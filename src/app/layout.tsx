@@ -1,15 +1,34 @@
+import type { Metadata } from "next";
+import { Comfortaa, Lato } from "next/font/google";
 import "./globals.css";
-import type { ReactNode } from "react";
 
-export const metadata = {
-  title: "Pregnancy Tracker",
-  description: "Final project",
+const comfortaa = Comfortaa({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "700"],
+  variable: "--font-comfortaa",
+});
+
+const lato = Lato({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "700"],
+  variable: "--font-lato",
+});
+
+export const metadata: Metadata = {
+  title: "Leleka",
+  description: "Pregnancy tracker app",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="uk-UA">
-      <body>{children}</body>
+    <html lang="uk">
+      <body className={`${comfortaa.variable} ${lato.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
