@@ -1,7 +1,13 @@
+import type { ReactNode } from "react";
+
 type AuthLayoutProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
-  return <main>{children}</main>;
+  return (
+    <div>
+      <main>{children}</main>
+    </div>
+  );
 }
