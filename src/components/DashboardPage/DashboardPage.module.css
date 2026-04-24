@@ -1,0 +1,95 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* 🔹 Верх */
+.topRow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 🔹 Контент */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.leftColumn,
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 🔹 Базові стилі блоків */
+.greetingBlock,
+.statusBlock,
+.babyTodayCard,
+.momTipCard,
+.tasksReminderCard,
+.feelingCheckCard {
+  padding: 16px;
+  border-radius: 20px;
+  background: #f3e9ea;
+}
+
+/* 📱 Tablet */
+@media (min-width: 768px) {
+  .topRow {
+    flex-direction: row;
+  }
+
+  .content {
+    flex-direction: row;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    flex: 1;
+  }
+}
+
+/* 💻 Desktop */
+@media (min-width: 1440px) {
+  .topRow {
+    gap: 24px;
+  }
+
+  .content {
+    gap: 24px;
+  }
+
+  .leftColumn {
+    flex: 2;
+  }
+
+  .rightColumn {
+    flex: 1;
+  }
+
+  /* 🔒 Фіксована висота + скрол */
+  .babyTodayCard {
+    height: 420px;
+    overflow-y: auto;
+  }
+
+  .tasksReminderCard {
+    height: 420px;
+    overflow-y: auto;
+  }
+
+  .momTipCard {
+    height: 200px;
+    overflow-y: auto;
+  }
+
+  .feelingCheckCard {
+    height: 200px;
+    overflow-y: auto;
+  }
+}
