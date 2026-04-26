@@ -40,16 +40,17 @@
 
 /* 📱 Tablet */
 @media (min-width: 768px) {
+  .page {
+    padding: 32px;
+    gap: 24px;
+  }
+
   .topRow {
     flex-direction: row;
+    gap: 24px;
   }
 
-  .content {
-    flex-direction: row;
-  }
-
-  .leftColumn,
-  .rightColumn {
+  .statusBlock {
     flex: 1;
   }
 }
@@ -61,6 +62,7 @@
   }
 
   .content {
+    flex-direction: row;
     gap: 24px;
   }
 
