@@ -50,14 +50,22 @@ export default function RegistrationForm() {
       const data = await response.json();
 
       if (!response.ok) {
-        toast.error(data.message || "Не вдалося зареєструватися");
+        let message = "Не вдалося зареєструватися";
+
+        if (response.status === 409) {
+          message = "Користувач з таким email вже існує";
+        } else if (response.status === 400) {
+          message = data.message || "Невірні дані";
+        }
+
+        toast.error(message);
         return;
       }
 
       toast.success("Реєстрацію успішно завершено");
       resetForm();
     } catch {
-      toast.error("Помилка сервера. Спробуйте пізніше");
+      toast.error("Проблема з мережею або сервером. Спробуйте пізніше.");
     }
   };
 
@@ -67,38 +75,74 @@ export default function RegistrationForm() {
       validationSchema={registerSchema}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, errors, touched }) => (
         <Form className={styles.form}>
           <label className={styles.label}>
-            Ім&apos;я
-            <Field className={styles.input} type="text" name="name" />
-            <ErrorMessage name="name" component="p" className={styles.error} />
+            Ім’я*
+            <Field
+              name="name"
+              placeholder="Ваше ім’я"
+              className={`${styles.input} ${
+                errors.name && touched.name ? styles.inputError : ""
+              }`}
+            />
+            <ErrorMessage
+              name="name"
+              component="span"
+              className={styles.error}
+            />
           </label>
 
           <label className={styles.label}>
-            Email
-            <Field className={styles.input} type="email" name="email" />
-            <ErrorMessage name="email" component="p" className={styles.error} />
+            Пошта*
+            <Field
+              name="email"
+              type="email"
+              placeholder="hello@leleka.com"
+              className={`${styles.input} ${
+                errors.email && touched.email ? styles.inputError : ""
+              }`}
+            />
+            <ErrorMessage
+              name="email"
+              component="span"
+              className={styles.error}
+            />
           </label>
 
           <label className={styles.label}>
-            Пароль
-            <Field className={styles.input} type="password" name="password" />
+            Пароль*
+            <Field
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              placeholder="********"
+              className={`${styles.input} ${
+                errors.password && touched.password ? styles.inputError : ""
+              }`}
+            />
             <ErrorMessage
               name="password"
-              component="p"
+              component="span"
               className={styles.error}
             />
           </label>
 
           <button
-            className={styles.button}
             type="submit"
+            className={`${styles.button} ${
+              isSubmitting ? styles.buttonLoading : ""
+            }`}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Реєстрація..." : "Зареєструватися"}
+            {isSubmitting ? (
+              <span className={styles.signal} aria-label="Завантаження" />
+            ) : (
+              "Зареєструватись"
+            )}
           </button>
-          <p className={styles.text}>
+
+          <p className={styles.loginText}>
             Вже маєте акаунт?{" "}
             <Link href="/auth/login" className={styles.link}>
               Увійти

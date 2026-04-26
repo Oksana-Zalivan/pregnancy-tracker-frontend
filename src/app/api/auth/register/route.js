@@ -18,12 +18,17 @@ export async function POST(req) {
         "Content-Type": "application/json",
       },
     });
-  } catch (error) {
+  } catch {
     return new Response(
       JSON.stringify({
-        message: "Помилка сервера",
+        message: "Проблема з мережею або сервером. Спробуйте пізніше.",
       }),
-      { status: 500 }
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
   }
 }
