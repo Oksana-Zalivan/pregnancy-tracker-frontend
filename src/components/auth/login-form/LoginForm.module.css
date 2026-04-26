@@ -1,0 +1,160 @@
+.form {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  color: #1a1a1a;
+}
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0 0 0 0);
+}
+
+.input {
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-color: #f3f3f3;
+  font-size: 14px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #9747ff;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.input:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.inputError {
+  border-color: #c60000;
+}
+
+.error {
+  font-size: 12px;
+  color: #c60000;
+}
+
+.button {
+  margin-top: 8px;
+  height: 48px;
+  padding: 10px 24px;
+  border-radius: 100px;
+  border: none;
+  background: #ffdae0;
+  border-bottom: 4px solid #ffcbd3;
+  color: #000;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 200ms ease, transform 200ms ease,
+    border-bottom-width 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button:hover,
+.button:focus {
+  background: #ffe6ea;
+  outline: none;
+}
+
+.button:active {
+  background: #f2b2b2;
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+.button:disabled {
+  background: #ffdae0;
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.buttonLoading {
+  animation: breathe 1.2s ease-in-out infinite;
+  background: #ffe6ea;
+}
+
+@keyframes breathe {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.authText {
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  line-height: 150%;
+  width: 100%;
+  text-align: center;
+  color: #000;
+}
+
+.link {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 200ms ease, opacity 200ms ease;
+}
+
+.link:hover,
+.link:focus {
+  color: #000;
+  text-decoration: underline;
+  outline: none;
+}
+
+.link:active {
+  color: #ffb6c1;
+  text-decoration: underline;
+}
+
+.signal {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0;
+  animation: pulsate 1s ease-out infinite;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}

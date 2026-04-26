@@ -1,3 +1,134 @@
+"use client";
+
+import Link from "next/link";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import toast from "react-hot-toast";
+import * as Yup from "yup";
+
+import { useRouter } from "next/navigation";
+import styles from "./LoginForm.module.css";
+
+type LoginValues = {
+  email: string;
+  password: string;
+};
+
+const initialValues: LoginValues = {
+  email: "",
+  password: "",
+};
+
+const loginSchema = Yup.object({
+  email: Yup.string()
+    .email("Некоректний формат email")
+    .max(64, "Email не може бути довшим за 64 символи")
+    .required("Email є обовʼязковим"),
+  password: Yup.string()
+    .min(8, "Пароль має містити мінімум 8 символів")
+    .max(128, "Пароль не може бути довшим за 128 символів")
+    .required("Пароль є обовʼязковим"),
+});
+
 export default function LoginForm() {
-  return <form>LoginForm</form>;
+  const router = useRouter();
+
+  const handleSubmit = async (values: LoginValues) => {
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        let message = "Не вдалося увійти";
+
+        if (response.status === 401) {
+          message = "Невірний email або пароль";
+        } else if (response.status === 400) {
+          message = data.message || "Невірні дані";
+        }
+
+        toast.error(message);
+        return;
+      }
+
+      toast.success("Вхід виконано успішно");
+      router.push("/");
+    } catch {
+      toast.error("Проблема з мережею або сервером. Спробуйте пізніше.");
+    }
+  };
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={loginSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ isSubmitting, errors, touched }) => (
+        <Form className={styles.form}>
+          <label className={styles.label}>
+            <span className={styles.visuallyHidden}>Пошта</span>
+            <Field
+              name="email"
+              type="email"
+              placeholder="Пошта"
+              className={`${styles.input} ${
+                errors.email && touched.email ? styles.inputError : ""
+              }`}
+            />
+            <ErrorMessage
+              name="email"
+              component="span"
+              className={styles.error}
+            />
+          </label>
+
+          <label className={styles.label}>
+            <span className={styles.visuallyHidden}>Пароль</span>
+            <Field
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              placeholder="Пароль"
+              className={`${styles.input} ${
+                errors.password && touched.password ? styles.inputError : ""
+              }`}
+            />
+            <ErrorMessage
+              name="password"
+              component="span"
+              className={styles.error}
+            />
+          </label>
+
+          <button
+            type="submit"
+            className={`${styles.button} ${
+              isSubmitting ? styles.buttonLoading : ""
+            }`}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <span className={styles.signal} aria-label="Завантаження" />
+            ) : (
+              "Увійти"
+            )}
+          </button>
+
+          <p className={styles.authText}>
+            Немає акаунту?{" "}
+            <Link href="/auth/register" className={styles.link}>
+              Зареєструватися
+            </Link>
+          </p>
+        </Form>
+      )}
+    </Formik>
+  );
 }
