@@ -1,3 +1,6 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import styles from "./DiaryEntryCard.module.css";
 
 type Emotion = {
@@ -19,10 +22,21 @@ type Props = {
 };
 
 export default function DiaryEntryCard({ entry, onClick, isActive }: Props) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    const isDesktop = window.innerWidth >= 1280;
+    if (isDesktop) {
+      onClick(entry);
+    } else {
+      router.push(`/diary/${entry._id}`);
+    }
+  };
+
   return (
     <div
       className={`${styles.card} ${isActive ? styles.active : ""}`}
-      onClick={() => onClick(entry)}
+      onClick={handleClick}
     >
       <div className={styles.cardHeader}>
         <h3>{entry.title}</h3>
