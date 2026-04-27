@@ -1,11 +1,11 @@
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3001";
 
 export async function PATCH(request, { params }) {
-  const { entryId } = await params;
+  const { id } = await params;
   const body = await request.json();
   const authorization = request.headers.get("authorization");
 
-  const response = await fetch(`${BACKEND_URL}/api/diaries/${entryId}`, {
+  const response = await fetch(`${BACKEND_URL}/api/diaries/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -19,10 +19,10 @@ export async function PATCH(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
-  const { entryId } = await params;
+  const { id } = await params;
   const authorization = request.headers.get("authorization");
 
-  const response = await fetch(`${BACKEND_URL}/api/diaries/${entryId}`, {
+  const response = await fetch(`${BACKEND_URL}/api/diaries/${id}`, {
     method: "DELETE",
     headers: {
       ...(authorization && { authorization }),
