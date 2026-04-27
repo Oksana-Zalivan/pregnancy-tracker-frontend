@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
 
-let diaries = [
-  { id: 1, text: "First record", week: 1 },
-  { id: 2, text: "Second record", week: 1 },
-];
+let diaries = [];
 
 // GET
 export async function GET() {
-  return NextResponse.json(diaries);
+  const sorted = diaries.sort((a, b) => new Date(b.date) - new Date(a.date));
+  return NextResponse.json(sorted);
 }
 
 // POST
@@ -15,8 +13,12 @@ export async function POST(request) {
   const body = await request.json();
 
   const newDiary = {
-    id: Date.now(),
-    ...body,
+    _id: Date.now().toString(),
+    title: body.title,
+    description: body.description,
+    date: body.date,
+    emotions: body.emotions || [],
+    userId: "1",
   };
 
   diaries.push(newDiary);
