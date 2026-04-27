@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
 
+import { useRouter } from "next/navigation";
 import styles from "./RegistrationForm.module.css";
 
 type RegisterValues = {
@@ -34,6 +35,8 @@ const registerSchema = Yup.object({
 });
 
 export default function RegistrationForm() {
+  const router = useRouter();
+
   const handleSubmit = async (
     values: RegisterValues,
     { resetForm }: { resetForm: () => void }
@@ -64,6 +67,7 @@ export default function RegistrationForm() {
 
       toast.success("Реєстрацію успішно завершено");
       resetForm();
+      router.push("/");
     } catch {
       toast.error("Проблема з мережею або сервером. Спробуйте пізніше.");
     }
@@ -142,7 +146,7 @@ export default function RegistrationForm() {
             )}
           </button>
 
-          <p className={styles.loginText}>
+          <p className={styles.authText}>
             Вже маєте акаунт?{" "}
             <Link href="/auth/login" className={styles.link}>
               Увійти
