@@ -66,6 +66,10 @@ export default function RegistrationForm() {
       }
 
       toast.success("Реєстрацію успішно завершено");
+
+      localStorage.setItem("token", data.data.token);
+      localStorage.setItem("user", JSON.stringify(data.data.user));
+
       resetForm();
       router.push("/");
     } catch {
