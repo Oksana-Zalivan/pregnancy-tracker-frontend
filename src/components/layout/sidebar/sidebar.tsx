@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navigationItems } from "@/lib/constants/navigation";
+import { useCurrentUserProfile } from "@/hooks/useCurrentUserProfile";
 import css from "@/components/layout/sidebar/sidebar.module.css";
 import clsx from "clsx";
 
@@ -16,8 +18,9 @@ export default function Sidebar({
   onCloseMobileMenu,
 }: SidebarProps) {
   const pathname = usePathname();
-
-  const isAuthenticated = false;
+  const { profile } = useCurrentUserProfile();
+  const isAuthenticated =
+    typeof window !== "undefined" && Boolean(localStorage.getItem("token"));
 
   return (
     <>
@@ -62,6 +65,22 @@ export default function Sidebar({
             })}
           </ul>
         </nav>
+
+        <div className={css.profileCard}>
+          <Image
+            src={profile.avatarUrl}
+            alt={`Аватар користувача ${profile.name}`}
+            width={56}
+            height={56}
+            className={css.profileAvatar}
+            unoptimized
+          />
+
+          <div className={css.profileMeta}>
+            <p className={css.profileName}>{profile.name}</p>
+            <p className={css.profileEmail}>{profile.email}</p>
+          </div>
+        </div>
       </aside>
     </>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 
 type ProtectedRouteProps = {
@@ -9,20 +9,16 @@ type ProtectedRouteProps = {
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const router = useRouter();
-  const [isChecking, setIsChecking] = useState(true);
+  const hasToken =
+    typeof window !== "undefined" && Boolean(localStorage.getItem("token"));
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
+    if (!hasToken) {
       router.replace("/auth/login");
-      return;
     }
+  }, [hasToken, router]);
 
-    setIsChecking(false);
-  }, [router]);
-
-  if (isChecking) {
+  if (!hasToken) {
     return <p>Завантаження...</p>;
   }
 

@@ -25,6 +25,8 @@
   transform: translateX(-100%);
   transition: transform 200ms ease;
   z-index: 50;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebarMobileOpen {
@@ -56,6 +58,39 @@
   flex-direction: column;
   gap: 12px;
   list-style: none;
+}
+
+.profileCard {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid #efebeb;
+}
+
+.profileAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profileMeta {
+  min-width: 0;
+}
+
+.profileName {
+  font-weight: 700;
+  color: #1d1717;
+}
+
+.profileEmail {
+  margin-top: 4px;
+  color: #6b6161;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .navLink {
