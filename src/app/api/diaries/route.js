@@ -1,27 +1,35 @@
 import { NextResponse } from "next/server";
 
-let diaries = [];
+const BACKEND_URL = "http://localhost:3001";
 
-// GET
 export async function GET() {
-  const sorted = diaries.sort((a, b) => new Date(b.date) - new Date(a.date));
-  return NextResponse.json(sorted);
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/diaries`, {
+      method: "GET",
+    });
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
 }
 
-// POST
 export async function POST(request) {
-  const body = await request.json();
+  try {
+    const body = await request.json();
 
-  const newDiary = {
-    _id: Date.now().toString(),
-    title: body.title,
-    description: body.description,
-    date: body.date,
-    emotions: body.emotions || [],
-    userId: "1",
-  };
+    const response = await fetch(`${BACKEND_URL}/api/diaries`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
 
-  diaries.push(newDiary);
-
-  return NextResponse.json(newDiary, { status: 201 });
+    const data = await response.json();
+    return NextResponse.json(data, { status: response.status });
+  } catch (error) {
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
 }
