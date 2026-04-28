@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import styles from "./TasksReminderCard.module.css";
 
 type Task = {
@@ -9,14 +11,13 @@ type Task = {
   date: string;
   name: string;
   isDone: boolean;
-  group?: "today" | "week";
 };
 
 export default function TasksReminderCard() {
   const router = useRouter();
-
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAddTask = () => {
     const token = localStorage.getItem("token");
@@ -31,11 +32,19 @@ export default function TasksReminderCard() {
 
   useEffect(() => {
     const fetchTasks = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setTasks([]);
+        return;
+      }
       try {
-        const token = localStorage.getItem("token");
+        setIsLoading(true);
 
         const response = await fetch("/api/tasks", {
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         if (!response.ok) {
@@ -46,6 +55,9 @@ export default function TasksReminderCard() {
         setTasks(data);
       } catch (error) {
         console.error("Помилка завантаження завдань", error);
+        toast.error("Не вдалося завантажити завдання");
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -57,6 +69,12 @@ export default function TasksReminderCard() {
     if (!task) return;
 
     const token = localStorage.getItem("token");
+
+    if (!token) {
+      router.push("/auth/register");
+      return;
+    }
+
     const newStatus = !task.isDone;
     const prevTasks = tasks;
 
@@ -69,7 +87,7 @@ export default function TasksReminderCard() {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` }),
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ isDone: newStatus }),
       });
@@ -79,15 +97,45 @@ export default function TasksReminderCard() {
       }
     } catch (error) {
       console.error("Помилка оновлення завдання", error);
+      toast.error("Не вдалося оновити завдання");
       setTasks(prevTasks);
     }
   };
 
-  const todayTasks = tasks.filter((task) => task.group === "today");
-  const weekTasks = tasks.filter((task) => task.group === "week");
-  const noGroupTasks = tasks.filter((task) => !task.group);
+  const normalizeDate = (date: string) => {
+    const normalizedDate = new Date(date);
+    normalizedDate.setHours(0, 0, 0, 0);
+    return normalizedDate;
+  };
 
-  const hasGroupedTasks = todayTasks.length > 0 || weekTasks.length > 0;
+  const sortedTasks = [...tasks].sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+  );
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  const nextWeek = new Date(today);
+  nextWeek.setDate(today.getDate() + 7);
+
+  const todayTasks = sortedTasks.filter(
+    (task) => normalizeDate(task.date).getTime() === today.getTime(),
+  );
+
+  const weekTasks = sortedTasks.filter((task) => {
+    const taskDate = normalizeDate(task.date);
+
+    return taskDate >= tomorrow && taskDate <= nextWeek;
+  });
+
+  const noGroupTasks = sortedTasks.filter((task) => {
+    const taskDate = normalizeDate(task.date);
+
+    return taskDate > nextWeek || taskDate < today;
+  });
 
   const renderTask = (task: Task) => (
     <li className={styles.taskItem} key={task._id}>
@@ -110,9 +158,11 @@ export default function TasksReminderCard() {
             }
           >
             {task.isDone && (
-              <img
+              <Image
                 src="/icons/check.svg"
                 alt="Виконано"
+                width={16}
+                height={16}
                 className={styles.checkboxIcon}
               />
             )}
@@ -142,15 +192,19 @@ export default function TasksReminderCard() {
           className={styles.addTaskButton}
           onClick={handleAddTask}
         >
-          <img
+          <Image
             src="/icons/add.svg"
             alt="Додати завдання"
+            width={24}
+            height={24}
             className={styles.addTaskIcon}
           />
         </button>
       </div>
 
-      {tasks.length === 0 ? (
+      {isLoading ? (
+        <p>Завантаження...</p>
+      ) : tasks.length === 0 ? (
         <div className={styles.tasksPlaceholder}>
           <div className={styles.placeholderTextBlock}>
             <p className={styles.placeholderTitle}>
@@ -167,7 +221,7 @@ export default function TasksReminderCard() {
             Створити завдання
           </button>
         </div>
-      ) : hasGroupedTasks ? (
+      ) : (
         <>
           {todayTasks.length > 0 && (
             <div className={styles.tasksGroup}>
@@ -185,14 +239,13 @@ export default function TasksReminderCard() {
 
           {noGroupTasks.length > 0 && (
             <div className={styles.tasksGroup}>
+              <p className={styles.tasksGroupTitle}>Інші:</p>
               <ul className={styles.tasksList}>
                 {noGroupTasks.map(renderTask)}
               </ul>
             </div>
           )}
         </>
-      ) : (
-        <ul className={styles.tasksList}>{tasks.map(renderTask)}</ul>
       )}
 
       {isAddTaskModalOpen && (
