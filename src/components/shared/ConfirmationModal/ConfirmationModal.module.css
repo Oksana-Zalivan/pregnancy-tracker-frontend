@@ -1,0 +1,19 @@
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.cancelButton {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.confirmButton {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
