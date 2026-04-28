@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -14,9 +15,19 @@ interface MenuItemProps {
 }
 
 const MenuItem = ({ label, href, iconName, active }: MenuItemProps) => {
+  const router = useRouter();
+  const isAuthorized = true;
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (!isAuthorized) {
+      e.preventDefault();
+      router.push("/auth/login");
+    }
+  };
   return (
     <Link
       href={href}
+      onClick={handleClick}
       className={`${styles.menuItem} ${active ? styles.activeItem : ""}`}
     >
       <div className={styles.iconWrapper}>
@@ -38,31 +49,40 @@ export const SideBar = () => {
 
   return (
     <>
-      <button
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white border rounded-md"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <Image
-          src={isOpen ? "/icons/close.svg" : "/icons/menu.svg"}
-          alt="menu toggle"
-          width={24}
-          height={24}
-        />
-      </button>
+      {!isOpen && (
+        <button
+          className={styles.fixedMobileBtn}
+          onClick={() => setIsOpen(true)}
+        >
+          <Image src="/icons/menu.svg" alt="open menu" width={24} height={24} />
+        </button>
+      )}
 
       <aside
         className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ""}`}
       >
-        <div className={styles.logoContainer}>
-          <Image
-            src="/icons/logo.svg"
-            alt="Лелека"
-            width={120}
-            height={40}
-            priority
-          />
+        <div className={styles.header}>
+          <div className={styles.logoContainer}>
+            <Image
+              src="/icons/logo.svg"
+              alt="Лелека"
+              width={100}
+              height={45}
+              priority
+            />
+          </div>
+
+          <button className={styles.burgerBtn} onClick={() => setIsOpen(false)}>
+            <Image
+              src="/icons/close.svg"
+              alt="close menu"
+              width={24}
+              height={24}
+            />
+          </button>
         </div>
 
+        {/* Навігація */}
         <nav className={styles.nav}>
           <MenuItem
             label="Мій день"
@@ -90,6 +110,10 @@ export const SideBar = () => {
           />
         </nav>
       </aside>
+
+      {isOpen && (
+        <div className={styles.overlay} onClick={() => setIsOpen(false)} />
+      )}
     </>
   );
 };

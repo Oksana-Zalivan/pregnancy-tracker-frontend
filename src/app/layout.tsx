@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Comfortaa, Lato } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
+import { SideBar } from "../components/SideBar/SideBar";
+import { Breadcrumbs } from "../components/Breadcrumbs/Breadcrumbs";
 
 const comfortaa = Comfortaa({
   subsets: ["latin", "cyrillic"],
@@ -28,7 +30,12 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body className={`${comfortaa.variable} ${lato.variable}`}>
+        <SideBar />
+
+        <Breadcrumbs />
+
         {children}
+
         <Toaster position="top-right" />
       </body>
     </html>
