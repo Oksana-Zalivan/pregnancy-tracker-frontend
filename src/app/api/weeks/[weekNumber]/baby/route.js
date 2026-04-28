@@ -5,7 +5,7 @@ export async function GET(req, { params }) {
     const token = req.headers.get("authorization");
 
     const response = await fetch(
-      `http://localhost:3001/api/weeks/${weekNumber}/baby`,
+      `${process.env.API_URL}/api/weeks/${weekNumber}/baby`,
       {
         headers: {
           ...(token && { Authorization: token }),
