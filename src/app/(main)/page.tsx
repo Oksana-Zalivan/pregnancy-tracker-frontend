@@ -1,3 +1,5 @@
+import DashboardPage from "@/components/DashboardPage/DashboardPage";
+
 export default function HomePage() {
-  return <h1>Home Page</h1>;
+  return <DashboardPage />;
 }
