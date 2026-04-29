@@ -1,14 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { api } from "../../api";
 import { cookies } from "next/headers";
 import { parse } from "cookie";
 import { isAxiosError } from "axios";
 
-export async function POST(req: NextRequest) {
+export async function POST(req) {
   try {
     const body = await req.json();
     // Відправляємо дані авторизації на бекенд
-    const response = await api.post("auth/login", body);
+    const response = await api.post("/auth/login", body);
     // Отримуємо доступ до сховища cookies поточного запиту
     const cookieStore = await cookies();
     // зчитуємо заголовок set-cookie з відповіді бекенду
@@ -28,19 +28,19 @@ export async function POST(req: NextRequest) {
           cookieStore.set("accessToken", parsed.accessToken, options);
         if (parsed.refreshToken)
           cookieStore.set("refreshToken", parsed.refreshToken, options);
+        if (parsed.sessionId)
+          cookieStore.set("sessionId", parsed.sessionId, options);
       }
-      // Повертаємо відповідь бекенду клієнту
-      return NextResponse.json(response.data, { status: response.status });
     }
-    // Бекенд не повернув cookies - авторизація не вдалась
-    return NextResponse.json({ error: "Неавторизований" }, { status: 401 });
+    // Повертаємо відповідь бекенду клієнту
+    return NextResponse.json(response.data, { status: response.status });
   } catch (error) {
     if (isAxiosError(error)) {
       // logErrorResponse(error.response?.data);
       // Axios помилка: повертаємо статус і деталі від бекенду
       return NextResponse.json(
         { error: error.message, response: error.response?.data },
-        { status: error.status },
+        { status: error.response?.status || 500 },
       );
     }
     // Невідома помилка: проблема з мережею
