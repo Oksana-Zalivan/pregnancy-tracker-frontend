@@ -25,7 +25,7 @@ export default function DiaryEntryCard({ entry, onClick, isActive }: Props) {
   const router = useRouter();
 
   const handleClick = () => {
-    const isDesktop = window.innerWidth >= 1280;
+    const isDesktop = window.innerWidth >= 1440;
     if (isDesktop) {
       onClick(entry);
     } else {

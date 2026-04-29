@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import styles from "./DiaryEntryDetails.module.css";
+import ConfirmationModal from "@/components/ConfirmationModal/ConfirmationModal";
 
 type Emotion = {
   _id: string;
@@ -68,30 +69,16 @@ export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
       </div>
 
       {showConfirm && (
-        <div className={styles.backdrop} onClick={() => setShowConfirm(false)}>
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-            <p className={styles.modalTitle}>Ви впевнені, що хочете видалити цей запис?</p>
-            <div className={styles.modalButtons}>
-              <button
-                type="button"
-                className={styles.cancelBtn}
-                onClick={() => setShowConfirm(false)}
-              >
-                Ні
-              </button>
-              <button
-                type="button"
-                className={styles.confirmBtn}
-                onClick={() => {
-                  onDelete(entry._id);
-                  setShowConfirm(false);
-                }}
-              >
-                Так
-              </button>
-            </div>
-          </div>
-        </div>
+        <ConfirmationModal
+          title="Ви точно хочете видалити?"
+          confirmButtonText="Так"
+          cancelButtonText="Ні"
+          onConfirm={() => {
+            onDelete(entry._id);
+            setShowConfirm(false);
+          }}
+          onCancel={() => setShowConfirm(false)}
+        />
       )}
     </>
   );
