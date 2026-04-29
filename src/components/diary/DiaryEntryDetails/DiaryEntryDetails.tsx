@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import styles from "./DiaryEntryDetails.module.css";
-import ConfirmationModal from "@/components/ConfirmationModal/ConfirmationModal";
+import ConfirmationModal from "@/components/shared/ConfirmationModal/ConfirmationModal";
 
 type Emotion = {
   _id: string;
@@ -70,6 +70,7 @@ export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
 
       {showConfirm && (
         <ConfirmationModal
+          isOpen={showConfirm}
           title="Ви точно хочете видалити?"
           confirmButtonText="Так"
           cancelButtonText="Ні"
