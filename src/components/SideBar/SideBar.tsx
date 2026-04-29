@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -12,6 +12,11 @@ interface MenuItemProps {
   href: string;
   iconName: string;
   active: boolean;
+}
+
+interface SideBarProps {
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const MenuItem = ({ label, href, iconName, active }: MenuItemProps) => {
@@ -43,26 +48,23 @@ const MenuItem = ({ label, href, iconName, active }: MenuItemProps) => {
   );
 };
 
-export const SideBar = () => {
+export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const isAuthenticated =
+    typeof window !== "undefined"
+      ? Boolean(localStorage.getItem("token"))
+      : false;
+  const getHref = (privateHref: string) =>
+    isAuthenticated ? privateHref : "/auth/login";
+  const currentWeek = 1;
 
   return (
     <>
-      {!isOpen && (
-        <button
-          className={styles.fixedMobileBtn}
-          onClick={() => setIsOpen(true)}
-        >
-          <Image src="/icons/menu.svg" alt="open menu" width={24} height={24} />
-        </button>
-      )}
-
       <aside
         className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ""}`}
       >
         <div className={styles.header}>
-          <div className={styles.logoContainer}>
+          <Link href="/" className={styles.logoContainer}>
             <Image
               src="/icons/logo.svg"
               alt="Лелека"
@@ -70,50 +72,47 @@ export const SideBar = () => {
               height={45}
               priority
             />
-          </div>
+          </Link>
 
-          <button className={styles.burgerBtn} onClick={() => setIsOpen(false)}>
+          <button className={styles.burgerBtn} onClick={onClose}>
             <Image
               src="/icons/close.svg"
               alt="close menu"
-              width={24}
-              height={24}
+              width={18}
+              height={18}
             />
           </button>
         </div>
 
-        {/* Навігація */}
         <nav className={styles.nav}>
           <MenuItem
             label="Мій день"
-            href="/dashboard"
+            href={getHref("/")}
             iconName="my-day"
-            active={pathname === "/dashboard"}
+            active={pathname === "/"}
           />
           <MenuItem
             label="Подорож"
-            href="/journey"
+            href={getHref(`/journey/${currentWeek}`)}
             iconName="journey"
-            active={pathname === "/journey"}
+            active={pathname.startsWith("/journey")}
           />
           <MenuItem
             label="Щоденник"
-            href="/diary"
+            href={getHref("/diary")}
             iconName="diary"
             active={pathname === "/diary"}
           />
           <MenuItem
             label="Профіль"
-            href="/profile"
+            href={getHref("/profile")}
             iconName="profile"
             active={pathname === "/profile"}
           />
         </nav>
       </aside>
 
-      {isOpen && (
-        <div className={styles.overlay} onClick={() => setIsOpen(false)} />
-      )}
+      {isOpen && <div className={styles.overlay} onClick={onClose} />}
     </>
   );
 };

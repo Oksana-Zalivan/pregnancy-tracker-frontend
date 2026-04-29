@@ -8,7 +8,9 @@ import styles from './Breadcrumbs.module.css';
 export const Breadcrumbs = () => {
   const pathname = usePathname();
   
-  if (pathname === '/' || pathname.startsWith('/auth')) return null;
+  if (pathname.startsWith('/auth')) return null;
+
+  
 
   const pathSegments = pathname.split('/').filter(item => item !== '');
   const translations: { [key: string]: string } = {
@@ -20,26 +22,26 @@ export const Breadcrumbs = () => {
 
   return (
     <nav className={styles.container}>
-      <div className={styles.flexRow}>
-        
-        <Link href="/dashboard" className={styles.link}>
-          Лелека
-        </Link>
+    <div className={styles.flexRow}>
+      <Link href="/" className={styles.link}>Мій день</Link>
+      
+      {pathSegments.map((segment, index) => {
+        const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
+        const isLast = index === pathSegments.length - 1;
+        const title = translations[segment] || segment;
 
-        {pathSegments.map((segment, index) => {
-          const isLast = index === pathSegments.length - 1;
-          const label = translations[segment] || segment;
-
-          return (
-            <div key={segment} className={styles.flexRow}>
-              <span className={styles.separator}>&gt;</span>
-              <span className={isLast ? styles.current : styles.link}>
-                {label}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    </nav>
+        return (
+          <React.Fragment key={href}>
+            <span className={styles.separator}>/</span>
+            {isLast ? (
+              <span className={styles.current}>{title}</span>
+            ) : (
+              <Link href={href} className={styles.link}>{title}</Link>
+            )}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  </nav>
   );
 };
