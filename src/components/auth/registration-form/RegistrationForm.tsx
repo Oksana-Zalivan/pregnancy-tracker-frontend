@@ -71,7 +71,7 @@ export default function RegistrationForm() {
       localStorage.setItem("user", JSON.stringify(data.data.user));
 
       resetForm();
-      router.push("/");
+      router.push("/profile/edit");
     } catch {
       toast.error("Проблема з мережею або сервером. Спробуйте пізніше.");
     }
