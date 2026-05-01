@@ -1,0 +1,23 @@
+.card {
+  padding: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* 📱 Tablet */
+@media (min-width: 768px) {
+  .title {
+    font-size: 32px;
+  }
+}
+
+/* 💻 Desktop */
+@media (min-width: 1440px) {
+  .title {
+    font-size: 36px;
+  }
+}

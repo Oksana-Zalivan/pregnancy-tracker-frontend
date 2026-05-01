@@ -3,35 +3,40 @@
   background-color: #ffffff;
 }
 
+/* Ліва колонка (форма + лого) */
 .authPanel {
   min-height: 100vh;
   padding: 20px;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
+/* 🔥 Лого тепер у потоці, а не absolute */
+.logo {
+  width: 100%;
+  max-width: 335px;
+
+  display: flex;
+  align-items: center;
+
+  margin-bottom: auto;
+  transform: translateX(-28px);
+}
+
+/* Обгортка форми */
 .formWrapper {
   width: 100%;
   max-width: 335px;
+
   display: flex;
   flex-direction: column;
+
+  margin: auto 0; /* центр по вертикалі */
 }
 
-.logo {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  height: 32px;
-  width: auto;
-}
-
+/* Заголовок */
 .title {
   margin-bottom: 28px;
   text-align: center;
@@ -40,27 +45,24 @@
   font-weight: 400;
 }
 
+/* Права картинка */
 .imageWrapper {
   display: none;
 }
 
-/* Tablet */
+/* ================= TABLET ================= */
 @media (min-width: 768px) {
   .authPanel {
     padding: 32px;
   }
 
+  .logo,
   .formWrapper {
     max-width: 475px;
   }
-
-  .logo {
-    top: 32px;
-    left: 32px;
-  }
 }
 
-/* Desktop */
+/* ================= DESKTOP ================= */
 @media (min-width: 1440px) {
   .page {
     display: flex;
@@ -71,6 +73,7 @@
     padding: 40px 72px;
   }
 
+  .logo,
   .formWrapper {
     max-width: 440px;
   }

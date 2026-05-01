@@ -1,0 +1,56 @@
+.card {
+  background-color: #ffdae0;
+  width: 303px;
+  height: 91px;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.active {
+  outline: 2px solid #f4a7b9;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  padding: 3.5px 0;
+  width: 271px;
+  height: 26px;
+  margin-bottom: 8px;
+}
+
+.cardHeader h3 {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 160%;
+  color: black;
+  margin-right: auto;
+}
+
+.date {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  color: black;
+}
+
+.emotions {
+  width: 271px;
+}
+
+.tag {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  color: black;
+  background-color: #fff4f6;
+  border-radius: 100px;
+  display: inline-block;
+  padding: 2px 12px;
+  margin-right: 8px;
+}
