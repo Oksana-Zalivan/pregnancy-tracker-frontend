@@ -3,45 +3,58 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import toast from "react-hot-toast";
 import styles from "./AddDiaryEntryForm.module.css";
 
+type FormValues = {
+  title: string;
+  description: string;
+  emotions: string[];
+};
+
+const emotionsList = ["Радість", "Сум", "Тривога", "Спокій"];
+
 const validationSchema = Yup.object({
-  title: Yup.string().required("Введіть назву"),
-  text: Yup.string().required("Введіть текст"),
-  categories: Yup.array().min(1, "Оберіть хоча б одну категорію"),
+  title: Yup.string()
+    .min(1, "Назва має містити мінімум 1 символ")
+    .max(64, "Назва не може бути довшою за 64 символи")
+    .required("Введіть назву"),
+  description: Yup.string()
+    .min(1, "Запис має містити мінімум 1 символ")
+    .max(1000, "Запис не може бути довшим за 1000 символів")
+    .required("Введіть текст запису"),
+  emotions: Yup.array()
+    .min(1, "Оберіть хоча б одну емоцію")
+    .max(12, "Можна обрати максимум 12 емоцій")
+    .required("Оберіть емоцію"),
 });
 
-const categoriesList = ["Радість", "Сум", "Тривога", "Спокій"];
-
-export default function AddDiaryEntryForm({ onClose }: { onClose: () => void }) {
-  const handleSubmit = async (values: any, { setSubmitting }: any) => {
+export default function AddDiaryEntryForm({
+  onClose,
+}: {
+  onClose: () => void;
+}) {
+  const handleSubmit = async (
+    values: FormValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
     try {
-      const token = localStorage.getItem("token");
-
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/diaries`,
-        values,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      onClose(); 
+      await axios.post("/api/diaries", values);
+      toast.success("Запис створено");
+      onClose();
     } catch (error) {
-      alert("Помилка при створенні запису");
+      toast.error("Не вдалося створити запис");
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <Formik
+    <Formik<FormValues>
       initialValues={{
         title: "",
-        text: "",
-        categories: [],
+        description: "",
+        emotions: [],
       }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
@@ -59,36 +72,44 @@ export default function AddDiaryEntryForm({ onClose }: { onClose: () => void }) 
           <ErrorMessage name="title" component="div" className={styles.error} />
 
           <div className={styles.categories}>
-            {categoriesList.map((cat) => (
-              <label key={cat}>
+            {emotionsList.map((emotion) => (
+              <label key={emotion}>
                 <input
                   type="checkbox"
-                  value={cat}
-                  checked={values.categories.includes(cat)}
+                  value={emotion}
+                  checked={values.emotions.includes(emotion)}
                   onChange={(e) => {
                     if (e.target.checked) {
-                      setFieldValue("categories", [...values.categories, cat]);
+                      setFieldValue("emotions", [...values.emotions, emotion]);
                     } else {
                       setFieldValue(
-                        "categories",
-                        values.categories.filter((c: string) => c !== cat)
+                        "emotions",
+                        values.emotions.filter((item) => item !== emotion)
                       );
                     }
                   }}
                 />
-                {cat}
+                {emotion}
               </label>
             ))}
           </div>
-          <ErrorMessage name="categories" component="div" className={styles.error} />
+          <ErrorMessage
+            name="emotions"
+            component="div"
+            className={styles.error}
+          />
 
           <Field
             as="textarea"
-            name="text"
+            name="description"
             placeholder="Текст запису"
             className={styles.textarea}
           />
-          <ErrorMessage name="text" component="div" className={styles.error} />
+          <ErrorMessage
+            name="description"
+            component="div"
+            className={styles.error}
+          />
 
           <button type="submit" disabled={isSubmitting} className={styles.button}>
             Зберегти

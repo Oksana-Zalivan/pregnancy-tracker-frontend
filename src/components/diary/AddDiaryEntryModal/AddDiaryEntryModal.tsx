@@ -1,9 +1,18 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useEffect } from "react";
 import styles from "./AddDiaryEntryModal.module.css";
 
-export default function AddDiaryEntryModal({ onClose, children }) {
+type AddDiaryEntryModalProps = {
+  onClose: () => void;
+  children: ReactNode;
+};
+
+export default function AddDiaryEntryModal({
+  onClose,
+  children,
+}: AddDiaryEntryModalProps) {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -15,11 +24,13 @@ export default function AddDiaryEntryModal({ onClose, children }) {
 
   return (
     <div className={styles.backdrop} onClick={onClose}>
-      <div
-        className={styles.modal}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button className={styles.close} onClick={onClose}>
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <button
+          type="button"
+          aria-label="Закрити модальне вікно"
+          className={styles.close}
+          onClick={onClose}
+        >
           ✕
         </button>
 

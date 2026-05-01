@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styles from "./FeelingCheckCard.module.css";
 
-import AddDiaryEntryModal from "../../diary/AddDiaryEntryModal/AddDiaryEntryModal";
-import AddDiaryEntryForm from "../../diary/AddDiaryEntryForm/AddDiaryEntryForm";
+import AddDiaryEntryModal from "@/components/diary/AddDiaryEntryModal/AddDiaryEntryModal";
+import AddDiaryEntryForm from "@/components/diary/AddDiaryEntryForm/AddDiaryEntryForm";
 
 
 export default function FeelingCheckCard() {
