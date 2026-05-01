@@ -3,16 +3,11 @@
 import { useRouter } from "next/navigation";
 import styles from "./DiaryEntryCard.module.css";
 
-type Emotion = {
-  _id: string;
-  title: string;
-};
-
 type Entry = {
   _id: string;
   title: string;
   date: string;
-  emotions: Emotion[];
+  emotions: string[];
 };
 
 type Props = {
@@ -25,7 +20,7 @@ export default function DiaryEntryCard({ entry, onClick, isActive }: Props) {
   const router = useRouter();
 
   const handleClick = () => {
-    const isDesktop = window.innerWidth >= 1440;
+    const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1440;
     if (isDesktop) {
       onClick(entry);
     } else {
@@ -43,9 +38,9 @@ export default function DiaryEntryCard({ entry, onClick, isActive }: Props) {
         <span className={styles.date}>{entry.date}</span>
       </div>
       <div className={styles.emotions}>
-        {entry.emotions?.map((emotion: Emotion) => (
-          <span key={emotion._id} className={styles.tag}>
-            {emotion.title}
+        {entry.emotions?.map((emotion, index) => (
+          <span key={index} className={styles.tag}>
+            {emotion}
           </span>
         ))}
       </div>

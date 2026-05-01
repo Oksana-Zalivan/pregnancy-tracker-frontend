@@ -5,17 +5,12 @@ import Image from "next/image";
 import styles from "./DiaryEntryDetails.module.css";
 import ConfirmationModal from "@/components/shared/ConfirmationModal/ConfirmationModal";
 
-type Emotion = {
-  _id: string;
-  title: string;
-};
-
 type Entry = {
   _id: string;
   title: string;
   date: string;
   description: string;
-  emotions: Emotion[];
+  emotions: string[];
 };
 
 type Props = {
@@ -40,7 +35,12 @@ export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
       <div className={styles.details}>
         <div className={styles.detailsHeader}>
           <h2>{entry.title}</h2>
-          <button type="button" className={styles.edit} onClick={() => onEdit(entry)}>
+          <button
+            type="button"
+            className={styles.edit}
+            onClick={() => onEdit(entry)}
+            aria-label="Редагувати запис"
+          >
             <Image src="/icons/edit.svg" alt="Редагувати" width={24} height={24} />
           </button>
         </div>
@@ -50,6 +50,7 @@ export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
             type="button"
             className={styles.delete}
             onClick={() => setShowConfirm(true)}
+            aria-label="Видалити запис"
           >
             <Image src="/icons/trash.svg" alt="Видалити" width={24} height={24} />
           </button>
@@ -60,9 +61,9 @@ export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
           ))}
         </div>
         <div className={styles.emotions}>
-          {entry.emotions?.map((emotion: Emotion) => (
-            <span key={emotion._id} className={styles.tag}>
-              {emotion.title}
+          {entry.emotions?.map((emotion, index) => (
+            <span key={index} className={styles.tag}>
+              {emotion}
             </span>
           ))}
         </div>
