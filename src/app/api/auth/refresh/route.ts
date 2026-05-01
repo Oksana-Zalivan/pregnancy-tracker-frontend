@@ -1,27 +1,14 @@
-// app/api/auth/refresh/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL!;
 
 export async function POST(req: NextRequest) {
-  const refreshToken = req.cookies.get('refreshToken')?.value;
-  const sessionId = req.cookies.get('sessionId')?.value;
-
-  console.log('Cookies:', { refreshToken, sessionId });
-
-  if (!refreshToken || !sessionId) {
-    return NextResponse.json(
-      { message: 'Сесію не знайдено' },
-      { status: 401 }
-    );
-  }
-
-  const cookieHeader = ` refreshToken=${refreshToken}; sessionId=${sessionId}`;
+  const cookieHeader = req.headers.get('cookie') ?? '';
 
   try {
     const backendRes = await axios.post(
-      `${BACKEND_URL}/api/auth/refresh`,
+      `${BACKEND_URL}/auth/refresh`,
       {},
       {
         headers: {
@@ -31,32 +18,23 @@ export async function POST(req: NextRequest) {
       }
     );
 
-    console.log('Бекенд статус:', backendRes.status);
-    console.log('Бекенд відповідь:', backendRes.data);
-
     if (backendRes.status !== 200) {
-      return NextResponse.json(
-        { message: backendRes.data?.message ?? 'Не вдалося оновити сесію' },
-        { status: backendRes.status }
-      );
+      return NextResponse.json({ error: 'Помилка оновлення токену' }, { status: 401 });
     }
 
-    const response = NextResponse.json({ message: 'ok' });
+    const response = NextResponse.json({
+      access_token: backendRes.data.access_token,
+    });
 
     const setCookie = backendRes.headers['set-cookie'];
     if (setCookie) {
-      setCookie.forEach((cookie) => {
-        response.headers.append('set-cookie', cookie);
-      });
+      response.headers.set('set-cookie', setCookie.join(', '));
     }
 
     return response;
 
   } catch (err) {
-    console.error('BFF помилка рефрешу:', err);
-    return NextResponse.json(
-      { message: 'Внутрішня помилка сервера' },
-      { status: 500 }
-    );
+    console.error('Виникла помилка:', err);
+    return NextResponse.json({ error: 'Проблема з мережею або сервером. Спробуйте пізніше' }, { status: 500 });
   }
 }
