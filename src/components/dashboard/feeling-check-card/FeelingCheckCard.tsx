@@ -15,11 +15,12 @@ export default function FeelingCheckCard() {
   const handleClick = () => {
     const token = localStorage.getItem("token");
 
-    if (!token) {
+    if (!token?.trim()) {
       router.push("/auth/register");
-    } else {
-      setIsOpen(true);
+      return;
     }
+
+      setIsOpen(true);
   };
 
   return (
