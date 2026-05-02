@@ -1,16 +1,15 @@
 import type { ReactNode } from "react";
+import MainLayout from "@/components/layout/main-layout/main-layout";
+import ProtectedRoute from "@/components/auth/ProtectedRoute/ProtectedRoute";
 
 type MainLayoutProps = {
   children: ReactNode;
 };
 
-export default function MainLayout({ children }: MainLayoutProps) {
+export default function Layout({ children }: MainLayoutProps) {
   return (
-    <div>
-      <header>Main Header</header>
-      <aside>Sidebar</aside>
-      <nav>Breadcrumbs</nav>
-      <main>{children}</main>
-    </div>
+    <ProtectedRoute>
+      <MainLayout>{children}</MainLayout>
+    </ProtectedRoute>
   );
 }
