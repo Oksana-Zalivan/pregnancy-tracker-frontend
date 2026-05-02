@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import MainLayout from "@/components/layout/main-layout/main-layout";
+import MainLayout from "@/components/layout/Main-layout/Main-layout";
 import ProtectedRoute from "@/components/auth/ProtectedRoute/ProtectedRoute";
 
 type MainLayoutProps = {

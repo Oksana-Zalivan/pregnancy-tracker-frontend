@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Header from "@/components/layout/header/Header";
-import Sidebar from "@/components/layout/sidebar/Sidebar";
-import Breadcrumbs from "@/components/layout/breadcrumbs/Breadcrumbs";
-import css from "@/components/layout/main-layout/Main-layout.module.css";
+import Header from "@/components/layout/Header/Header";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
+import Breadcrumbs from "@/components/layout/Breadcrumbs/Breadcrumbs";
+import css from "@/components/layout/Main-layout/Main-layout.module.css";
 import type { ReactNode } from "react";
 
 type MainLayoutProps = {

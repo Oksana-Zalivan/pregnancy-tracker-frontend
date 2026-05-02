@@ -3,23 +3,15 @@ export async function POST(req) {
     const body = await req.json();
 
     const response = await fetch(
-<<<<<<< HEAD
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/register`,
-=======
-      `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`,
->>>>>>> origin/main
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-<<<<<<< HEAD
         body: JSON.stringify(body),
         credentials: "include",
-=======
-        credentials: "include",
         body: JSON.stringify(body),
->>>>>>> origin/main
       }
     );
 
