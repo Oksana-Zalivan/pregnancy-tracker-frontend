@@ -2,13 +2,26 @@ export async function POST(req) {
   try {
     const body = await req.json();
 
-    const response = await fetch("http://localhost:3001/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
+    const response = await fetch(
+<<<<<<< HEAD
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/register`,
+=======
+      `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`,
+>>>>>>> origin/main
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+<<<<<<< HEAD
+        body: JSON.stringify(body),
+        credentials: "include",
+=======
+        credentials: "include",
+        body: JSON.stringify(body),
+>>>>>>> origin/main
+      }
+    );
 
     const data = await response.json();
 
