@@ -39,6 +39,7 @@ export default function LoginForm() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(values),
       });
 
@@ -58,10 +59,6 @@ export default function LoginForm() {
       }
 
       toast.success("Вхід виконано успішно");
-
-      localStorage.setItem("token", data.data.token);
-      localStorage.setItem("user", JSON.stringify(data.data.user));
-      
       router.push("/");
     } catch {
       toast.error("Проблема з мережею або сервером. Спробуйте пізніше.");
