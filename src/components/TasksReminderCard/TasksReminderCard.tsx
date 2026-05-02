@@ -19,12 +19,9 @@ export default function TasksReminderCard() {
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
 
   const handleAddTask = () => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      router.push("/auth/register");
-      return;
-    }
+    const response = await fetch("/api/tasks", {
+      credentials: "include",
+    });
 
     setIsAddTaskModalOpen(true);
   };
