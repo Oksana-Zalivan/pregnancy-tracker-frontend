@@ -6,6 +6,8 @@ import css from "./AuthBar.module.css";
 export default function AuthBar() {
     return (
         <div className={css.authBarMenu}>
+            
+        <div className="divider" />
             <Link href="/auth/register" className={css.authBarButtonPink}>
                 Зареєструватися
             </Link>
