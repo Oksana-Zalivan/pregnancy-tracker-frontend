@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL!;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
 export async function POST(req: NextRequest) {
   const cookieHeader = req.headers.get('cookie') ?? '';
