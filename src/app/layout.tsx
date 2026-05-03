@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Comfortaa, Lato } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
-import  SideBar from "../components/layout/SideBar/sidebar";
+import  SideBar from "../components/layout/Sidebar/Sidebar";
 import Breadcrumbs from "../components/layout/Breadcrumbs/breadcrumbs";
 
 const comfortaa = Comfortaa({
