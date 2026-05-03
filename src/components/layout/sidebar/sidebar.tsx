@@ -1,9 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
+
 import { navigationItems } from "@/lib/constants/navigation";
+import { UserBar } from "@/auth/UserBar";
+import { AuthBar } from "@/auth/AuthBar";
+import  ConfirmationModal  from "../../shared/ConfirmationModal/ConfirmationModal";
+
 import css from "./Sidebar.module.css";
 
 type SidebarProps = {
@@ -16,8 +22,24 @@ export default function Sidebar({
   onCloseMobileMenu,
 }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
-  const isAuthenticated = false;
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    if (typeof window !== "undefined") {
+      return Boolean(localStorage.getItem("token"));
+    }
+    return false;
+  });
+
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+    setIsLogoutModalOpen(false);
+    onCloseMobileMenu();
+    router.push("/auth/login");
+  };
 
   return (
     <>
@@ -31,17 +53,17 @@ export default function Sidebar({
       >
         <div className={css.sidebarHeader}>
           <p className={css.sidebarTitle}>Menu</p>
-
           <button
             type="button"
             className={css.closeButton}
             onClick={onCloseMobileMenu}
+            aria-label="Close menu"
           >
             ✕
           </button>
         </div>
 
-        <nav aria-label="Main navigation">
+        <nav aria-label="Main navigation" className={css.nav}>
           <ul className={css.navList}>
             {navigationItems.map((item) => {
               const targetHref = isAuthenticated ? item.href : "/auth/login";
@@ -62,7 +84,35 @@ export default function Sidebar({
             })}
           </ul>
         </nav>
+
+        <div className={css.sidebarFooter}>
+          {isAuthenticated ? (
+            <div className={css.authSection}>
+              <UserBar />
+              <button
+                type="button"
+                onClick={() => setIsLogoutModalOpen(true)}
+                className={css.logoutBtn}
+              >
+                Вихід
+              </button>
+            </div>
+          ) : (
+            <AuthBar />
+          )}
+        </div>
       </aside>
+
+      {isLogoutModalOpen && (
+        <ConfirmationModal
+    isOpen={isLogoutModalOpen}
+    title="Ви впевнені, що хочете вийти?"
+    confirmButtonText="Вийти"
+    cancelButtonText="Скасувати"
+    onConfirm={handleLogout}
+    onCancel={() => setIsLogoutModalOpen(false)}
+  />
+      )}
     </>
   );
 }
