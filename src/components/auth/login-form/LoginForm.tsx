@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
-
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/authStore";
 import styles from "./LoginForm.module.css";
 
 type LoginValues = {
@@ -31,6 +31,7 @@ const loginSchema = Yup.object({
 
 export default function LoginForm() {
   const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
 
   const handleSubmit = async (values: LoginValues) => {
     try {
@@ -46,18 +47,24 @@ export default function LoginForm() {
       const data = await response.json();
 
       if (!response.ok) {
-        let message = "Не вдалося увійти";
-
-        if (response.status === 401) {
-          message = "Невірний email або пароль";
-        } else if (response.status === 400) {
-          message = data.message || "Невірні дані";
-        }
-
-        toast.error(message);
+        toast.error(data.message || "Не вдалося увійти");
         return;
       }
 
+      const currentUserResponse = await fetch("/api/users/current", {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store",
+      });
+
+      if (!currentUserResponse.ok) {
+        toast.error("Не вдалося отримати дані користувача");
+        return;
+      }
+
+      const currentUser = await currentUserResponse.json();
+
+      setUser(currentUser.data);
       toast.success("Вхід виконано успішно");
       router.push("/");
     } catch {
