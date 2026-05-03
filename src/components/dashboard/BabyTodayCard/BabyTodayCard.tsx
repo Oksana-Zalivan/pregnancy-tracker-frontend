@@ -18,7 +18,7 @@ export default function BabyTodayCard() {
         <div className={styles.textBlock}>
           <p className={styles.size}>Розмір: приблизно 12 см</p>
           <p className={styles.text}>
-            Вага: близько 45 грамів. М'язи обличчя вже працюють.
+            Вага: близько 45 грамів. М`&#39;`язи обличчя вже працюють.
           </p>
         </div>
       </div>
@@ -29,3 +29,4 @@ export default function BabyTodayCard() {
       </p>
     </section>
   );
+}

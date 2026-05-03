@@ -13,7 +13,7 @@ export default function Header({ onOpenMenu }: HeaderProps) {
             <div className={css.headerContainer}>
                 <Link href="/" className={css.headerLogo}>
                     <svg className={css.headerLogo} width={84} height={36}>
-                        <use href="/icons/logo.svg"></use>
+                        <use href="/images/sprite.svg#icon-logo"></use>
                     </svg>
                 </Link>
 
@@ -23,7 +23,9 @@ export default function Header({ onOpenMenu }: HeaderProps) {
                     className={css.menuButton}
                     onClick={onOpenMenu}
                 >
-                    ☰
+                    <svg className={css.headerMenuButton} width={32} height={32}>
+                        <use href="/images/sprite.svg#icon-menu"></use>
+                    </svg>
                 </button>
             </div>
         </header>
