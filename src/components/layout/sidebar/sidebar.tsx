@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { navigationItems } from "@/lib/constants/navigation";
-import css from "./Sidebar.module.css";
+import css from "./SideBar.module.css";
 
 type SidebarProps = {
   isMobileMenuOpen: boolean;
