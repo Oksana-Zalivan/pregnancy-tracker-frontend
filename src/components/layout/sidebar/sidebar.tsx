@@ -1,10 +1,10 @@
-s"use client";
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { navigationItems } from "@/lib/constants/navigation";
-import css from "@/components/layout/sidebar/Sidebar.module.css";
 import clsx from "clsx";
+import { navigationItems } from "@/lib/constants/navigation";
+import css from "./Sidebar.module.css";
 
 type SidebarProps = {
   isMobileMenuOpen: boolean;
