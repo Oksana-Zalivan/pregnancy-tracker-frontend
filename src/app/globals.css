@@ -3,6 +3,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --z-header: 100;
+  --z-sidebar: 200;
+  --z-backdrop: 900;
+  --z-modal: 1000;
+  --z-loader: 1100;
 }
 
 @media (prefers-color-scheme: dark) {

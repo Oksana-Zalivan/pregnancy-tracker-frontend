@@ -1,9 +1,9 @@
-import GreetingBlock from "@/components/dashboard/greeting-block/GreetingBlock";
-import StatusBlock from "@/components/dashboard/status-block/StatusBlock";
-import BabyTodayCard from "@/components/dashboard/baby-today-card/BabyTodayCard";
-import MomTipCard from "@/components/dashboard/mom-trip-card/MomTipCard";
-import TasksReminderCard from "@/components/dashboard/tasks-reminder-card/TasksReminderCard";
-import FeelingCheckCard from "@/components/dashboard/feeling-check-card/FeelingCheckCard";
+import GreetingBlock from "@/components/dashboard/GreetingBlock/GreetingBlock";
+import StatusBlock from "@/components/dashboard/StatuBlock/StatusBlock";
+import BabyTodayCard from "@/components/dashboard/BabyTodayCard/BabyTodayCard";
+import MomTipCard from "@/components/dashboard/MomTipCard/MomTipCard";
+import TasksReminderCard from "@/components/dashboard/TasksReminderCard/TasksReminderCard";
+import FeelingCheckCard from "@/components/dashboard/FeelingCheckCard/FeelingCheckCard";
 import styles from "./DashboardPage.module.css";
 
 export default function DashboardPage() {

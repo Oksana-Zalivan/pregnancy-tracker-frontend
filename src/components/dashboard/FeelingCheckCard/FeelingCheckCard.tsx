@@ -7,10 +7,9 @@ import styles from "./FeelingCheckCard.module.css";
 import AddDiaryEntryModal from "@/components/diary/AddDiaryEntryModal/AddDiaryEntryModal";
 import AddDiaryEntryForm from "@/components/diary/AddDiaryEntryForm/AddDiaryEntryForm";
 
-
 export default function FeelingCheckCard() {
   const router = useRouter();
-   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
     const token = localStorage.getItem("token");
@@ -20,7 +19,7 @@ export default function FeelingCheckCard() {
       return;
     }
 
-      setIsOpen(true);
+    setIsOpen(true);
   };
 
   return (
@@ -33,14 +32,11 @@ export default function FeelingCheckCard() {
         </p>
       </div>
 
-      <button
-        type="button"
-        className={styles.button}
-        onClick={handleClick}
-      >
+      <button type="button" className={styles.button} onClick={handleClick}>
         Зробити запис у щоденник
       </button>
-       {isOpen && (
+
+      {isOpen && (
         <AddDiaryEntryModal onClose={() => setIsOpen(false)}>
           <AddDiaryEntryForm onClose={() => setIsOpen(false)} />
         </AddDiaryEntryModal>

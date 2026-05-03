@@ -1,0 +1,34 @@
+.diaryList {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 24px;
+}
+
+.createButton {
+  cursor: pointer;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+}
+
+.item {
+  width: 100%;
+}
+
+.placeholder {
+  margin-top: 16px;
+}
