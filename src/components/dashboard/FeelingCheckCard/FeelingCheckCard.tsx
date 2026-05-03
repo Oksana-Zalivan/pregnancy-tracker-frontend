@@ -36,7 +36,7 @@ export default function FeelingCheckCard() {
         Зробити запис у щоденник
       </button>
 
-      {isOpen && (
+      {false && isOpen && (
         <AddDiaryEntryModal onClose={() => setIsOpen(false)}>
           <AddDiaryEntryForm onClose={() => setIsOpen(false)} />
         </AddDiaryEntryModal>
