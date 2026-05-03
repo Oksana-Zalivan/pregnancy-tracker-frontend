@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
-
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/authStore";
 import styles from "./RegistrationForm.module.css";
 
 type RegisterValues = {
@@ -36,6 +36,7 @@ const registerSchema = Yup.object({
 
 export default function RegistrationForm() {
   const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
 
   const handleSubmit = async (
     values: RegisterValues,
@@ -47,28 +48,19 @@ export default function RegistrationForm() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(values),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        let message = "Не вдалося зареєструватися";
-
-        if (response.status === 409) {
-          message = "Користувач з таким email вже існує";
-        } else if (response.status === 400) {
-          message = data.message || "Невірні дані";
-        }
-
-        toast.error(message);
+        toast.error(data.message || "Не вдалося зареєструватися");
         return;
       }
 
+      setUser(data.data.user);
       toast.success("Реєстрацію успішно завершено");
-
-      localStorage.setItem("token", data.data.token);
-      localStorage.setItem("user", JSON.stringify(data.data.user));
 
       resetForm();
       router.push("/profile/edit");

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/authStore";
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -9,21 +10,21 @@ type ProtectedRouteProps = {
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const router = useRouter();
-  const [isChecking, setIsChecking] = useState(true);
+  const user = useAuthStore((state) => state.user);
+  const isAuthLoading = useAuthStore((state) => state.isAuthLoading);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
+    if (!isAuthLoading && !user) {
       router.replace("/auth/login");
-      return;
     }
+  }, [isAuthLoading, user, router]);
 
-    setIsChecking(false);
-  }, [router]);
-
-  if (isChecking) {
+  if (isAuthLoading) {
     return <p>Завантаження...</p>;
+  }
+
+  if (!user) {
+    return null;
   }
 
   return <>{children}</>;
