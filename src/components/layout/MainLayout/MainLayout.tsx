@@ -4,8 +4,8 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 
 import Header from "@/components/layout/Header/Header";
-import Sidebar from "@/components/layout/Sidebar/Sidebar";
-import Breadcrumbs from "@/components/layout/Breadcrumbs/Breadcrumbs";
+import Sidebar from "@/components/layout/SideBar/SideBar";
+import Breadcrumbs from "@/components/layout/BreadCrumbs/BreadCrumbs";
 
 import css from "./MainLayout.module.css";
 
