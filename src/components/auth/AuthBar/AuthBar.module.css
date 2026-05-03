@@ -1,0 +1,52 @@
+.authBarMenu {
+    position: relative;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    
+}
+.authBarButtonPink {
+    display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 8px;
+    border: none;
+    border-bottom: 4px solid #ffcbd3;
+    border-radius: 100px;
+    padding-block: 10px;
+    padding-inline: 24px;
+    background: #ffdae0;
+}
+.authBarButtonPink:hover,
+.authBarButtonPink:focus {
+    border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+    background: #fff;
+}
+.authBarButtonPink:active {
+    background: #b2b2b2;
+    border: none;
+}
+.authBarButtonGray {
+    display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 8px;
+    border: none;
+    border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+    border-radius: 100px;
+    padding-block: 10px;
+    padding-inline: 24px;
+    background: rgba(0, 0, 0, 0.05);
+}
+.authBarButtonGray:hover,
+.authBarButtonGray:focus {
+    border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+    background: #fff4f6;
+}
+.authBarButtonGray:active {
+    background: #ffcbd3;
+    border: none;
+}

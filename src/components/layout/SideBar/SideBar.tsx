@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { navigationItems } from "@/lib/constants/navigation";
+import AuthBar  from "@/components/auth/AuthBar/AuthBar";
 import css from "./SideBar.module.css";
 
 type SidebarProps = {
@@ -41,7 +42,7 @@ export default function Sidebar({
           </button>
         </div>
 
-        <nav aria-label="Main navigation">
+        <nav aria-label="Main navigation" className={css.wraper}>
           <ul className={css.navList}>
             {navigationItems.map((item) => {
               const targetHref = isAuthenticated ? item.href : "/auth/login";
@@ -62,6 +63,7 @@ export default function Sidebar({
             })}
           </ul>
         </nav>
+        {!isAuthenticated ? <AuthBar /> : null}
       </aside>
     </>
   );

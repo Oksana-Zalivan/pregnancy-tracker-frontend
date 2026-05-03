@@ -63,3 +63,10 @@ h5,
 h6 {
   font-family: var(--font-comfortaa);
 }
+
+.divider {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  width: 100%;
+  margin: 0 16px;
+  height: 0px;
+}
