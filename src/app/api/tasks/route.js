@@ -1,50 +1,52 @@
 import { NextResponse } from "next/server";
-import axios from "axios";
 
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001/api",
-});
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001/api";
 
-const handleError = (error) => {
-  return NextResponse.json(  
-    {
-      error: error.message,
-      response: error.response?.data,
-    },
-    {
-      status: error.response?.status || 500,
-    }
-  );
+export async function GET(request) {
+  try {
+    const cookie = request.headers.get("cookie");
+
+    const response = await fetch(`${BACKEND_URL}/tasks`, {
+      method: "GET",
+      headers: {
+        ...(cookie && { cookie }),
+      },
+      cache: "no-store",
+    });
+
+    const data = await response.json();
+
+    return NextResponse.json(data, { status: response.status });
+  } catch {
+    return NextResponse.json(
+      { message: "Помилка отримання завдань" },
+      { status: 500 }
+    );
+  }
 };
 
-export async function GET() {
+export async function POST(request) {
   try {
-    const res = await api("/tasks");
+    const cookie = request.headers.get("cookie");
+    const body = await request.json();
 
-    return NextResponse.json(res.data, {
-      status: res.status ?? 200,
+    const response = await fetch(`${BACKEND_URL}/tasks`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(cookie && { cookie }),
+      },
+      body: JSON.stringify(body),
     });
-  } catch (error) {
-    return handleError(error);
+
+    const data = await response.json();
+
+    return NextResponse.json(data, { status: response.status });
+  } catch {
+    return NextResponse.json(
+      { message: "Помилка створення завдання" },
+      { status: 500 }
+    );
   }
-}
-
-export async function POST(req) {
-  try {
-    const body = await req.json();
-    if (!body || !body?.name || !body?.date) {
-      return NextResponse.json(
-        { error: "Дані невалідні або відсутні" },
-        { status: 400 }
-      );
-    }
-
-    const res = await api.post("/tasks", body);
-
-    return NextResponse.json(res.data, {
-      status: res.status ?? 201,
-    });
-  } catch (error) {
-    return handleError(error);
-  }
-}
+};
