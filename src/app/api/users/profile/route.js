@@ -1,29 +1,34 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
-  try {
-    const userProfile = {
-      name: "Ганна",
-      email: "hanna@gmail.com",
-      avatar: "/icons/profile.svg",
-    };
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
-    return NextResponse.json(userProfile, { status: 200 });
+export async function PATCH(req) {
+  try {
+    const body = await req.json();
+    const cookie = request.headers.get("cookie");
+    
+    const response = await fetch(`${BACKEND_URL}/api/users/profile`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        ...(cookie && { cookie }),
+      },
+      body: JSON.stringify(body),
+      cache: "no-store",
+    });
+
+    const data = await response.json();
+
+    return NextResponse.json({ data: updatedProfile });
   } catch {
     return NextResponse.json(
-      { message: "Не вдалося завантажити профіль" },
-      { status: 500 },
+      {
+        message: "Не вдалося оновити дані профілю.",
+      },
+      {
+        status: 500,
+      }
     );
-  }
-}
-
-export async function POST(request) {
-  try {
-    const body = await request.json();
-    console.log("Дані отримано:", body);
-
-    return NextResponse.json({ message: "Профіль оновлено" }, { status: 200 });
-  } catch {
-    return NextResponse.json({ message: "Помилка оновлення" }, { status: 400 });
   }
 }
