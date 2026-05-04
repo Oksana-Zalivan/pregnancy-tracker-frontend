@@ -9,7 +9,7 @@ export async function PATCH(request, { params }) {
     const authorization = request.headers.get("authorization");
 
     const response = await fetch(
-      `${BACKEND_URL}/api/tasks/${taskId}/status`,
+      "${BACKEND_URL}/api/tasks/${taskId}/status",
       {
         method: "PATCH",
         headers: {
