@@ -2,16 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import toast from "react-hot-toast";
+
 import { navigationItems } from "@/lib/constants/navigation";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/lib/store/authStore";
 import UserBar from "@/components/layout/UserBar/UserBar";
 import AuthBar from "@/components/layout/AuthBar/AuthBar";
 import ConfirmationModal from "@/components/shared/ConfirmationModal/ConfirmationModal";
 
-import css from "./SideBar.module.css";
+import css from "./Sidebar.module.css";
 
 type SidebarProps = {
   isMobileMenuOpen: boolean;
@@ -76,6 +77,7 @@ export default function Sidebar({
             type="button"
             className={css.closeButton}
             onClick={onCloseMobileMenu}
+            aria-label="Закрити меню"
           >
             ✕
           </button>
@@ -91,7 +93,6 @@ export default function Sidebar({
                 <li key={item.label}>
                   <Link
                     href={targetHref}
-                    aria-current={isActive ? "page" : undefined}
                     className={clsx(css.navLink, isActive && css.activeLink)}
                     onClick={onCloseMobileMenu}
                   >

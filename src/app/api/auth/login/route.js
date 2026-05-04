@@ -18,9 +18,17 @@ export async function POST(req) {
 
     const data = await response.json();
 
-    return NextResponse.json(data, {
+    const res = new Response(JSON.stringify(data), {
       status: response.status,
     });
+
+    const setCookie = response.headers.get("set-cookie");
+
+    if (setCookie) {
+      res.headers.set("set-cookie", setCookie);
+    }
+
+    return res;
   } catch {
     return NextResponse.json(
       {
