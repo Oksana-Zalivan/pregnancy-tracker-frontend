@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Comfortaa, Lato } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import AuthProvider from "@/components/auth/AuthProvider/AuthProvider";
 import "./globals.css";
 
 const comfortaa = Comfortaa({
@@ -28,9 +29,10 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body className={`${comfortaa.variable} ${lato.variable}`}>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
         <Toaster position="top-right" />
       </body>
     </html>
   );
 }
+
