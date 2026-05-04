@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
-export async function GET() {
+export const GET = async () => {
   try {
-    // ТЗ: Публічний ендпоінт для отримання даних дашборду
+    // ТЗ: Публічний ендпоїнт для отримання даних дашборду гостя
+    // Використовуємо BACKEND_URL 
     const { data } = await axios.get(`${process.env.BACKEND_URL}/api/weeks/public/current`);
 
-    // Повертаємо дані: weekNumber, daysUntilBirth, baby, momTip
+    // Бекенд поверне: weekNumber, daysUntilBirth , babyInfo та momTip
     return NextResponse.json(data);
     
   } catch (error) {
@@ -17,4 +18,4 @@ export async function GET() {
 
     return NextResponse.json({ message }, { status });
   }
-}
+};

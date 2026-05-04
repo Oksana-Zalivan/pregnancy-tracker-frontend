@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import css from "@/components/layout/header/Header.module.css";
+import css from "@/components/layout/header/header.module.css";
 
 type HeaderProps = {
   onOpenMenu: () => void;
