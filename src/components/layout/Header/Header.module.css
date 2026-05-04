@@ -1,14 +1,15 @@
-
 .headerLogo {
   display: block;
 }
-.headerContainer{
-  
+
+.headerContainer {
+
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
 }
+
 .menuButton {
   border: none;
   background-color: transparent;
