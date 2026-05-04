@@ -1,23 +1,153 @@
 .form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 48px 20px 64px 20px;
+    padding: 0;
+    width: 295px;
+    height: 222px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
 
-};
+@media screen and (min-width: 768px) {
+    .form {
+        width: 640px;
+    }
+}
+
+@media screen and (min-width: 1158px) {
+    .form {
+        height: 238px;
+    }
+}
 
 .formGroup {
-    
-};
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 295px;
+    height: 66px;
+}
+
+@media screen and (min-width: 768px) {
+    .formGroup {
+        width: 640px;
+    }
+}
+
+@media screen and (min-width: 1158px) {
+    .formGroup {
+        height: 72px;
+    }
+}
 
 .formLabel {
-    
-};
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: #000;
+    display: block;
+    text-align: left;
+    padding-left: 0;
+}
+
+@media screen and (min-width: 1158px) {
+    .formLabel {
+        font-size: 16px;
+    }
+}
 
 .formField {
-    
-};
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: #000;
+    border: 2px solid rgba(255, 255, 255, 0);
+    border-radius: 12px;
+    padding: 8px 12px;
+    width: 295px;
+    height: 37px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+@media screen and (min-width: 768px) {
+    .formField {
+        width: 640px;
+    }
+}
+
+@media screen and (min-width: 1158px) {
+    .formField {
+        height: 40px;
+    }
+}
+
+.formField:focus {
+    outline: none;
+    border: 2px solid #FFCBD3;
+}
+
+.formField::placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    opacity: 1;
+}
+
+.formFieldError {
+    border: 2px solid #C60000;
+}
 
 .formError {
-    
-};
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 160%;
+    color: #C60000;
+    display: block;
+    text-align: left;
+    padding-left: 0;
+}
 
 .submitButton {
-    
-};
+    font-family: "Lato", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 160%;
+    color: #000;
+    border-bottom: 4px solid #FFCBD3;
+    border-radius: 100px;
+    padding: 10px 24px;
+    width: 295px;
+    height: 42px;
+    background: #FFDAE0;
+    text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    .submitButton {
+        width: 268px;
+    }
+}
+
+@media screen and (min-width: 1158px) {
+    .submitButton {
+        height: 46px;
+    }
+}
+
+.submitButton:hover, .submitButton:focus {
+    background: #FFF4F6;
+    border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+}
+
+.submitButton:active {
+    background: #FFCBD3;
+    border: none;
+}
+
+.submitButton:disabled {
+    opacity: 0.3;
+}
