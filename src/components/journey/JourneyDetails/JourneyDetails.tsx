@@ -18,6 +18,8 @@ export const JourneyDetails = ({ data, isLoading }: Props) => {
 
   if (isLoading) return <Loader />;
 
+
+  
   return (
     <div className={styles.wrapper}>
       <Tabs active={tab} onChange={setTab} />
