@@ -27,7 +27,7 @@ export async function POST(req) {
         message: "Проблема з мережею або сервером. Спробуйте пізніше.",
         error: error.message,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
