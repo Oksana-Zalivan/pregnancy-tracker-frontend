@@ -1,0 +1,36 @@
+.layout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.contentWrapper {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 16px;
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 1440px) {
+  .layout {
+    display: grid;
+    grid-template-columns: 312px 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .contentWrapper {
+    padding: 24px 64px;
+    gap: 16px;
+    min-width: 0;
+  }
+}

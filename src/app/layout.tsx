@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Comfortaa, Lato } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import AuthProvider from "@/components/auth/AuthProvider/AuthProvider";
 import "./globals.css";
 
 const comfortaa = Comfortaa({
@@ -9,7 +11,7 @@ const comfortaa = Comfortaa({
 });
 
 const lato = Lato({
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-lato",
 });
@@ -27,8 +29,10 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body className={`${comfortaa.variable} ${lato.variable}`}>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
+        <Toaster position="top-right" />
       </body>
     </html>
   );
 }
+
