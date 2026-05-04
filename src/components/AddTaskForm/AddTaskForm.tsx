@@ -1,11 +1,14 @@
 "use client";
 
+import css from "./AddTaskForm.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import type { FormikHelpers } from "formik";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Yup from "yup";
 import { useId } from "react";
 import toast from "react-hot-toast";
+import Button from "../shared/Button/Button";
+import clsx from "clsx";
 
 interface AddTaskFormProps {
   onClose: () => void;
@@ -58,7 +61,7 @@ export default function AddTaskForm({ onClose }: AddTaskFormProps) {
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error("Не вдалося створити завдання");
+      throw new Error(result.message || "Не вдалося створити завдання");
     }
 
     return result;
@@ -71,7 +74,7 @@ export default function AddTaskForm({ onClose }: AddTaskFormProps) {
       toast.success("Завдання створено");
       onClose();
     },
-    onError: (error) => {
+    onError: () => {
       toast.error("Сталась помилка, спробуйте ще раз");
     },
   });
@@ -83,36 +86,75 @@ export default function AddTaskForm({ onClose }: AddTaskFormProps) {
     try {
       await mutation.mutateAsync(values);
       resetForm();
-    } catch (err) {
-      toast.error("Сталась помилка, спробуйте ще раз");
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <>
-      <Formik<FormValues>
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <Form>
-          <div>
-            <label htmlFor={`${fieldId}-name`}>Назва завдання</label>
-            <Field id={`${fieldId}-name`} name="name" type="text" />
-            <ErrorMessage component="span" name="name" />
+    <Formik<FormValues>
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={validationSchema}
+    >
+      {({ errors, touched }) => (
+        <Form className={css.form}>
+          <div className={css.formGroup}>
+            <label className={css.formLabel} htmlFor={`${fieldId}-name`}>
+              Назва завдання
+            </label>
+
+            <Field
+              className={clsx(
+                css.formField,
+                errors.name && touched.name && css.formFieldError
+              )}
+              id={`${fieldId}-name`}
+              name="name"
+              type="text"
+              placeholder="Прийняти вітаміни"
+            />
+
+            <ErrorMessage
+              className={css.formError}
+              component="span"
+              name="name"
+            />
           </div>
-          <div>
-            <label htmlFor={`${fieldId}-date`}>Дата</label>
-            <Field id={`${fieldId}-date`} name="date" type="date" min={today} />
-            <ErrorMessage component="span" name="date" />
+
+          <div className={css.formGroup}>
+            <label className={css.formLabel} htmlFor={`${fieldId}-date`}>
+              Дата
+            </label>
+
+            <Field
+              className={clsx(
+                css.formField,
+                errors.date && touched.date && css.formFieldError
+              )}
+              id={`${fieldId}-date`}
+              name="date"
+              type="date"
+              min={today}
+            />
+
+            <ErrorMessage
+              className={css.formError}
+              component="span"
+              name="date"
+            />
           </div>
-          <button type="submit" disabled={mutation.isPending}>
-            {mutation.isPending ? "Збереження..." : "Зберегти"}
-          </button>
+
+          <Button
+            className={css.submitButton}
+            type="submit"
+            disabled={mutation.isPending}
+            isLoading={mutation.isPending}
+          >
+            Зберегти
+          </Button>
         </Form>
-      </Formik>
-    </>
+      )}
+    </Formik>
   );
 }
