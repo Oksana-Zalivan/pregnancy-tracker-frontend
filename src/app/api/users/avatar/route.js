@@ -1,25 +1,26 @@
 import { NextResponse } from "next/server";
-import { updateUserAvatar } from "@/lib/mock-user-store";
+
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001/api";
 
 export async function PATCH(req) {
   try {
     const formData = await req.formData();
-    const avatar = formData.get("avatar");
+    const cookie = req.headers.get("cookie");
 
-    if (!(avatar instanceof File)) {
-      return NextResponse.json(
-        {
-          message: "Оберіть файл зображення.",
-        },
-        {
-          status: 400,
-        }
-      );
-    }
+    const response = await fetch(`${BACKEND_URL}/users/avatar`, {
+    method: "PATCH",
+    headers: {
+      ...(cookie && { cookie }),
+    },
+    body: formData,
+  });
 
-    const updatedProfile = await updateUserAvatar(avatar);
+    const data = await response.json();
 
-    return NextResponse.json({ data: updatedProfile });
+    return NextResponse.json(data, {
+      status: response.status,
+    });
   } catch {
     return NextResponse.json(
       {

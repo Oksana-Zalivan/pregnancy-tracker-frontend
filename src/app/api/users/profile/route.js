@@ -8,7 +8,7 @@ export async function PATCH(req) {
     const body = await req.json();
     const cookie = request.headers.get("cookie");
     
-    const response = await fetch(`${BACKEND_URL}/api/users/profile`, {
+    const response = await fetch(`${BACKEND_URL}/users/profile`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

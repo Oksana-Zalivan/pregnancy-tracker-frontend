@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRef, useState, type ChangeEvent } from "react";
 import toast from "react-hot-toast";
-import type { UserProfile } from "@/lib/types/profile";
+import type { UserProfile } from "@/types/user-profile";
 import styles from "./ProfileAvatar.module.css";
 
 type ProfileAvatarProps = {
@@ -21,9 +21,7 @@ export default function ProfileAvatar({
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
-    if (!file) {
-      return;
-    }
+    if (!file) return;
 
     if (!file.type.startsWith("image/")) {
       toast.error("Оберіть файл зображення.");
@@ -38,7 +36,7 @@ export default function ProfileAvatar({
       setIsUploading(true);
 
       const response = await fetch("/api/users/avatar", {
-        method: "POST",
+        method: "PATCH",
         body: formData,
       });
 
@@ -49,7 +47,7 @@ export default function ProfileAvatar({
         return;
       }
 
-      onProfileUpdate(data.profile);
+      onProfileUpdate(data.data);
       toast.success("Фото профілю оновлено.");
     } catch {
       toast.error("Проблема з мережею або сервером. Спробуйте пізніше.");

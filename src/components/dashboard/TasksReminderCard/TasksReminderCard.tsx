@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Button from "@/components/shared/Button/Button";
-import { Loader } from "@/components/shared/loader/Loader";
+import { Loader } from "@/components/shared/Loader/Loader";
+import AddTaskModal from "@/components/AddTaskModal/AddTaskModal";
+import AddTaskForm from "@/components/AddTaskForm/AddTaskForm";
 import styles from "./TasksReminderCard.module.css";
 
 type Task = {
@@ -23,35 +25,41 @@ export default function TasksReminderCard() {
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const fetchTasks = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await fetch("/api/tasks", {
+        credentials: "include",
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error("Не вдалося завантажити завдання");
+      }
+
+      const data: TasksResponse | Task[] = await response.json();
+      setTasks(Array.isArray(data) ? data : data.data ?? []);
+    } catch (error) {
+      console.error("Помилка завантаження завдань", error);
+      toast.error("Не вдалося завантажити завдання");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
   const handleAddTask = () => {
     setIsAddTaskModalOpen(true);
   };
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        setIsLoading(true);
-
-        const response = await fetch("/api/tasks", {
-          credentials: "include",
-        });
-
-        if (!response.ok) {
-          throw new Error("Не вдалося завантажити завдання");
-        }
-
-        const data: TasksResponse = await response.json();
-        setTasks(data.data);
-      } catch (error) {
-        console.error("Помилка завантаження завдань", error);
-        toast.error("Не вдалося завантажити завдання");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
+  const handleCloseTaskModal = () => {
+    setIsAddTaskModalOpen(false);
     fetchTasks();
-  }, []);
+  };
 
   const handleToggleTask = async (id: string) => {
     const task = tasks.find((t) => t._id === id);
@@ -61,7 +69,7 @@ export default function TasksReminderCard() {
     const prevTasks = tasks;
 
     setTasks((currentTasks) =>
-      currentTasks.map((t) => (t._id === id ? { ...t, isDone: newStatus } : t)),
+      currentTasks.map((t) => (t._id === id ? { ...t, isDone: newStatus } : t))
     );
 
     try {
@@ -91,7 +99,7 @@ export default function TasksReminderCard() {
   };
 
   const sortedTasks = [...tasks].sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   );
 
   const today = new Date();
@@ -104,18 +112,16 @@ export default function TasksReminderCard() {
   nextWeek.setDate(today.getDate() + 7);
 
   const todayTasks = sortedTasks.filter(
-    (task) => normalizeDate(task.date).getTime() === today.getTime(),
+    (task) => normalizeDate(task.date).getTime() === today.getTime()
   );
 
   const weekTasks = sortedTasks.filter((task) => {
     const taskDate = normalizeDate(task.date);
-
     return taskDate >= tomorrow && taskDate <= nextWeek;
   });
 
   const noGroupTasks = sortedTasks.filter((task) => {
     const taskDate = normalizeDate(task.date);
-
     return taskDate > nextWeek || taskDate < today;
   });
 
@@ -221,9 +227,9 @@ export default function TasksReminderCard() {
       )}
 
       {isAddTaskModalOpen && (
-        <p className={styles.modalPlaceholder}>
-          Модальне вікно додавання завдання буде підключено окремо.
-        </p>
+        <AddTaskModal onClose={handleCloseTaskModal}>
+          <AddTaskForm onClose={handleCloseTaskModal} />
+        </AddTaskModal>
       )}
     </div>
   );
