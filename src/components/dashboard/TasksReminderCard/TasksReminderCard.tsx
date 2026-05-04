@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Button from "@/components/shared/Button/Button";
+import { Loader } from "@/components/shared/Loader/Loader";
 import styles from "./TasksReminderCard.module.css";
 
 type Task = {
@@ -13,46 +13,35 @@ type Task = {
   isDone: boolean;
 };
 
+type TasksResponse = {
+  message: string;
+  data: Task[];
+};
+
 export default function TasksReminderCard() {
-  const router = useRouter();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleAddTask = () => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      router.push("/auth/register");
-      return;
-    }
-
     setIsAddTaskModalOpen(true);
   };
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        setTasks([]);
-        return;
-      }
       try {
         setIsLoading(true);
 
         const response = await fetch("/api/tasks", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          credentials: "include",
         });
 
         if (!response.ok) {
           throw new Error("Не вдалося завантажити завдання");
         }
 
-        const data: Task[] = await response.json();
-        setTasks(data);
+        const data: TasksResponse = await response.json();
+        setTasks(data.data);
       } catch (error) {
         console.error("Помилка завантаження завдань", error);
         toast.error("Не вдалося завантажити завдання");
@@ -68,13 +57,6 @@ export default function TasksReminderCard() {
     const task = tasks.find((t) => t._id === id);
     if (!task) return;
 
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      router.push("/auth/register");
-      return;
-    }
-
     const newStatus = !task.isDone;
     const prevTasks = tasks;
 
@@ -87,8 +69,8 @@ export default function TasksReminderCard() {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
+        credentials: "include",
         body: JSON.stringify({ isDone: newStatus }),
       });
 
@@ -158,13 +140,9 @@ export default function TasksReminderCard() {
             }
           >
             {task.isDone && (
-              <Image
-                src="/icons/check.svg"
-                alt="Виконано"
-                width={16}
-                height={16}
-                className={styles.checkboxIcon}
-              />
+              <svg className={styles.checkboxIcon} width="16" height="16">
+                <use href="/icons/sprite.svg#icon-check" />
+              </svg>
             )}
           </span>
 
@@ -187,23 +165,17 @@ export default function TasksReminderCard() {
       <div className={styles.tasksHeader}>
         <h2 className={styles.tasksTitle}>Важливі завдання</h2>
 
-        <button
+        <Button
           type="button"
           className={styles.addTaskButton}
           onClick={handleAddTask}
         >
-          <Image
-            src="/icons/add.svg"
-            alt="Додати завдання"
-            width={24}
-            height={24}
-            className={styles.addTaskIcon}
-          />
-        </button>
+          <img src="/icons/add.svg" alt="Додати завдання" />
+        </Button>
       </div>
 
       {isLoading ? (
-        <p>Завантаження...</p>
+        <Loader size="md" />
       ) : tasks.length === 0 ? (
         <div className={styles.tasksPlaceholder}>
           <div className={styles.placeholderTextBlock}>
@@ -213,13 +185,13 @@ export default function TasksReminderCard() {
             <p className={styles.placeholderText}>Створіть мерщій завдання!</p>
           </div>
 
-          <button
+          <Button
             type="button"
             className={styles.createTaskButton}
             onClick={handleAddTask}
           >
             Створити завдання
-          </button>
+          </Button>
         </div>
       ) : (
         <>

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.100.1",
-    "axios": "^1.15.2",
+    "axios": "^1.16.0",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.20",
     "formik": "^2.4.9",
