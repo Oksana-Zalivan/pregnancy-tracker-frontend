@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./TasksReminderCard.module.css";
 
 export default function TasksReminderCard() {

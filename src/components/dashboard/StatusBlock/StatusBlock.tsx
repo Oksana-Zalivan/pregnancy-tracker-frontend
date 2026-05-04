@@ -2,35 +2,40 @@
 import { useState, useEffect } from "react";
 import styles from "./StatusBlock.module.css";
 
+type StatusData = {
+  weekNumber: number;
+  daysUntilBirth: number;
+};
+
 export default function StatusBlock() {
-  const [data, setData] = useState<{
-    weekNumber: number;
-    daysUntilBirth: number;
-  } | null>(null);
+  const [data, setData] = useState<StatusData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchStatus = async () => {
       try {
-        const response = await fetch("/api/weeks/private/current");
+        const response = await fetch("/api/weeks/private/current", {
+          method: "GET",
+          credentials: "include",
+          cache: "no-store",
+        });
 
-        // Если ответ не успешный
-        if (response.status !== 200) {
-          throw new Error("Не вдалося завантажити дані");
-        }
-
-        // Превращаем ответ в JavaScript-объект
         const json = await response.json();
 
-        setData(json);
+        if (!response.ok) {
+          throw new Error(json.message || "Не вдалося завантажити дані");
+        }
+
+        setData(json.data ?? json);
       } catch {
         setError("Не вдалося завантажити дані");
       } finally {
         setLoading(false);
       }
     };
-    fetchData();
+
+    fetchStatus();
   }, []);
 
   if (loading) {
@@ -48,12 +53,12 @@ export default function StatusBlock() {
     );
   }
 
-  // Если произошла ошибка — показываем сообщение об ошибке
+
   if (error) {
     return (
-      <div className={styles.container}>
+      <section className={styles.container}>
         <p className={styles.error}>{error}</p>
-      </div>
+      </section>
     );
   }
 

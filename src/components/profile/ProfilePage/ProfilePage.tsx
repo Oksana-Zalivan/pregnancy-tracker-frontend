@@ -1,12 +1,21 @@
 "use client";
 
-import ProfileAvatar from "@/components/profile/ProfileAvatar";
-import ProfileEditForm from "@/components/profile/ProfileEditForm";
+import { useState } from "react";
+import ProfileAvatar from "@/components/profile/ProfileAvatar/ProfileAvatar";
+import ProfileEditForm from "@/components/profile/ProfileEditForm/ProfileEditForm";
 import { useCurrentUserProfile } from "@/hooks/useCurrentUserProfile";
-import styles from "@/components/profile/ProfilePage.module.css";
+import styles from "@/components/profile/ProfilePage/ProfilePage.module.css";
+import type { UserProfile } from "@/types/user-profile";
 
 export default function ProfilePage() {
   const { profile, isLoading } = useCurrentUserProfile();
+  const [localProfile, setLocalProfile] = useState<UserProfile | null>(null);
+
+  const currentProfile = localProfile ?? profile;
+
+  const handleProfileUpdate = (updatedProfile: UserProfile) => {
+    setLocalProfile(updatedProfile);
+  };
 
   return (
     <section className={styles.page}>
@@ -22,8 +31,11 @@ export default function ProfilePage() {
           <div className={styles.loader}>Завантажуємо дані профілю...</div>
         ) : (
           <>
-            <ProfileAvatar profile={profile} />
-            <ProfileEditForm profile={profile} />
+            <ProfileAvatar
+              profile={currentProfile}
+              onProfileUpdate={handleProfileUpdate}
+            />
+            <ProfileEditForm profile={currentProfile} />
           </>
         )}
       </div>
