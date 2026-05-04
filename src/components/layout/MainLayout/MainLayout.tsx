@@ -3,9 +3,9 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 
-import Header from "@/components/layout/Header/Header";
-import Sidebar from "@/components/layout/SideBar/SideBar";
-import Breadcrumbs from "@/components/layout/BreadCrumbs/BreadCrumbs";
+import Header from "@/components/layout/header/header";
+import Sidebar from "@/components/layout/sidebar/sidebar";
+import Breadcrumbs from "@/components/layout/breadcrumbs/breadcrumbs";
 
 import css from "./MainLayout.module.css";
 
