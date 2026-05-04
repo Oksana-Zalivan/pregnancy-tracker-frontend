@@ -1,34 +1,50 @@
+import { NextResponse } from "next/server";
+
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3001";
 
 export async function PATCH(request, { params }) {
-  const { id } = await params;
-  const body = await request.json();
-  const authorization = request.headers.get("authorization");
+  try {
+    const { id } = await params;
+    const body = await request.json();
+    const cookie = request.headers.get("cookie");
 
-  const response = await fetch(`${BACKEND_URL}/api/diaries/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      ...(authorization && { authorization }),
-    },
-    body: JSON.stringify(body),
-  });
+    const response = await fetch(`${BACKEND_URL}/diaries/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        ...(cookie && { cookie }),
+      },
+      body: JSON.stringify(body),
+    });
 
-  const data = await response.json();
-  return Response.json(data, { status: response.status });
+    const data = await response.json();
+    return NextResponse.json(data, { status: response.status });
+  } catch {
+    return NextResponse.json(
+      { message: "Не вдалося оновити запис щоденника" },
+      { status: 500 }
+    );
+  }
 }
 
 export async function DELETE(request, { params }) {
-  const { id } = await params;
-  const authorization = request.headers.get("authorization");
+  try {
+    const { id } = await params;
+    const cookie = request.headers.get("cookie");
 
-  const response = await fetch(`${BACKEND_URL}/api/diaries/${id}`, {
-    method: "DELETE",
-    headers: {
-      ...(authorization && { authorization }),
-    },
-  });
+    const response = await fetch(`${BACKEND_URL}/diaries/${id}`, {
+      method: "DELETE",
+      headers: {
+        ...(cookie && { cookie }),
+      },
+    });
 
-  const data = await response.json();
-  return Response.json(data, { status: response.status });
+    const data = await response.json();
+    return NextResponse.json(data, { status: response.status });
+  } catch {
+    return NextResponse.json(
+      { message: "Не вдалося видалити запис щоденника" },
+      { status: 500 }
+    );
+  }
 }

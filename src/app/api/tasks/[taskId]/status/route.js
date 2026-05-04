@@ -5,9 +5,9 @@ const BACKEND_URL =
 
 export async function PATCH(request, { params }) {
   try {
-    const { taskId } = await params;
-    const cookie = request.headers.get("cookie");
+    const { taskId } = params;
     const body = await request.json();
+    const cookie = request.headers.get("cookie");
 
     const response = await fetch(`${BACKEND_URL}/tasks/${taskId}/status`, {
       method: "PATCH",
@@ -23,7 +23,7 @@ export async function PATCH(request, { params }) {
     return NextResponse.json(data, { status: response.status });
   } catch {
     return NextResponse.json(
-      { message: "Помилка оновлення статусу завдання" },
+      { message: "Не вдалося оновити статус завдання" },
       { status: 500 }
     );
   }

@@ -2,7 +2,6 @@
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import toast from "react-hot-toast";
 import styles from "./AddDiaryEntryForm.module.css";
 
@@ -36,13 +35,28 @@ export default function AddDiaryEntryForm({
 }) {
   const handleSubmit = async (
     values: FormValues,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+    { setSubmitting }: { setSubmitting: (v: boolean) => void }
   ) => {
     try {
-      await axios.post("/api/diaries", values);
+      const response = await fetch("/api/diaries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        toast.error(data.message || "Не вдалося створити запис");
+        return;
+      }
+
       toast.success("Запис створено");
       onClose();
-    } catch (error) {
+    } catch {
       toast.error("Не вдалося створити запис");
     } finally {
       setSubmitting(false);
@@ -76,7 +90,6 @@ export default function AddDiaryEntryForm({
               <label key={emotion}>
                 <input
                   type="checkbox"
-                  value={emotion}
                   checked={values.emotions.includes(emotion)}
                   onChange={(e) => {
                     if (e.target.checked) {
@@ -111,8 +124,12 @@ export default function AddDiaryEntryForm({
             className={styles.error}
           />
 
-          <button type="submit" disabled={isSubmitting} className={styles.button}>
-            Зберегти
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={styles.button}
+          >
+            {isSubmitting ? "Збереження..." : "Зберегти"}
           </button>
         </Form>
       )}
