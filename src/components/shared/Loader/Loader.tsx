@@ -17,6 +17,7 @@ export const Loader = ({ size = 'md', fullScreen = false }: LoaderProps) => {
       )}
     >
       
+      
       <div className={clsx(styles.spinner, styles[size])} />
     </div>
   );
