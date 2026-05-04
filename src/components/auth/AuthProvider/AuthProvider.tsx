@@ -1,41 +1,26 @@
-"use client";
+import { create } from "zustand";
 
-import { useEffect, type ReactNode } from "react";
-import { useAuthStore } from "@/store/authStore";
-
-type Props = {
-  children: ReactNode;
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  gender?: "boy" | "girl" | null;
+  dueDate?: string | null;
+  avatar?: string;
 };
 
-export default function AuthProvider({ children }: Props) {
-  const setUser = useAuthStore((state) => state.setUser);
-  const setAuthLoading = useAuthStore((state) => state.setAuthLoading);
+type AuthState = {
+  user: User | null;
+  isAuthLoading: boolean;
+  setUser: (user: User | null) => void;
+  setAuthLoading: (value: boolean) => void;
+  clearUser: () => void;
+};
 
-  useEffect(() => {
-    const getCurrentUser = async () => {
-      try {
-        const response = await fetch("/api/users/current", {
-          method: "GET",
-          credentials: "include",
-          cache: "no-store",
-        });
-
-        if (!response.ok) {
-          setUser(null);
-          return;
-        }
-
-        const result = await response.json();
-        setUser(result.data ?? null);
-      } catch {
-        setUser(null);
-      } finally {
-        setAuthLoading(false);
-      }
-    };
-
-    getCurrentUser();
-  }, [setUser, setAuthLoading]);
-
-  return <>{children}</>;
-}
+export const useAuthStore = create<AuthState>((set) => ({
+  user: null,
+  isAuthLoading: true,
+  setUser: (user) => set({ user }),
+  setAuthLoading: (value) => set({ isAuthLoading: value }),
+  clearUser: () => set({ user: null }),
+}));
