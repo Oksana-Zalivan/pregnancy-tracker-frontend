@@ -20,7 +20,7 @@ export async function GET(request) {
     return NextResponse.json(data, { status: response.status });
   } catch {
     return NextResponse.json(
-      { message: "Помилка отримання поточного користувача" },
+      { message: "Помилка отримання користувача" },
       { status: 500 }
     );
   }
