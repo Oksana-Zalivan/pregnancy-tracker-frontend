@@ -1,23 +1,65 @@
+/* ----------- MOBILE (до 767px) ----------- */
+
 .container {
   display: flex;
-  gap: 24px;
+  flex-direction: row;
+  gap: 16px;
+  width: 100%;
 }
 
 .card {
   flex: 1;
-  padding: 16px;
+  background-color: #fff4f6;
   border-radius: 32px;
-  background: #fff4f6;
+  padding: 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .label {
-  margin: 0 0 8px;
   font-size: 14px;
-  color: #6b6b6b;
+  color: #000000;
+  margin: 0;
+  font-weight: 400;
 }
 
 .value {
-  margin: 0;
-  font-size: 48px;
+  font-size: 40px;
   font-weight: 700;
+  color: #000000;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ----------- TABLET (від 768px) ----------- */
+@media (min-width: 768px) {
+  .container {
+    gap: 32px;
+  }
+}
+
+/* ----------- DESKTOP (від 1280px) ----------- */
+@media (min-width: 1280px) {
+  .label {
+    font-size: 16px;
+  }
+
+  .value {
+    font-size: 56px;
+  }
+}
+
+.valuePlaceholder {
+  font-size: 40px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.05);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.error {
+  color: #c60000;
+  font-size: 12px;
+  font-weight: 400;
 }
