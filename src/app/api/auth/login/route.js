@@ -21,11 +21,10 @@ export async function POST(req) {
     return NextResponse.json(data, {
       status: response.status,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         message: "Проблема з мережею або сервером. Спробуйте пізніше.",
-        error: error.message,
       },
       { status: 500 },
     );
