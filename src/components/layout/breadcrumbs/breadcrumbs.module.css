@@ -1,0 +1,28 @@
+.breadcrumbs {
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link {
+  color: #555555;
+}
+
+.current {
+  font-weight: 700;
+}
+
+.separator {
+  color: #999999;
+}
