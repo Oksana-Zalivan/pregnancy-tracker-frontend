@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Comfortaa, Lato } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import AuthProvider from "@/components/auth/AuthProvider/AuthProvider";
 import "./globals.css";
-import  SideBar from "../components/layout/Sidebar/Sidebar";
-import Breadcrumbs from "../components/layout/Breadcrumbs/breadcrumbs";
 
 const comfortaa = Comfortaa({
   subsets: ["latin", "cyrillic"],
@@ -30,14 +29,10 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body className={`${comfortaa.variable} ${lato.variable}`}>
-        <SideBar isMobileMenuOpen={false} onCloseMobileMenu={() => {}} />
-
-        <Breadcrumbs />
-
-        {children}
-
+        <AuthProvider>{children}</AuthProvider>
         <Toaster position="top-right" />
       </body>
     </html>
   );
 }
+

@@ -1,24 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import toast from "react-hot-toast";
 
 import { navigationItems } from "@/lib/constants/navigation";
+import { useAuthStore } from "@/lib/store/authStore";
 import UserBar from "@/components/layout/UserBar/UserBar";
 import AuthBar from "@/components/layout/AuthBar/AuthBar";
-import ConfirmationModal from "@/shared/ConfirmationModal/ConfirmationModal";
+import ConfirmationModal from "@/components/shared/ConfirmationModal/ConfirmationModal";
 
 import css from "./Sidebar.module.css";
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  avatar?: string;
-};
 
 type SidebarProps = {
   isMobileMenuOpen: boolean;
@@ -32,40 +26,15 @@ export default function Sidebar({
   const pathname = usePathname();
   const router = useRouter();
 
-  const [user, setUser] = useState<User | null>(null);
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const user = useAuthStore((state) => state.user);
+  const isAuthLoading = useAuthStore((state) => state.isAuthLoading);
+  const clearUser = useAuthStore((state) => state.clearUser);
+
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isLogoutLoading, setIsLogoutLoading] = useState(false);
 
   const isAuthenticated = Boolean(user);
 
-  useEffect(() => {
-    const getCurrentUser = async () => {
-      try {
-        const response = await fetch("/api/users/current", {
-          method: "GET",
-          credentials: "include",
-          cache: "no-store",
-        });
-
-        if (!response.ok) {
-          setUser(null);
-          return;
-        }
-
-        const result = await response.json();
-        setUser(result.data ?? null);
-      } catch {
-        setUser(null);
-      } finally {
-        setIsCheckingAuth(false);
-      }
-    };
-
-    getCurrentUser();
-  }, []);
-
-  
   const handleLogout = async () => {
     try {
       setIsLogoutLoading(true);
@@ -79,7 +48,7 @@ export default function Sidebar({
         throw new Error("Не вдалося вийти з акаунту");
       }
 
-      setUser(null);
+      clearUser();
       setIsLogoutModalOpen(false);
       onCloseMobileMenu();
       router.push("/");
@@ -98,20 +67,23 @@ export default function Sidebar({
         onClick={onCloseMobileMenu}
       />
 
-      <aside className={clsx(css.sidebar, isMobileMenuOpen && css.sidebarMobileOpen)}>
+      <aside
+        className={clsx(css.sidebar, isMobileMenuOpen && css.sidebarMobileOpen)}
+      >
         <div className={css.sidebarHeader}>
           <p className={css.sidebarTitle}>Меню</p>
-          <button 
-            type="button" 
-            className={css.closeButton} 
+
+          <button
+            type="button"
+            className={css.closeButton}
             onClick={onCloseMobileMenu}
-            aria-label="Закрити меню" 
+            aria-label="Закрити меню"
           >
             ✕
           </button>
         </div>
 
-        <nav className={css.nav}>
+        <nav aria-label="Main navigation" className={css.nav}>
           <ul className={css.navList}>
             {navigationItems.map((item) => {
               const targetHref = isAuthenticated ? item.href : "/auth/login";
@@ -132,24 +104,19 @@ export default function Sidebar({
           </ul>
         </nav>
 
-        
         <div className={css.sidebarFooter}>
-          {isCheckingAuth ? null : isAuthenticated && user ? (
-            <UserBar 
-              user={user} 
-              onLogout={() => setIsLogoutModalOpen(true)} 
-            />
+          {isAuthLoading ? null : isAuthenticated && user ? (
+            <UserBar user={user} onLogout={() => setIsLogoutModalOpen(true)} />
           ) : (
             <AuthBar onNavigate={onCloseMobileMenu} />
           )}
         </div>
       </aside>
 
-      
       <ConfirmationModal
         isOpen={isLogoutModalOpen}
         title="Ви впевнені, що хочете вийти?"
-        confirmButtonText="Вийти"
+        confirmButtonText={isLogoutLoading ? "Вихід..." : "Вийти"}
         cancelButtonText="Скасувати"
         onConfirm={handleLogout}
         onCancel={() => setIsLogoutModalOpen(false)}
