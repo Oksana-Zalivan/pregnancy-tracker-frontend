@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Button from "@/components/shared/Button/Button";
-import { Loader } from "@/components/shared/Loader/Loader";
+import { Loader } from "@/components/shared/loader/Loader";
 import styles from "./TasksReminderCard.module.css";
 
 type Task = {
