@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import Container from "@/components/shared/Container/Container";
 import GreetingBlock from "@/components/dashboard/GreetingBlock/GreetingBlock";
 import DiaryList from "@/components/diary/DiaryList/DiaryList";
@@ -16,15 +17,45 @@ type DiaryEntry = {
   emotions: string[];
 };
 
-const mockEntries: DiaryEntry[] = [];
+type DiaryEntriesResponse = {
+  message: string;
+  data: DiaryEntry[];
+};
 
 export default function DiaryPage() {
   const router = useRouter();
 
-  const [entries, setEntries] = useState<DiaryEntry[]>(mockEntries);
-  const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(
-    mockEntries[0] ?? null,
-  );
+  const [entries, setEntries] = useState<DiaryEntry[]>([]);
+  const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchEntries = async () => {
+      try {
+        setIsLoading(true);
+
+        const response = await fetch("/api/diary", {
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          throw new Error("Не вдалося завантажити записи щоденника");
+        }
+
+        const result: DiaryEntriesResponse = await response.json();
+
+        setEntries(result.data);
+        setSelectedEntry(result.data[0] ?? null);
+      } catch (error) {
+        console.error("Помилка завантаження записів щоденника", error);
+        toast.error("Не вдалося завантажити записи щоденника");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchEntries();
+  }, []);
 
   const handleSelectEntry = (entry: DiaryEntry) => {
     if (window.innerWidth < 1440) {
@@ -36,21 +67,45 @@ export default function DiaryPage() {
   };
 
   const handleCreateEntry = () => {
-    console.log("create entry");
+    router.push("/diary/create");
   };
 
   const handleEditEntry = (entry: DiaryEntry) => {
-    console.log("edit entry", entry);
+    router.push(`/diary/${entry._id}/edit`);
   };
 
-  const handleDeleteEntry = (id: string) => {
-    setEntries((currentEntries) =>
-      currentEntries.filter((entry) => entry._id !== id),
-    );
+  const handleDeleteEntry = async (id: string) => {
+    try {
+      const response = await fetch(`/api/diary/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
 
-    setSelectedEntry((currentEntry) =>
-      currentEntry?._id === id ? null : currentEntry,
-    );
+      if (!response.ok) {
+        throw new Error("Не вдалося видалити запис");
+      }
+
+      setEntries((currentEntries) => {
+        const updatedEntries = currentEntries.filter(
+          (entry) => entry._id !== id,
+        );
+
+        setSelectedEntry((currentEntry) => {
+          if (currentEntry?._id !== id) {
+            return currentEntry;
+          }
+
+          return updatedEntries[0] ?? null;
+        });
+
+        return updatedEntries;
+      });
+
+      toast.success("Запис успішно видалено");
+    } catch (error) {
+      console.error("Помилка видалення запису", error);
+      toast.error("Не вдалося видалити запис");
+    }
   };
 
   return (
@@ -58,20 +113,26 @@ export default function DiaryPage() {
       <main className={styles.diaryPage}>
         <GreetingBlock />
 
-        <DiaryList
-          entries={entries}
-          selectedEntryId={selectedEntry?._id}
-          onSelectEntry={handleSelectEntry}
-          onCreateEntry={handleCreateEntry}
-        />
+        {isLoading ? (
+          <p className={styles.loading}>Завантаження...</p>
+        ) : (
+          <>
+            <DiaryList
+              entries={entries}
+              selectedEntryId={selectedEntry?._id}
+              onSelectEntry={handleSelectEntry}
+              onCreateEntry={handleCreateEntry}
+            />
 
-        <div className={styles.desktopOnly}>
-          <DiaryEntryDetails
-            entry={selectedEntry}
-            onEdit={handleEditEntry}
-            onDelete={handleDeleteEntry}
-          />
-        </div>
+            <div className={styles.desktopOnly}>
+              <DiaryEntryDetails
+                entry={selectedEntry}
+                onEdit={handleEditEntry}
+                onDelete={handleDeleteEntry}
+              />
+            </div>
+          </>
+        )}
       </main>
     </Container>
   );
