@@ -2,6 +2,7 @@
 
 import { useEffect, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/authStore";
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -9,18 +10,23 @@ type ProtectedRouteProps = {
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const router = useRouter();
-  const hasToken =
-    typeof window !== "undefined" && Boolean(localStorage.getItem("token"));
+  const user = useAuthStore((state) => state.user);
+  const isAuthLoading = useAuthStore((state) => state.isAuthLoading);
 
   useEffect(() => {
-    if (!hasToken) {
+    if (!isAuthLoading && !user) {
       router.replace("/auth/login");
     }
-  }, [hasToken, router]);
+  }, [isAuthLoading, user, router]);
 
-  if (!hasToken) {
+  if (isAuthLoading) {
     return <p>Завантаження...</p>;
+  }
+
+  if (!user) {
+    return null;
   }
 
   return <>{children}</>;
 }
+
