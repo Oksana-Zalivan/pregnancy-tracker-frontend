@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import styles from "./JourneyDetails.module.css";
-import { Loader } from "@/components/shared/loader/Loader";
+import { Loader } from "@/components/shared/Loader/Loader";
 import { Tabs } from "./Tabs";
 import { BabyTab } from "./BabyTab";
 import { MomTab } from "./MomTab";

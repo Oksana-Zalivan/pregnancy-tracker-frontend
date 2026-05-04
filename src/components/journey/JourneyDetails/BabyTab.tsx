@@ -9,6 +9,7 @@ type Props = {
 export const BabyTab = ({ data }: Props) => {
   return (
     <div className={styles.babyGrid}>
+      
       <div className={styles.imageCard}>
         <Image
           src={data.image}
@@ -16,20 +17,20 @@ export const BabyTab = ({ data }: Props) => {
           width={200}
           height={200}
         />
+
         <p className={styles.sizeText}>
-          Ваш малюк зараз розміром з {data.size}
+          Ваш малюк зараз розміром з {data.analogy ?? "невідомо"}
         </p>
       </div>
 
       <div className={styles.textCard}>
-        <p>{data.description}</p>
+        <p>{data.babyDevelopment}</p>
 
-        {data.fact && (
-          <div className={styles.highlight}>
-            {data.fact}
-          </div>
-        )}
+        <div className={styles.highlight}>
+          {data.interestingFact}
+        </div>
       </div>
+
     </div>
   );
 };

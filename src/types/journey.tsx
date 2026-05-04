@@ -1,13 +1,29 @@
 export type BabyData = {
+  analogy: string | null;
+  weekNumber: number;
+  babySize: number;
+  babyWeight: number;
   image: string;
-  size: string;
-  description: string;
-  fact?: string; 
+  babyActivity: string;
+  babyDevelopment: string;
+  interestingFact: string;
+  momDailyTips: string[];
+};
+
+export type MomFeelingData = {
+  states: string[];
+  sensationDescr: string;
+};
+
+export type ComfortTip = {
+  category: string;
+  tip: string;
 };
 
 export type MomData = {
-  feelings: string;
-  tips: string[];
+  weekNumber: number;
+  feelings: MomFeelingData;
+  comfortTips: ComfortTip[];
 };
 
 export type JourneyData = {
