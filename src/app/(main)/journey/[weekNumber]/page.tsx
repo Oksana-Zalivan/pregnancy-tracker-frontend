@@ -30,11 +30,6 @@ export default function JourneyPage({ params }: PageProps) {
       {/* 3. Перемикач тижнів (горизонтальний список) */}
       <JourneyWeeksNavigation currentWeek={weekNumber} />
 
-      {/* 
-          4. Логічні блоки контенту. 
-          Оскільки JourneyDetails не існує, ми просто виводимо компоненти, 
-          які мають бути на сторінці згідно з макетом.
-      */}
       
       <section>
         {/* Картка з малюком (авокадо) */}
