@@ -1,21 +1,27 @@
 import { NextResponse } from 'next/server';
-import axios from 'axios';
 
-export const GET = async () => {
+const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3001/api";
+
+export async function GET() {
   try {
-    // ТЗ: Публічний ендпоїнт для отримання даних дашборду гостя
-    // Використовуємо BACKEND_URL 
-    const { data } = await axios.get(`${process.env.BACKEND_URL}/api/weeks/public/current`);
+    // Використовуємо fetch згідно з порадою ментора
+    const response = await fetch(`${BACKEND_URL}/weeks/public/current`, {
+      method: "GET",
+      cache: "no-store", // Забороняємо кешування для отримання актуальних даних
+    });
 
-    // Бекенд поверне: weekNumber, daysUntilBirth , babyInfo та momTip
-    return NextResponse.json(data);
+    const data = await response.json();
+
+    // Повертаємо дані разом зі статусом відповіді бекенда
+    return NextResponse.json(data, {
+      status: response.status,
+    });
     
   } catch (error) {
-    console.error('Помилка Route Handler:', error.message);
-
-    const status = error.response?.status || 500;
-    const message = error.response?.data?.message || 'Внутрішня помилка сервера на фронтенді';
-
-    return NextResponse.json({ message }, { status });
+    // Помилка має бути інформативна для користувача, без консоль логів згідно ТЗ
+    return NextResponse.json(
+      { message: "Не вдалося отримати публічні дані тижня" },
+      { status: 500 }
+    );
   }
-};
+}
