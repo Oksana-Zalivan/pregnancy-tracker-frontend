@@ -1,0 +1,67 @@
+.tabs {
+  display: flex;
+  gap: 8px;
+  background: #f5e6ea;
+  padding: 6px;
+  border-radius: 20px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.active {
+  background: #ffb6c1;
+}
+.babyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.imageCard {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.textCard {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.highlight {
+  background: #ffe4e9;
+  padding: 10px;
+  border-radius: 12px;
+  margin-top: 12px;
+}
+.momGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.right {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+}
+@media (max-width: 768px) {
+  .babyGrid,
+  .momGrid {
+    grid-template-columns: 1fr;
+  }
+}
