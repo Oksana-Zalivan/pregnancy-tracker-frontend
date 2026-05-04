@@ -16,12 +16,20 @@ export async function POST(req) {
 
     const data = await response.json();
 
-    return new Response(JSON.stringify(data), {
+    const res = new Response(JSON.stringify(data), {
       status: response.status,
       headers: {
         "Content-Type": "application/json",
       },
     });
+
+    const setCookie = response.headers.get("set-cookie");
+
+    if (setCookie) {
+      res.headers.set("set-cookie", setCookie);
+    }
+
+    return res;
   } catch {
     return new Response(
       JSON.stringify({
