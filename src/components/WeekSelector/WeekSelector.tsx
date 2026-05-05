@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import css from "./WeekSelector.module.css";
 
-interface WeekSelectorProps {
-  dueDate: string;
+type WeekSelectorProps = {
+    dueDate: string;
 }
 
 const MS_IN_DAY = 1000 * 60 * 60 * 24;
