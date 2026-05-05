@@ -1,37 +1,31 @@
+import { NextResponse } from "next/server";
+
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001/api";
+
 export async function GET(req, { params }) {
   try {
-    const { weekNumber } = await params;
+    const { weekNumber } = params;
+    const cookie = req.headers.get("cookie");
 
-    const token = req.headers.get("authorization");
-
-    const response = await fetch(
-      `${process.env.API_URL}/api/weeks/${weekNumber}/baby`,
-      {
-        headers: {
-          ...(token && { Authorization: token }),
-        },
+    const response = await fetch(`${BACKEND_URL}/weeks/${weekNumber}/baby`, {
+      headers: {
+        ...(cookie && { cookie }),
       },
-    );
+      cache: "no-store",
+    });
 
     const data = await response.json();
 
-    return new Response(JSON.stringify(data), {
-      status: response.status,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return NextResponse.json(data, { status: response.status });
   } catch {
-    return new Response(
-      JSON.stringify({
+    return NextResponse.json(
+      {
         message: "Не вдалося завантажити дані дитини",
-      }),
+      },
       {
         status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
+      }
     );
   }
 }

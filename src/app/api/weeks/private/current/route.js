@@ -1,19 +1,18 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001/api";
 
 export async function GET() {
   try {
-    const cookieStore = await cookies();
+    const cookieStore = request.headers.get("cookie");
 
-    const response = await fetch(
-      `${process.env.API_URL}/api/weeks/private/current`,
-      {
-        headers: {
-          Cookie: cookieStore.toString(),
-        },
-        cache: "no-store",
+    const response = await fetch(`${BACKEND_URL}/weeks/private/current`, {
+      headers: {
+        ...(cookie && { cookie }),
       },
-    );
+      cache: "no-store",
+    });
 
     const data = await response.json();
 
@@ -27,7 +26,7 @@ export async function GET() {
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

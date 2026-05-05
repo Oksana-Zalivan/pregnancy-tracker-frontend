@@ -6,6 +6,10 @@ import GreetingBlock from "@/components/GreetingBlock/GreetingBlock";
 import { JourneyDetails } from "@/components/journey/JourneyDetails/JourneyDetails";
 import { JourneyData } from "@/types/journey";
 import { useAuthStore } from "@/store/authStore";
+import { use } from "react";
+import GreetingBlock from "@/components/dashboard/GreetingBlock/GreetingBlock";
+import WeekSelector from "@/components/shared/WeekSelector/WeekSelector";
+import { JourneyDetails } from "@/components/journey/JourneyDetails/JourneyDetails";
 
 type Props = {
   params: Promise<{ weekNumber: string }>;
@@ -52,3 +56,16 @@ export default function JourneyPage({ params }: Props) {
 }
       
 //WeekSelector dueDate={dueDate}
+      <WeekSelector dueDate="2026-10-01" />
+      <JourneyDetails
+        data={
+          {
+            baby: {},
+            mom: {},
+          } as any
+        }
+        isLoading={false}
+      />
+    </>
+  );
+}

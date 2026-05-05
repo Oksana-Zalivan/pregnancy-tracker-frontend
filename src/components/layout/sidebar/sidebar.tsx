@@ -2,23 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
-<<<<<<< HEAD
-import { usePathname } from "next/navigation";
-import { navigationItems } from "@/lib/constants/navigation";
-import css from "@/components/layout/sidebar/sidebar.module.css";
-=======
 import { usePathname, useRouter } from "next/navigation";
->>>>>>> effde4e61e93d4e4a3e416e7a95924a4c7b81d5a
 import clsx from "clsx";
 import toast from "react-hot-toast";
 
 import { navigationItems } from "@/lib/constants/navigation";
-import { useAuthStore } from "@/lib/store/authStore";
+import { useAuthStore } from "@/store/authStore";
 import UserBar from "@/components/layout/UserBar/UserBar";
 import AuthBar from "@/components/layout/AuthBar/AuthBar";
 import ConfirmationModal from "@/components/shared/ConfirmationModal/ConfirmationModal";
 
-import css from "./sidebar.module.css";
+import css from "./Sidebar.module.css";
 
 type SidebarProps = {
   isMobileMenuOpen: boolean;
