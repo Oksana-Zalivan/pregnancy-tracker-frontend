@@ -3,7 +3,7 @@
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import styles from './OnboardingPage.module.css';
+import styles from './OnboardingForm.module.css';
 import { babySexOptions, type BabySex } from '@/types/user-profile';
 import { saveUserProfile } from '@/lib/profile-storage';
 import { defaultUserProfile } from '@/types/user-profile';

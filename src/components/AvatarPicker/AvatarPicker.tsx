@@ -1,49 +1,89 @@
 'use client';
-import { useState } from 'react';
+import Image from 'next/image';
+import { useRef, useState, type ChangeEvent } from 'react';
+import toast from 'react-hot-toast';
+import styles from './AvatarPicker.module.css';
 
-const AvatarPicker = () => {
-  const [error, setError] = useState('');
-  const [previewUrl, setPreviewUrl] = useState('');
+export default function AvatarPicker() {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState('/icons/default-avatar.svg');
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    setError('');
+
+    if (!file) return;
 
     //   Перевірка розширення файлу та розмір зображення
-    if (file) {
-      // перевірка типу файлу
-      if (!file.type.startsWith('image/')) {
-        setError('Тільки зображення');
-        return;
-      }
-      if (file.size > 5 * 1024 * 1024) {
-        setError('Максимальний дозволений розмір файлу 5Мб');
+    if (!file.type.startsWith('image/')) {
+      toast.error('Оберіть вірний формат файлу для зображення');
+      e.target.value = '';
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error(
+        'Максимальний дозволений розмір файлу 5Мб та максимальний ширина та висота 1024px',
+      );
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    const localPreview = URL.createObjectURL(file);
+    setAvatarUrl(localPreview);
+
+    try {
+      setIsUploading(true);
+      const response = await fetch('/api/users/avatar', {
+        method: 'PATCH',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        toast.error(data.message || 'Не вдалося оновити аватар.');
+        setAvatarUrl('/icons/default-avatar.svg');
         return;
       }
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setAvatarUrl(data.data.avatarUrl);
+      toast.success('Фото профілю оновлено.');
+    } catch {
+      toast.error('Проблема з мережею або сервером. Спробуйте пізніше.');
+    } finally {
+      setIsUploading(false);
+      e.target.value = '';
     }
   };
 
   return (
     <div>
-      {/* Відображаємо превю якщо зобр. існує */}
-      {previewUrl ? (
-        <Image src={previewUrl} alt="Preview" width={300} height={300} />
-      ) : (
-        <label>
-          {' '}
-          Chose photo
-          <input type="file" accept="image/*" onChange={handleFileChange} />
-        </label>
-      )}
-      {error && <p>{error}</p>}
+      <Image
+        src={avatarUrl}
+        alt={'Аватар користувача'}
+        width={132}
+        height={132}
+        className={styles.avatar}
+        unoptimized
+      />
+      <button
+        type="button"
+        className={styles.button}
+        disabled={isUploading}
+        onClick={() => inputRef.current?.click()}
+      >
+        {isUploading ? 'Завантаження...' : 'Завантажити фото'}
+      </button>
+
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        className={styles.hiddenInput}
+        onChange={handleFileChange}
+      />
     </div>
   );
-};
-
-export default AvatarPicker;
+}

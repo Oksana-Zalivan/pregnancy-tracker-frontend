@@ -37,7 +37,7 @@ export default function OnboardingPage({
           {children}
         </div>
       </section>
-      {/* Права Частина */}
+      {/* Зображення правої частини сторінки */}
       {imageSrc && (
         <div className={styles.imageWrapper}>
           <Image
