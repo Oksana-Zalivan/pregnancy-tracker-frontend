@@ -7,6 +7,7 @@ type Entry = {
   _id: string;
   title: string;
   date: string;
+  description: string;
   emotions: string[];
 };
 
@@ -20,7 +21,8 @@ export default function DiaryEntryCard({ entry, onClick, isActive }: Props) {
   const router = useRouter();
 
   const handleClick = () => {
-    const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1440;
+    const isDesktop =
+      typeof window !== "undefined" && window.innerWidth >= 1440;
     if (isDesktop) {
       onClick(entry);
     } else {

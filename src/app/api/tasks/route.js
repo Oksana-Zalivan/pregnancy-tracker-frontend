@@ -1,48 +1,52 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
-const API_URL = process.env.API_URL || "http://localhost:3001/api";
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001/api";
 
-const handleError = (error) => {
+export async function GET(request) {
+  try {
+    const cookie = request.headers.get("cookie");
+
+    const response = await fetch(`${BACKEND_URL}/tasks`, {
+      method: "GET",
+      headers: {
+        ...(cookie && { cookie }),
+      },
+      cache: "no-store",
+    });
+
+    const data = await response.json();
+
+    return NextResponse.json(data, { status: response.status });
+  } catch {
     return NextResponse.json(
-        {
-            error: error.message,
-            response: error.response?.data,
-        },
-        {
-            status: error.response?.status || 500,
-        }
+      { message: "Помилка отримання завдань" },
+      { status: 500 }
     );
+  }
 };
 
-export async function GET() {
-    try {
-        const res = await api('/tasks');
+export async function POST(request) {
+  try {
+    const cookie = request.headers.get("cookie");
+    const body = await request.json();
 
-        return NextResponse.json(res.data,
-            {
-                status: res.status ?? 200,
-            });
-    } catch (error) {
-        handleError(error);
-    }
-};
+    const response = await fetch(`${BACKEND_URL}/tasks`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(cookie && { cookie }),
+      },
+      body: JSON.stringify(body),
+    });
 
-export async function POST(req) {
-    try {
-        const body = await req.json();
-        if (!body || !body?.name || !body?.date) {
-            return NextResponse.json(
-                { error: 'Дані невалідні або відсутні' },
-                { status: 400 }
-            )
-        };
+    const data = await response.json();
 
-        const res = await api.post('/tasks', body);
-
-        return NextResponse.json(res.data, {
-            status: res.status ?? 201
-        });
-    } catch (error) {
-        handleError(error);
-    }
+    return NextResponse.json(data, { status: response.status });
+  } catch {
+    return NextResponse.json(
+      { message: "Помилка створення завдання" },
+      { status: 500 }
+    );
+  }
 };

@@ -1,49 +1,24 @@
 "use client";
 
 import { use } from "react";
-import Breadcrumbs from "@/components/layout/breadcrumbs/breadcrumbs";
-import GreetingBlock from "@/components/GreetingBlock/GreetingBlock";
-import JourneyWeeksNavigation from "./JourneyWeeksNavigation";
+import GreetingBlock from "@/components/dashboard/GreetingBlock/GreetingBlock";
+import WeekSelector from "@/components/journey/WeekSelector/WeekSelector";
+import JourneyDetails from "@/components/journey/JourneyDetails/JourneyDetails";
 
-// Імпортуємо готові блоки
-import BabyTodayCard from "@/components/dashboard/baby-today-card/BabyTodayCard";
-import MomTipCard from "@/components/dashboard/mom-trip-card/MomTipCard";
-import TasksReminderCard from "@/components/dashboard/tasks-reminder-card/TasksReminderCard";
-import FeelingCheckCard from "@/components/dashboard/feeling-check-card/FeelingCheckCard";
-
-interface PageProps {
+type Props = {
   params: Promise<{ weekNumber: string }>;
-}
+};
 
-export default function JourneyPage({ params }: PageProps) {
-  const resolvedParams = use(params);
-  const weekNumber = Number(resolvedParams.weekNumber) || 1;
+export default function JourneyPage({ params }: Props) {
+  // Розпаковуємо пропси через use() для Next.js 15
+  const { weekNumber } = use(params);
+  const currentWeek = Number(weekNumber) || 1;
 
   return (
-    <main>
-      {/* 1. Навігація верхнього рівня */}
-      <Breadcrumbs />
-      
-      {/* 2. Блок привітання (дані про ім'я тягне сам через API) */}
+    <>
       <GreetingBlock />
-
-      {/* 3. Перемикач тижнів (горизонтальний список) */}
-      <JourneyWeeksNavigation currentWeek={weekNumber} />
-
-      
-      <section>
-        {/* Картка з малюком (авокадо) */}
-        <BabyTodayCard />
-        
-        {/* Картка з порадою */}
-        <MomTipCard />
-        
-        {/* Картка з завданнями */}
-        <TasksReminderCard />
-        
-        {/* Картка перевірки самопочуття */}
-        <FeelingCheckCard />
-      </section>
-    </main>
+      <WeekSelector currentWeek={currentWeek} />
+      <JourneyDetails weekNumber={currentWeek} />
+    </>
   );
 }
