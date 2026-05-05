@@ -1,3 +1,4 @@
+ "use client"
 import css from "./UserBar.module.css";
 
 type User = {
@@ -31,6 +32,8 @@ export default function UserBar({ user, onLogout, onNavigate}: UserBarProps) {
                 </div>
 
                 <button
+                    type="button"
+                    aria-label="Вийти з аккаунта"
                     className={css.logoutLink}
                     onClick={() => {
                         onNavigate?.();
