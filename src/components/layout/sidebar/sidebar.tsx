@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
+<<<<<<< HEAD
+import { usePathname } from "next/navigation";
+import { navigationItems } from "@/lib/constants/navigation";
+import css from "@/components/layout/sidebar/sidebar.module.css";
+=======
 import { usePathname, useRouter } from "next/navigation";
+>>>>>>> effde4e61e93d4e4a3e416e7a95924a4c7b81d5a
 import clsx from "clsx";
 import toast from "react-hot-toast";
 

@@ -11,7 +11,10 @@
   "dependencies": {
     "@tanstack/react-query": "^5.100.1",
     "axios": "^1.15.2",
+<<<<<<< HEAD
+=======
     "cookie": "^1.1.1",
+>>>>>>> effde4e61e93d4e4a3e416e7a95924a4c7b81d5a
     "clsx": "^2.1.1",
     "dayjs": "^1.11.20",
     "formik": "^2.4.9",

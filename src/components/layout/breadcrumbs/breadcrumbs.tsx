@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+<<<<<<< HEAD
+import css from "@/components/layout/breadcrumbs/breadcrumbs.module.css";
+=======
 import css from "./breadcrumbs.module.css";
+>>>>>>> effde4e61e93d4e4a3e416e7a95924a4c7b81d5a
 
 const breadcrumbLabels: Record<string, string> = {
   diary: "Щоденник",
