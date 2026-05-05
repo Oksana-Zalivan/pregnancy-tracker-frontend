@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Container from "@/components/shared/Container/Container";
 import DiaryEntryDetails from "@/components/diary/DiaryEntryDetails/DiaryEntryDetails";
-import { Loader } from "@/components/shared/loader/Loader";
+import { Loader } from "@/components/shared/Loader/Loader";
 import styles from "./page.module.css";
 
 type DiaryEntry = {

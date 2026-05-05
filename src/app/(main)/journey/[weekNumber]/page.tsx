@@ -2,8 +2,8 @@
 
 import { use } from "react";
 import GreetingBlock from "@/components/dashboard/GreetingBlock/GreetingBlock";
-import WeekSelector from "@/components/journey/WeekSelector/WeekSelector";
-import JourneyDetails from "@/components/journey/JourneyDetails/JourneyDetails";
+import WeekSelector from "@/components/shared/WeekSelector/WeekSelector";
+import { JourneyDetails } from "@/components/journey/JourneyDetails/JourneyDetails";
 
 type Props = {
   params: Promise<{ weekNumber: string }>;
@@ -17,8 +17,16 @@ export default function JourneyPage({ params }: Props) {
   return (
     <>
       <GreetingBlock />
-      <WeekSelector currentWeek={currentWeek} />
-      <JourneyDetails weekNumber={currentWeek} />
+      <WeekSelector dueDate="2026-10-01" />
+      <JourneyDetails
+        data={
+          {
+            baby: {},
+            mom: {},
+          } as any
+        }
+        isLoading={false}
+      />
     </>
   );
 }

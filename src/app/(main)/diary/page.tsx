@@ -7,7 +7,7 @@ import Container from "@/components/shared/Container/Container";
 import GreetingBlock from "@/components/dashboard/GreetingBlock/GreetingBlock";
 import DiaryList from "@/components/diary/DiaryList/DiaryList";
 import DiaryEntryDetails from "@/components/diary/DiaryEntryDetails/DiaryEntryDetails";
-import { Loader } from "@/components/shared/loader/Loader";
+import { Loader } from "@/components/shared/Loader/Loader";
 import styles from "./page.module.css";
 
 type DiaryEntry = {
