@@ -1,22 +1,13 @@
 'use client';
 
-import styles from './OnboardingPage.module.css';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import toast from 'react-hot-toast';
 import * as Yup from 'yup';
-import {
-  babySexOptions,
-  type BabySex,
-  type UserProfile,
-} from '@/types/user-profile';
-import { saveUserProfile } from '@/lib/profile-storage';
+import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-
-type OnboardingFormProps = {
-  profile: Pick<UserProfile, 'babySex' | 'dueDate'>;
-};
-
-type OnboardingFormValues = Pick<UserProfile, 'babySex' | 'dueDate'>;
+import styles from './OnboardingPage.module.css';
+import { babySexOptions, type BabySex } from '@/types/user-profile';
+import { saveUserProfile } from '@/lib/profile-storage';
+import { defaultUserProfile } from '@/types/user-profile';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 // Валідація через Yup
 const onboardingSchema = Yup.object({
@@ -26,21 +17,14 @@ const onboardingSchema = Yup.object({
   dueDate: Yup.string().required('Планова дата пологів є обовʼязковою'),
 });
 
-function buildInitialValues(
-  profile: Pick<UserProfile, 'babySex' | 'dueDate'>,
-): OnboardingFormValues {
-  return {
-    babySex: profile.babySex,
-    dueDate: profile.dueDate,
-  };
-}
-
-export default function OnboardingForm({ profile }: OnboardingFormProps) {
+export default function OnboardingForm() {
   const router = useRouter();
   return (
     <Formik
-      initialValues={buildInitialValues(profile)}
-      enableReinitialize
+      initialValues={{
+        babySex: defaultUserProfile.babySex,
+        dueDate: defaultUserProfile.dueDate,
+      }}
       validationSchema={onboardingSchema}
       onSubmit={async (values) => {
         try {
