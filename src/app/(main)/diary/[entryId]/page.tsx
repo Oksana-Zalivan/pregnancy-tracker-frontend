@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Container from "@/components/shared/Container/Container";
 import DiaryEntryDetails from "@/components/diary/DiaryEntryDetails/DiaryEntryDetails";
+import { Loader } from "@/components/shared/loader/Loader";
 import styles from "./page.module.css";
 
 type DiaryEntry = {
@@ -28,12 +29,14 @@ export default function DiaryEntryPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (!params?.entryId) return;
     const fetchEntry = async () => {
       try {
         setIsLoading(true);
 
-        const response = await fetch("/api/diary", {
+        const response = await fetch("/api/diaries", {
           credentials: "include",
+          cache: "no-store",
         });
 
         if (!response.ok) {
@@ -62,7 +65,7 @@ export default function DiaryEntryPage() {
 
   const handleDeleteEntry = async (id: string) => {
     try {
-      const response = await fetch(`/api/diary/${id}`, {
+      const response = await fetch(`/api/diaries/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -83,7 +86,7 @@ export default function DiaryEntryPage() {
     <Container>
       <main className={styles.diaryEntryPage}>
         {isLoading ? (
-          <p>Завантаження...</p>
+          <Loader size="md" />
         ) : (
           <DiaryEntryDetails
             entry={entry}

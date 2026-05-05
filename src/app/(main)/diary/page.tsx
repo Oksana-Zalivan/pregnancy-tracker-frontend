@@ -7,6 +7,7 @@ import Container from "@/components/shared/Container/Container";
 import GreetingBlock from "@/components/dashboard/GreetingBlock/GreetingBlock";
 import DiaryList from "@/components/diary/DiaryList/DiaryList";
 import DiaryEntryDetails from "@/components/diary/DiaryEntryDetails/DiaryEntryDetails";
+import { Loader } from "@/components/shared/loader/Loader";
 import styles from "./page.module.css";
 
 type DiaryEntry = {
@@ -34,8 +35,9 @@ export default function DiaryPage() {
       try {
         setIsLoading(true);
 
-        const response = await fetch("/api/diary", {
+        const response = await fetch("/api/diaries", {
           credentials: "include",
+          cache: "no-store",
         });
 
         if (!response.ok) {
@@ -76,7 +78,7 @@ export default function DiaryPage() {
 
   const handleDeleteEntry = async (id: string) => {
     try {
-      const response = await fetch(`/api/diary/${id}`, {
+      const response = await fetch(`/api/diaries/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -114,7 +116,7 @@ export default function DiaryPage() {
         <GreetingBlock />
 
         {isLoading ? (
-          <p className={styles.loading}>Завантаження...</p>
+          <Loader size="md" />
         ) : (
           <>
             <DiaryList
