@@ -2,8 +2,11 @@
 import Link from "next/link";
 import css from "./AuthBar.module.css";
 
+type AuthBarProps = {
+  onNavigate?: () => void;
+};
 
-export default function AuthBar() {
+export default function AuthBar({ onNavigate }: AuthBarProps) {
     return (
         <div className={css.authBarMenu}>
             
