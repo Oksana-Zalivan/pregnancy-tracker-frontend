@@ -1,17 +1,26 @@
-import { NextResponse } from 'next/server';
-import emotions from '@/db/data/emotions.json';
+import { NextResponse } from "next/server";
 
-export async function GET() {
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001/api";
+
+export async function GET(request) {
   try {
-    return NextResponse.json({
-      message: 'Емоції успішно отримані',
-      data: emotions,
+    const cookie = request.headers.get("cookie");
+
+    const response = await fetch(BACKEND_URL + "/emotions", {
+      method: "GET",
+      headers: {
+        ...(cookie && { cookie }),
+      },
+      cache: "no-store",
     });
+
+    const data = await response.json();
+
+    return NextResponse.json(data, { status: response.status });
   } catch {
     return NextResponse.json(
-      {
-        message: 'Помилка отримання емоцій',
-      },
+      { message: "Помилка отримання емоцій" },
       { status: 500 }
     );
   }
