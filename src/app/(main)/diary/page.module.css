@@ -1,0 +1,19 @@
+.diaryPage {
+  display: flex;
+  flex-direction: column;
+}
+
+.desktopOnly {
+  display: none;
+}
+
+@media (min-width: 1440px) {
+  .diaryPage {
+    display: grid;
+    grid-template-columns: 390px 1fr;
+  }
+
+  .desktopOnly {
+    display: block;
+  }
+}
