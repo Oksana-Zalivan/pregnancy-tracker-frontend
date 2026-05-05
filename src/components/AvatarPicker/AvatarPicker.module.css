@@ -1,0 +1,56 @@
+.avatarWrap {
+    width: 144px;
+    height: 144px;
+}
+
+.avatar {
+    width: 144px;
+    height: 144px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 10px 28px rgba(194, 171, 171, 0.2);
+}
+
+
+.button {
+    align-self: flex-start;
+    min-height: 54px;
+    padding: 14px 24px;
+    border: none;
+    border-bottom: 4px solid #e6dada;
+    border-radius: 999px;
+    background: #f7f3f3;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 200ms ease, background-color 200ms ease;
+}
+
+.button:hover,
+.button:focus {
+    background-color: #f2ebeb;
+    outline: none;
+}
+
+.button:active {
+    transform: translateY(2px);
+}
+
+.button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.hiddenInput {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    .card {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .content {
+        flex: 1;
+    }
+}

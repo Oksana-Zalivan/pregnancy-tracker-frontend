@@ -1,0 +1,93 @@
+.page {
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+/* Ліва колонка (форма + лого) */
+.onboardingSection {
+    min-height: 100vh;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    width: 100%;
+    max-width: 335px;
+
+    display: flex;
+    align-items: center;
+
+    margin-bottom: auto;
+    transform: translateX(-28px);
+}
+
+/* Обгортка форми */
+.formWrapper {
+    width: 100%;
+    max-width: 335px;
+
+    display: flex;
+    flex-direction: column;
+
+    margin: auto 0;
+    /* центр по вертикалі */
+}
+
+/* Заголовок */
+.title {
+    margin-bottom: 28px;
+    text-align: center;
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 400;
+}
+
+/* Права картинка */
+.imageWrapper {
+    display: none;
+}
+
+/* ================= TABLET ================= */
+@media (min-width: 768px) {
+    .authPanel {
+        padding: 32px;
+    }
+
+    .logo,
+    .formWrapper {
+        max-width: 475px;
+    }
+}
+
+/* ================= DESKTOP ================= */
+@media (min-width: 1440px) {
+    .page {
+        display: flex;
+    }
+
+    .authPanel {
+        width: 50%;
+        padding: 40px 72px;
+    }
+
+    .logo,
+    .formWrapper {
+        max-width: 440px;
+    }
+
+    .imageWrapper {
+        display: block;
+        width: 50%;
+        height: 100vh;
+        position: relative;
+    }
+
+    .image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}

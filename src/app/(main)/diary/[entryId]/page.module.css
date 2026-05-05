@@ -1,0 +1,9 @@
+.diaryEntryPage {
+  display: block;
+}
+
+@media (min-width: 1440px) {
+  .diaryEntryPage {
+    display: none;
+  }
+}
