@@ -25,8 +25,8 @@ export default function UserBar({ user, onLogout, onNavigate}: UserBarProps) {
                         alt="User Avatar"
                     />
                     <div className={css.avatarContent}>
-                        <p className={css.userName}>{user?.name}</p>
-                        <p className={css.userEmail}>{user?.email}</p>
+                        <p className={css.userName}>{user.name}</p>
+                        <p className={css.userEmail}>{user.email}</p>
                     </div>
                 </div>
 
@@ -45,3 +45,4 @@ export default function UserBar({ user, onLogout, onNavigate}: UserBarProps) {
         </div>
     );
 }
+

@@ -1,14 +1,17 @@
-"use client"
+"use client";
 
+import css from "./AddTaskForm.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import type { FormikHelpers } from "formik";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Yup from "yup";
 import { useId } from "react";
-import toast, { Toaster } from 'react-hot-toast';
-import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import Button from "../shared/Button/Button";
+import clsx from "clsx";
+
 interface AddTaskFormProps {
-    onClose: () => void;
+  onClose: () => void;
 }
 
 type FormValues = {
@@ -16,97 +19,142 @@ type FormValues = {
   date: string;
 };
 
+function getLocalDate() {
+  const today = new Date();
+
+  return [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0"),
+  ].join("-");
+}
+
 export default function AddTaskForm({ onClose }: AddTaskFormProps) {
-    const today = new Date();
+  const fieldId = useId();
+  const queryClient = useQueryClient();
+  const today = getLocalDate();
 
-    const localDate = [
-        today.getFullYear(),
-        String(today.getMonth() + 1).padStart(2, "0"),
-        String(today.getDate()).padStart(2, "0"),
-    ].join("-");
+  const initialValues: FormValues = {
+    name: "",
+    date: today,
+  };
 
-    const initialValues = {
-        name: "",
-        date: localDate,
-    };
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .trim()
+      .min(1, "Назва має містити щонайменше 1 символ")
+      .max(96, "Назва не може бути довшою за 96 символів")
+      .required("Назва є обовʼязковою"),
+    date: Yup.string().required("Дата є обовʼязковою"),
+  });
 
-    const createTask = async (data: FormValues) => {
-        const response = await fetch("/api/tasks", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-        
-        if (!response.ok) {
-            throw new Error("Не вдалося створити завдання");
-        }
-        
-        return response.json();
-    };
-
-    const queryClient = useQueryClient();
-
-    const mutation = useMutation({
-        mutationFn: (data: FormValues) => createTask(data),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["notes"] });
-            onClose();
-        },
-        onError: (err) => {
-            toast.error('Сталась помилка, спробуйте ще раз');
-        },
+  const createTask = async (data: FormValues) => {
+    const response = await fetch("/api/tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(data),
     });
 
-    const handleSubmit = async (values: FormValues, { setSubmitting, resetForm }: FormikHelpers<FormValues>) => {
-        try {
-            setSubmitting(true);
-            const payload: FormValues = {
-                name: values.name,
-                date: values.date,
-            };
-            await mutation.mutateAsync(payload);
-            resetForm();
-        } catch (err) {
-            toast.error('Сталась помилка, спробуйте ще раз');
-        } finally {
-            setSubmitting(false);
-        };
-    };
+    const result = await response.json();
 
-    const Schema = Yup.object().shape({
-        name: Yup.string()
-            .min(1, "Назва має містити щонайменше 1 символ")
-            .max(96, "Назва не може бути довшою за 96 символів")
-            .required("Назва є обовʼязковою"),
-        date: Yup.date()
-            .min(today, "Дата не може бути раніше сьогоднішньої")
-            .required("Дата є обовʼязковою"),
-    });
+    if (!response.ok) {
+      throw new Error(result.message || "Не вдалося створити завдання");
+    }
 
-    const fieldId = useId();
+    return result;
+  };
 
-    return (
-        <>
-            <Toaster />
-            <Formik<FormValues> initialValues={initialValues} onSubmit={handleSubmit} validationSchema={Schema}>
-                <Form>
-                    <div>
-                        <label htmlFor={`${fieldId}-name`}>Назва завдання</label>
-                        <Field id={`${fieldId}-name`} name="name" type="text"></Field>
-                        <ErrorMessage component="span" name="name"></ErrorMessage>
-                    </div>
-                    <div>
-                        <label htmlFor={`${fieldId}-date`}>Дата</label>
-                        <Field id={`${fieldId}-date`} name="date" type="date"></Field>
-                        <ErrorMessage component="span" name="date"></ErrorMessage>
-                    </div>
-                    <button type="submit" disabled={mutation.isPending}>
-                        {mutation.isPending ? "Збереження..." : "Зберегти"}
-                    </button>
-                </Form>
-            </Formik>
-        </>
-    )
-};
+  const mutation = useMutation({
+    mutationFn: createTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      toast.success("Завдання створено");
+      onClose();
+    },
+    onError: () => {
+      toast.error("Сталась помилка, спробуйте ще раз");
+    },
+  });
+
+  const handleSubmit = async (
+    values: FormValues,
+    { setSubmitting, resetForm }: FormikHelpers<FormValues>
+  ) => {
+    try {
+      await mutation.mutateAsync(values);
+      resetForm();
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <Formik<FormValues>
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={validationSchema}
+    >
+      {({ errors, touched }) => (
+        <Form className={css.form}>
+          <div className={css.formGroup}>
+            <label className={css.formLabel} htmlFor={`${fieldId}-name`}>
+              Назва завдання
+            </label>
+
+            <Field
+              className={clsx(
+                css.formField,
+                errors.name && touched.name && css.formFieldError
+              )}
+              id={`${fieldId}-name`}
+              name="name"
+              type="text"
+              placeholder="Прийняти вітаміни"
+            />
+
+            <ErrorMessage
+              className={css.formError}
+              component="span"
+              name="name"
+            />
+          </div>
+
+          <div className={css.formGroup}>
+            <label className={css.formLabel} htmlFor={`${fieldId}-date`}>
+              Дата
+            </label>
+
+            <Field
+              className={clsx(
+                css.formField,
+                errors.date && touched.date && css.formFieldError
+              )}
+              id={`${fieldId}-date`}
+              name="date"
+              type="date"
+              min={today}
+            />
+
+            <ErrorMessage
+              className={css.formError}
+              component="span"
+              name="date"
+            />
+          </div>
+
+          <Button
+            className={css.submitButton}
+            type="submit"
+            disabled={mutation.isPending}
+            isLoading={mutation.isPending}
+          >
+            Зберегти
+          </Button>
+        </Form>
+      )}
+    </Formik>
+  );
+}

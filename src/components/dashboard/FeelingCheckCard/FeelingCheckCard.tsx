@@ -2,19 +2,18 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import styles from "./FeelingCheckCard.module.css";
-
+import { useAuthStore } from "@/store/authStore";
 import AddDiaryEntryModal from "@/components/diary/AddDiaryEntryModal/AddDiaryEntryModal";
 import AddDiaryEntryForm from "@/components/diary/AddDiaryEntryForm/AddDiaryEntryForm";
+import styles from "./FeelingCheckCard.module.css";
 
 export default function FeelingCheckCard() {
   const router = useRouter();
+  const user = useAuthStore((state) => state.user);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
-    const token = localStorage.getItem("token");
-
-    if (!token?.trim()) {
+    if (!user) {
       router.push("/auth/register");
       return;
     }
@@ -36,7 +35,7 @@ export default function FeelingCheckCard() {
         Зробити запис у щоденник
       </button>
 
-      {false && isOpen && (
+      {isOpen && (
         <AddDiaryEntryModal onClose={() => setIsOpen(false)}>
           <AddDiaryEntryForm onClose={() => setIsOpen(false)} />
         </AddDiaryEntryModal>
@@ -44,4 +43,3 @@ export default function FeelingCheckCard() {
     </section>
   );
 }
-
