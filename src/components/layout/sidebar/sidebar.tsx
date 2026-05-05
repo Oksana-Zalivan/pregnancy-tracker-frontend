@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import clsx from "clsx";
-import toast from "react-hot-toast";
+import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import clsx from 'clsx';
+import toast from 'react-hot-toast';
 
-import { navigationItems } from "@/lib/constants/navigation";
-import { useAuthStore } from "@/store/authStore";
-import UserBar from "@/components/layout/UserBar/UserBar";
-import AuthBar from "@/components/layout/AuthBar/AuthBar";
-import ConfirmationModal from "@/components/shared/ConfirmationModal/ConfirmationModal";
+import { navigationItems } from '@/lib/constants/navigation';
+import { useAuthStore } from '@/store/authStore';
+import UserBar from '@/components/layout/UserBar/UserBar';
+import AuthBar from '@/components/layout/AuthBar/AuthBar';
+import ConfirmationModal from '@/components/shared/ConfirmationModal/ConfirmationModal';
 
-import css from "./Sidebar.module.css";
+import css from './Sidebar.module.css';
 
 type SidebarProps = {
   isMobileMenuOpen: boolean;
@@ -39,22 +39,23 @@ export default function Sidebar({
     try {
       setIsLogoutLoading(true);
 
-      const response = await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
       });
 
       if (!response.ok) {
-        throw new Error("Не вдалося вийти з акаунту");
+        throw new Error('Не вдалося вийти з акаунту');
       }
 
       clearUser();
       setIsLogoutModalOpen(false);
       onCloseMobileMenu();
-      router.push("/");
+
+      router.push('/');
       router.refresh();
     } catch {
-      toast.error("Не вдалося вийти з акаунту");
+      toast.error('Не вдалося вийти з акаунту');
     } finally {
       setIsLogoutLoading(false);
     }
@@ -62,11 +63,13 @@ export default function Sidebar({
 
   return (
     <>
+      {/* backdrop */}
       <div
         className={clsx(css.backdrop, isMobileMenuOpen && css.backdropVisible)}
         onClick={onCloseMobileMenu}
       />
 
+      {/* sidebar */}
       <aside
         className={clsx(css.sidebar, isMobileMenuOpen && css.sidebarMobileOpen)}
       >
@@ -83,11 +86,13 @@ export default function Sidebar({
           </button>
         </div>
 
+        {/* navigation */}
         <nav aria-label="Main navigation" className={css.nav}>
           <ul className={css.navList}>
             {navigationItems.map((item) => {
-              const targetHref = isAuthenticated ? item.href : "/auth/login";
-              const isActive = pathname === item.href;
+              const targetHref = isAuthenticated ? item.href : '/auth/login';
+
+              const isActive = pathname.startsWith(item.href);
 
               return (
                 <li key={item.label}>
@@ -104,6 +109,7 @@ export default function Sidebar({
           </ul>
         </nav>
 
+        {/* footer */}
         <div className={css.sidebarFooter}>
           {isAuthLoading ? null : isAuthenticated && user ? (
             <UserBar user={user} onLogout={() => setIsLogoutModalOpen(true)} />
@@ -113,10 +119,11 @@ export default function Sidebar({
         </div>
       </aside>
 
+      {/* logout modal */}
       <ConfirmationModal
         isOpen={isLogoutModalOpen}
         title="Ви впевнені, що хочете вийти?"
-        confirmButtonText={isLogoutLoading ? "Вихід..." : "Вийти"}
+        confirmButtonText={isLogoutLoading ? 'Вихід...' : 'Вийти'}
         cancelButtonText="Скасувати"
         onConfirm={handleLogout}
         onCancel={() => setIsLogoutModalOpen(false)}
