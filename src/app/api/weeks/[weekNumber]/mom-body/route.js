@@ -5,7 +5,7 @@ const BACKEND_URL =
 
 export async function GET(req, { params }) {
   try {
-    const { weekNumber } = await params;
+    const { weekNumber } = params;
     const cookie = req.headers.get("cookie");
 
     const response = await fetch(
