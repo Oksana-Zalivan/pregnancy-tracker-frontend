@@ -1,6 +1,13 @@
 "use client";
 
 import { useState } from "react";
+<<<<<<< HEAD:src/components/layout/main-layout/main-layout.tsx
+import Header from "@/components/layout/header/header";
+import Sidebar from "@/components/layout/sidebar/sidebar";
+import Breadcrumbs from "@/components/layout/breadcrumbs/breadcrumbs";
+import css from "@/components/layout/main-layout/main-layout.module.css";
+=======
+>>>>>>> effde4e61e93d4e4a3e416e7a95924a4c7b81d5a:src/components/layout/MainLayout/MainLayout.tsx
 import type { ReactNode } from "react";
 
 import Header from "@/components/layout/Header/Header";
