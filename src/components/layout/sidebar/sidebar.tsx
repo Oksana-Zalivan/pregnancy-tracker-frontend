@@ -7,12 +7,12 @@ import clsx from "clsx";
 import toast from "react-hot-toast";
 
 import { navigationItems } from "@/lib/constants/navigation";
-import { useAuthStore } from "@/lib/store/authStore";
+import { useAuthStore } from "@/store/authStore";
 import UserBar from "@/components/layout/UserBar/UserBar";
 import AuthBar from "@/components/layout/AuthBar/AuthBar";
 import ConfirmationModal from "@/components/shared/ConfirmationModal/ConfirmationModal";
 
-import css from "./sidebar.module.css";
+import css from "./Sidebar.module.css";
 
 type SidebarProps = {
   isMobileMenuOpen: boolean;
