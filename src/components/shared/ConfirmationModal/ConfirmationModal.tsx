@@ -26,19 +26,11 @@ export default function ConfirmationModal({
       <h2 className={styles.title}>{title}</h2>
 
       <div className={styles.buttons}>
-        <Button
-          type="button"
-          className={styles.cancelButton}
-          onClick={onCancel}
-        >
+        <Button className={styles.cancelButton} onClick={onCancel}>
           {cancelButtonText}
         </Button>
 
-        <Button
-          type="button"
-          className={styles.confirmButton}
-          onClick={onConfirm}
-        >
+        <Button className={styles.confirmButton} onClick={onConfirm}>
           {confirmButtonText}
         </Button>
       </div>

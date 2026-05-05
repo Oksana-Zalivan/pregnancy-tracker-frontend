@@ -5,13 +5,11 @@ const BACKEND_URL =
 
 export async function GET(request) {
   try {
-    const authorization = request.headers.get("authorization");
     const cookie = request.headers.get("cookie");
 
     const response = await fetch(`${BACKEND_URL}/diaries`, {
       method: "GET",
       headers: {
-        ...(authorization && { authorization }),
         ...(cookie && { cookie }),
       },
       cache: "no-store",
@@ -20,7 +18,7 @@ export async function GET(request) {
     const data = await response.json();
 
     return NextResponse.json(data, { status: response.status });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "Помилка отримання записів щоденника" },
       { status: 500 }
@@ -30,7 +28,6 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const authorization = request.headers.get("authorization");
     const cookie = request.headers.get("cookie");
     const body = await request.json();
 
@@ -38,7 +35,6 @@ export async function POST(request) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(authorization && { authorization }),
         ...(cookie && { cookie }),
       },
       body: JSON.stringify(body),
@@ -47,7 +43,7 @@ export async function POST(request) {
     const data = await response.json();
 
     return NextResponse.json(data, { status: response.status });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "Помилка створення запису щоденника" },
       { status: 500 }
