@@ -1,17 +1,17 @@
-import Image from "next/image";
-import Link from "next/link";
-import clsx from "clsx";
-import styles from "./Logo.module.css";
+import Image from 'next/image';
+import Link from 'next/link';
+import clsx from 'clsx';
+import styles from './Logo.module.css';
 
 type LogoProps = {
   className?: string;
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
   withLink?: boolean;
 };
 
 export default function Logo({
   className,
-  size = "medium",
+  size = 'medium',
   withLink = true,
 }: LogoProps) {
   const logo = (
@@ -19,8 +19,8 @@ export default function Logo({
       <Image
         src="/icons/logo.svg"
         alt="Leleka"
-        width={100}
-        height={40}
+        fill
+        className={styles.image}
         priority
       />
     </div>

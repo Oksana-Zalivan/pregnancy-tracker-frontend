@@ -1,0 +1,35 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  cursor: pointer;
+}
+
+.logo:hover {
+  opacity: 0.85;
+}
+
+.image {
+  object-fit: contain;
+}
+
+.small {
+  width: 75px;
+  height: 32px;
+}
+
+.medium {
+  width: 100px;
+  height: 40px;
+}
+
+.large {
+  width: 140px;
+  height: 56px;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+}
