@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
 import css from "./Breadcrumbs.module.css";
 
 const breadcrumbLabels: Record<string, string> = {
