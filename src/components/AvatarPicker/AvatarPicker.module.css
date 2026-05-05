@@ -40,7 +40,7 @@
     cursor: not-allowed;
 }
 
-.input {
+.hiddenInput {
     display: none;
 }
 

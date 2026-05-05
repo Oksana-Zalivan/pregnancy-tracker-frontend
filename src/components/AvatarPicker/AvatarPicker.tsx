@@ -36,6 +36,7 @@ export default function AvatarPicker() {
     try {
       setIsUploading(true);
       const response = await fetch('/api/users/avatar', {
+        credentials: 'include',
         method: 'PATCH',
         body: formData,
       });

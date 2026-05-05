@@ -9,12 +9,24 @@ import { saveUserProfile } from '@/lib/profile-storage';
 import { defaultUserProfile } from '@/types/user-profile';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
+const getDateAfterDays = (days: number) => {
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+  return date.toISOString().split('T')[0];
+};
+
+const minDueDate = getDateAfterDays(7);
+const maxDueDate = getDateAfterDays(280);
+
 // Валідація через Yup
 const onboardingSchema = Yup.object({
   babySex: Yup.mixed<BabySex>()
     .oneOf(['unknown', 'girl', 'boy'], 'Оберіть коректне значення')
     .required('Стать дитини є обовʼязковою'),
-  dueDate: Yup.string().required('Планова дата пологів є обовʼязковою'),
+  dueDate: Yup.date()
+    .required('Планова дата пологів є обовʼязковою')
+    .min(new Date(minDueDate), 'Дата має бути не раніше ніж через 1 тиждень')
+    .max(new Date(maxDueDate), 'Дата має бути не пізніше ніж через 40 тижнів'),
 });
 
 export default function OnboardingForm() {
@@ -23,7 +35,7 @@ export default function OnboardingForm() {
     <Formik
       initialValues={{
         babySex: defaultUserProfile.babySex,
-        dueDate: defaultUserProfile.dueDate,
+        dueDate: '',
       }}
       validationSchema={onboardingSchema}
       onSubmit={async (values) => {
@@ -33,6 +45,7 @@ export default function OnboardingForm() {
             headers: {
               'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify(values),
           });
 
@@ -44,7 +57,7 @@ export default function OnboardingForm() {
           }
 
           saveUserProfile(data.data);
-          toast.success('Вітаю! профіль успішно оновлено');
+          toast.success('Вітаю! Профіль успішно оновлено');
           router.push('/');
         } catch {
           toast.error('Проблема з мережею або сервером. Спробуйте пізніше.');
