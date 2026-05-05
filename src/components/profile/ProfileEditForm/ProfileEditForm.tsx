@@ -9,7 +9,7 @@ import {
   type BabySex,
   type UserProfile,
 } from "@/types/user-profile";
-import styles from "@/components/profile/ProfileEditForm.module.css";
+import styles from "@/components/profile/ProfileEditForm/ProfileEditForm.module.css";
 
 type ProfileEditFormProps = {
   profile: UserProfile;

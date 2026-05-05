@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3001";
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
 
 export async function PATCH(request, { params }) {
   try {
-    const { id } = await params;
+    const { entryId } = await params;
     const body = await request.json();
     const cookie = request.headers.get("cookie");
 
-    const response = await fetch(`${BACKEND_URL}/diaries/${id}`, {
+    const response = await fetch(`${BACKEND_URL}/diaries/${entryId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -29,10 +30,10 @@ export async function PATCH(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
-    const { id } = await params;
+    const { entryId } = await params;
     const cookie = request.headers.get("cookie");
 
-    const response = await fetch(`${BACKEND_URL}/diaries/${id}`, {
+    const response = await fetch(`${BACKEND_URL}/diaries/${entryId}`, {
       method: "DELETE",
       headers: {
         ...(cookie && { cookie }),
