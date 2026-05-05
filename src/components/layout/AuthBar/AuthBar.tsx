@@ -1,11 +1,19 @@
-import { useAuthStore } from "@/store/authStore";
+"use client";
+import Link from "next/link";
+import css from "./AuthBar.module.css";
+
 
 export default function AuthBar() {
-    const user = useAuthStore((state) => state.user);
-
     return (
-        <div>
-            {user ? `Привіт, ${user.name}!` : "UserBar"}
+        <div className={css.authBarMenu}>
+            
+        <div className={css.divider} />
+            <Link href="/auth/register" className={css.authBarButtonPink} onClick={onNavigate}>
+                Зареєструватися
+            </Link>
+            <Link href="/auth/login" className={css.authBarButtonGray} onClick={onNavigate}>
+                Увійти
+            </Link >
         </div>
-    );
+  );
 }
