@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import Modal from "@/components/shared/Modal/Modal";
+import Button from "@/components/shared/Button/Button";
 import styles from "./ConfirmationModal.module.css";
 
 type Props = {
@@ -20,47 +21,19 @@ export default function ConfirmationModal({
   onConfirm,
   onCancel,
 }: Props) {
-useEffect(() => {
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      onCancel();
-    }
-  };
-
-  if (!isOpen) return;
-
-  window.addEventListener("keydown", handleKeyDown);
-
-  return () => {
-    window.removeEventListener("keydown", handleKeyDown);
-  };
-}, [isOpen, onCancel]);
-
-  if (!isOpen) return null;
-
   return (
-    <div className={styles.backdrop} onClick={onCancel}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h2 className={styles.title}>{title}</h2>
+    <Modal isOpen={isOpen} onClose={onCancel} className={styles.modal}>
+      <h2 className={styles.title}>{title}</h2>
 
-        <div className={styles.buttons}>
-          <button
-            type="button"
-            className={styles.cancelButton}
-            onClick={onCancel}
-          >
-            {cancelButtonText}
-          </button>
+      <div className={styles.buttons}>
+        <Button className={styles.cancelButton} onClick={onCancel}>
+          {cancelButtonText}
+        </Button>
 
-          <button
-            type="button"
-            className={styles.confirmButton}
-            onClick={onConfirm}
-          >
-            {confirmButtonText}
-          </button>
-        </div>
+        <Button className={styles.confirmButton} onClick={onConfirm}>
+          {confirmButtonText}
+        </Button>
       </div>
-    </div>
+    </Modal>
   );
 }

@@ -13,10 +13,9 @@ export default function StatusBlock() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchStatus = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch("/api/weeks/private/current", {
-          method: "GET",
           credentials: "include",
           cache: "no-store",
         });
@@ -34,8 +33,7 @@ export default function StatusBlock() {
         setLoading(false);
       }
     };
-
-    fetchStatus();
+    fetchData();
   }, []);
 
   if (loading) {
@@ -53,12 +51,12 @@ export default function StatusBlock() {
     );
   }
 
-
+  // Если произошла ошибка — показываем сообщение об ошибке
   if (error) {
     return (
-      <section className={styles.container}>
+      <div className={styles.container}>
         <p className={styles.error}>{error}</p>
-      </section>
+      </div>
     );
   }
 

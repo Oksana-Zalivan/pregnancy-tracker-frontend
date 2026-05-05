@@ -1,13 +1,16 @@
 import styles from "./MomTipCard.module.css";
 
-export default function MomTipCard() {
+type MomTipCardProps = {
+  tip?: string | null;
+};
+
+export default function MomTipCard({ tip }: MomTipCardProps) {
   return (
     <section className={styles.card}>
       <h2 className={styles.title}>Порада для мами</h2>
-
       <p className={styles.text}>
-        Не забувайте про зволоження шкіри живота та стегон спеціальними
-        олійками, щоб попередити появу розтяжок.
+        {tip ||
+          "Не забувайте піклуватися про себе та відпочивати протягом дня."}
       </p>
     </section>
   );
