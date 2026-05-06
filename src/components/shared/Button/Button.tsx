@@ -1,20 +1,24 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
-import clsx from "clsx";
-import styles from "./Button.module.css";
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import clsx from 'clsx';
+import styles from './Button.module.css';
+
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'icon';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  children: ReactNode;
+  children?: ReactNode;
   isLoading?: boolean;
   fullWidth?: boolean;
+  variant?: ButtonVariant;
 };
 
 export default function Button({
   children,
   isLoading = false,
   fullWidth = false,
+  variant = 'primary',
   className,
   disabled,
-  type = "button",
+  type = 'button',
   ...props
 }: ButtonProps) {
   return (
@@ -22,13 +26,14 @@ export default function Button({
       type={type}
       className={clsx(
         styles.button,
+        styles[variant],
         fullWidth && styles.fullWidth,
-        className
+        className,
       )}
       disabled={disabled || isLoading}
       {...props}
     >
-      {isLoading ? "Завантаження..." : children}
+      {isLoading ? 'Завантаження...' : children}
     </button>
   );
 }

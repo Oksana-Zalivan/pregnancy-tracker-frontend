@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useEffect, type ReactNode } from "react";
-import { createPortal } from "react-dom";
-import clsx from "clsx";
-import styles from "./Modal.module.css";
+import { useEffect, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
+import clsx from 'clsx';
+import styles from './Modal.module.css';
 
 type ModalProps = {
   isOpen: boolean;
@@ -26,17 +26,15 @@ export default function Modal({
     if (!isOpen) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
+      if (event.key === 'Escape') onClose();
     };
 
-    document.addEventListener("keydown", handleKeyDown);
-    document.body.style.overflow = "hidden";
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
     };
   }, [isOpen, onClose]);
 
@@ -61,13 +59,15 @@ export default function Modal({
             onClick={onClose}
             aria-label="Закрити модальне вікно"
           >
-            ×
+            <svg className={styles.closeIcon} aria-hidden="true">
+              <use href="/images/sprite.svg#icon-close" />
+            </svg>
           </button>
         )}
 
         {children}
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }
