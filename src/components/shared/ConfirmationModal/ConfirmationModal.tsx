@@ -23,16 +23,18 @@ export default function ConfirmationModal({
 }: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onCancel} className={styles.modal}>
-      <h2 className={styles.title}>{title}</h2>
+      <div className={styles.content}>
+        <h2 className={styles.title}>{title}</h2>
 
-      <div className={styles.buttons}>
-        <Button className={styles.cancelButton} onClick={onCancel}>
-          {cancelButtonText}
-        </Button>
+        <div className={styles.buttons}>
+          <Button className={styles.cancelButton} onClick={onCancel}>
+            {cancelButtonText}
+          </Button>
 
-        <Button className={styles.confirmButton} onClick={onConfirm}>
-          {confirmButtonText}
-        </Button>
+          <Button className={styles.confirmButton} onClick={onConfirm}>
+            {confirmButtonText}
+          </Button>
+        </div>
       </div>
     </Modal>
   );
