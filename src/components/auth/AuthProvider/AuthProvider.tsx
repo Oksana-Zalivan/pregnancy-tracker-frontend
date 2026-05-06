@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect, type ReactNode } from "react";
-import { useAuthStore } from "@/store/authStore";
+import { useEffect, type ReactNode } from 'react';
+import { useAuthStore } from '@/store/authStore';
 
 type Props = {
   children: ReactNode;
@@ -14,10 +14,10 @@ export default function AuthProvider({ children }: Props) {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        const response = await fetch("/api/users/current", {
-          method: "GET",
-          credentials: "include",
-          cache: "no-store",
+        const response = await fetch('/api/users/current', {
+          method: 'GET',
+          credentials: 'include',
+          cache: 'no-store',
         });
 
         if (!response.ok) {
@@ -29,7 +29,8 @@ export default function AuthProvider({ children }: Props) {
 
         setUser(result.data ?? null);
       } catch (error) {
-        console.error("AuthProvider error:", error);
+        console.error('AuthProvider error:', error);
+
         setUser(null);
       } finally {
         setAuthLoading(false);
