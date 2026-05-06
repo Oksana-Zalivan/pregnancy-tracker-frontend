@@ -1,8 +1,51 @@
 .button {
   border: none;
   cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .fullWidth {
   width: 100%;
+}
+
+/* PRIMARY */
+
+.primary {
+  background-color: #f7d6de;
+  color: #2d2d2d;
+  border-radius: 999px;
+}
+
+/* SECONDARY */
+
+.secondary {
+  background-color: #f3f3f3;
+  color: #2d2d2d;
+  border-radius: 999px;
+}
+
+/* GHOST */
+
+.ghost {
+  background-color: transparent;
+}
+
+/* ICON */
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  background: transparent;
 }

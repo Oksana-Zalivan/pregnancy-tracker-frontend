@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
 import styles from './Logo.module.css';
@@ -16,18 +15,18 @@ export default function Logo({
 }: LogoProps) {
   const logo = (
     <div className={clsx(styles.logo, styles[size], className)}>
-      <Image
-        src="/icons/logo.svg"
-        alt="Leleka"
-        fill
-        className={styles.image}
-        priority
-      />
+      <svg className={styles.icon} aria-label="Leleka">
+        <use href="/images/sprite.svg#icon-logo" />
+      </svg>
     </div>
   );
 
   if (withLink) {
-    return <Link href="/">{logo}</Link>;
+    return (
+      <Link href="/" aria-label="Перейти на головну сторінку">
+        {logo}
+      </Link>
+    );
   }
 
   return logo;
