@@ -9,26 +9,26 @@ export async function POST(req) {
 
     const response = await fetch(`${BACKEND_URL}/auth/login`, {
       method: 'POST',
+      cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include',
       body: JSON.stringify(body),
     });
 
     const data = await response.json();
 
-    const res = NextResponse(JSON.stringify(data), {
+    const nextResponse = NextResponse.json(data, {
       status: response.status,
     });
 
     const setCookie = response.headers.get('set-cookie');
 
     if (setCookie) {
-      res.headers.set('set-cookie', setCookie);
+      nextResponse.headers.set('set-cookie', setCookie);
     }
 
-    return res;
+    return nextResponse;
   } catch {
     return NextResponse.json(
       {
