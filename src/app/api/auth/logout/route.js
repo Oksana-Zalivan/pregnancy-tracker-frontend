@@ -8,19 +8,23 @@ export async function POST(request) {
   try {
     const response = await fetch(`${BACKEND_URL}/auth/logout`, {
       method: 'POST',
-      credentials: 'include',
       headers: {
         ...(cookie && { cookie }),
       },
+      cache: 'no-cache',
+    });
+
+    const nextResponse = NextResponse(null, {
+      status: response.status,
     });
 
     const setCookie = response.headers.get('set-cookie');
-    return new NextResponse(null, {
-      status: response.status,
-      headers: {
-        ...(setCookie && { 'set-cookie': setCookie }),
-      },
-    });
+
+    if (setCookie) {
+      nextResponse.headers.set('set-cookie', setCookie);
+    }
+
+    return nextResponse;
   } catch {
     return NextResponse.json(
       {
