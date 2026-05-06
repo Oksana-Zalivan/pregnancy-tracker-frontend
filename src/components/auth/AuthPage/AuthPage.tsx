@@ -1,8 +1,11 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import type { ReactNode } from "react";
-import styles from "./AuthPage.module.css";
+import Image from 'next/image';
+import type { ReactNode } from 'react';
+
+import Logo from '@/components/shared/Logo/Logo';
+
+import styles from './AuthPage.module.css';
 
 type AuthPageProps = {
   title: string;
@@ -15,40 +18,32 @@ export default function AuthPage({
   title,
   children,
   imageSrc,
-  imageAlt = "",
+  imageAlt = '',
 }: AuthPageProps) {
   return (
     <main className={styles.page}>
-      {/* Ліва частина */}
       <section className={styles.authPanel}>
-        {/* Лого */}
-        <div className={styles.logo}>
-          <Image
-            src="/icons/logo.svg"
-            alt="Лелека"
-            width={75}
-            height={32}
-            priority
-          />
-        </div>
+        <div className={styles.authContainer}>
+          <div className={styles.logoWrapper}>
+            <Logo size="small" />
+          </div>
 
-        {/* Контент */}
-        <div className={styles.formWrapper}>
-          <h1 className={styles.title}>{title}</h1>
-          {children}
+          <div className={styles.formWrapper}>
+            <h1 className={styles.title}>{title}</h1>
+            {children}
+          </div>
         </div>
       </section>
 
-      {/* Права частина (тільки якщо є картинка) */}
       {imageSrc && (
         <div className={styles.imageWrapper}>
           <Image
             className={styles.image}
             src={imageSrc}
             alt={imageAlt}
-            width={720}
-            height={900}
+            fill
             priority
+            sizes="50vw"
           />
         </div>
       )}

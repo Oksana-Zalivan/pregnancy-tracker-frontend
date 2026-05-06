@@ -1,7 +1,5 @@
 .form {
   width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -27,12 +25,14 @@
 }
 
 .input {
-  height: 48px;
-  padding: 0 16px;
-  border-radius: 8px;
+  height: 40px;
+  padding: 8px 12px;
+  border-radius: 12px;
   border: 2px solid transparent;
-  background-color: #f3f3f3;
-  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.05);
+  font-family: var(--font-lato);
+  font-size: 16px;
+  line-height: 1.5;
   outline: none;
 }
 
@@ -55,21 +55,16 @@
 }
 
 .button {
-  margin-top: 8px;
-  height: 48px;
+  height: 42px;
   padding: 10px 24px;
   border-radius: 100px;
   border: none;
-  background: #ffdae0;
   border-bottom: 4px solid #ffcbd3;
-  color: #000;
+  background: #ffdae0;
+  font-family: var(--font-lato);
   font-size: 14px;
-  cursor: pointer;
-  transition: background-color 200ms ease, transform 200ms ease,
-    border-bottom-width 200ms ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-weight: 500;
+  line-height: 1.6;
 }
 
 .button:hover,
