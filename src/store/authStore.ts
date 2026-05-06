@@ -1,9 +1,11 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 export type User = {
   id: string;
   name: string;
   email: string;
+  gender?: 'boy' | 'girl' | null;
+  dueDate?: string | null;
   avatar?: string;
 };
 
