@@ -75,7 +75,7 @@ export default function AddDiaryEntryForm({
     >
       {({ isSubmitting, values, setFieldValue }) => (
         <Form className={styles.form}>
-          <h2>Новий запис</h2>
+          <h2 className={styles.title}>Новий запис</h2>
 
           <Field
             type="text"
