@@ -13,7 +13,7 @@ import UserBar from '@/components/layout/UserBar/UserBar';
 import AuthBar from '@/components/layout/AuthBar/AuthBar';
 import ConfirmationModal from '@/components/shared/ConfirmationModal/ConfirmationModal';
 
-import css from './Sidebar.module.css';
+import css from './sidebar.module.css';
 
 const iconMap: Record<string, string> = {
   '/': 'my-day',
