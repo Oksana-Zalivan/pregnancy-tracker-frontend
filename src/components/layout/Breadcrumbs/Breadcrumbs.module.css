@@ -17,6 +17,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  
 }
 
 .link,
@@ -42,3 +43,4 @@
   fill: none;
   stroke: #000000;
 }
+

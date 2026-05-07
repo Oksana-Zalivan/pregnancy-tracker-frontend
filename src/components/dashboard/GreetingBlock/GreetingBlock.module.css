@@ -1,23 +1,30 @@
-.card {
-  padding: 0;
+.greeting {
+  width: 100%;
 }
 
 .title {
-  margin: 0;
-  font-size: 28px;
-  font-weight: 700;
+font-family: var(--second-family);
+font-weight: 700;
+font-size: 32px;
+line-height: 140%;
+letter-spacing: 0.01em;
+color: var(--color-scheme-text);
 }
 
-/* 📱 Tablet */
-@media (min-width: 768px) {
+@media screen and (max-width: 768px) {
+  .title {
+    font-family: var(--second-family);
+font-weight: 700;
+font-size: 24px;
+line-height: 140%;
+letter-spacing: 0.01em;
+color: var(--color-scheme-text);
+  }
+
+}
+
+@media screen and (min-width: 1440px) {
   .title {
     font-size: 32px;
-  }
-}
-
-/* 💻 Desktop */
-@media (min-width: 1440px) {
-  .title {
-    font-size: 36px;
   }
 }

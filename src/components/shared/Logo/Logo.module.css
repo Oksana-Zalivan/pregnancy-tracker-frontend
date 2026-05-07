@@ -4,6 +4,7 @@
   justify-content: flex-start;
   position: relative;
   cursor: pointer;
+  transition: opacity 0.2s ease;
 }
 
 .logo:hover {
@@ -29,7 +30,3 @@
   height: 56px;
 }
 
-.logo img {
-  width: 100%;
-  height: auto;
-}

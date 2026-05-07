@@ -1,13 +1,12 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import type { ReactNode } from "react";
+import { useState } from 'react';
+import type { ReactNode } from 'react';
 
-import Header from "@/components/layout/Header/Header";
-import Sidebar from "@/components/layout/Sidebar/Sidebar";
-import Breadcrumbs from "@/components/layout/Breadcrumbs/Breadcrumbs";
+import Header from '@/components/layout/Header/Header';
+import Sidebar from '@/components/layout/Sidebar/Sidebar';
 
-import css from "./MainLayout.module.css";
+import css from './MainLayout.module.css';
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -33,10 +32,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         onCloseMobileMenu={closeMobileMenu}
       />
 
-      <div className={css.contentWrapper}>
-        <Breadcrumbs />
-        <main className={css.main}>{children}</main>
-      </div>
+      <main className={css.main}>{children}</main>
     </div>
   );
 }

@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import toast from "react-hot-toast";
-import * as Yup from "yup";
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/authStore";
-import styles from "./RegistrationForm.module.css";
+import Link from 'next/link';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import toast from 'react-hot-toast';
+import * as Yup from 'yup';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/authStore';
+import styles from './RegistrationForm.module.css';
 
 type RegisterValues = {
   name: string;
@@ -15,9 +15,9 @@ type RegisterValues = {
 };
 
 const initialValues: RegisterValues = {
-  name: "",
-  email: "",
-  password: "",
+  name: '',
+  email: '',
+  password: '',
 };
 
 const registerSchema = Yup.object({
@@ -25,13 +25,13 @@ const registerSchema = Yup.object({
     .max(32, "Ім'я не може бути довшим за 32 символи")
     .required("Ім'я є обов'язковим"),
   email: Yup.string()
-    .email("Некоректний формат email")
-    .max(64, "Email не може бути довшим за 64 символи")
-    .required("Email є обовʼязковим"),
+    .email('Некоректний формат email')
+    .max(64, 'Email не може бути довшим за 64 символи')
+    .required('Email є обовʼязковим'),
   password: Yup.string()
-    .min(8, "Пароль має містити мінімум 8 символів")
-    .max(128, "Пароль не може бути довшим за 128 символів")
-    .required("Пароль є обовʼязковим"),
+    .min(8, 'Пароль має містити мінімум 8 символів')
+    .max(128, 'Пароль не може бути довшим за 128 символів')
+    .required('Пароль є обовʼязковим'),
 });
 
 export default function RegistrationForm() {
@@ -40,32 +40,47 @@ export default function RegistrationForm() {
 
   const handleSubmit = async (
     values: RegisterValues,
-    { resetForm }: { resetForm: () => void }
+    { resetForm }: { resetForm: () => void },
   ) => {
     try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        credentials: "include",
+        credentials: 'include',
         body: JSON.stringify(values),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        toast.error(data.message || "Не вдалося зареєструватися");
+        toast.error(data.message || 'Не вдалося зареєструватися');
         return;
       }
 
-      setUser(data.data.user);
-      toast.success("Реєстрацію успішно завершено");
+      const currentUserResponse = await fetch('/api/users/current', {
+        method: 'GET',
+        credentials: 'include',
+        cache: 'no-store',
+      });
+
+      if (!currentUserResponse.ok) {
+        toast.error('Не вдалося отримати дані користувача');
+        return;
+      }
+
+      const currentUser = await currentUserResponse.json();
+
+      setUser(currentUser.data);
+
+      toast.success('Реєстрацію успішно завершено');
 
       resetForm();
-      router.push("/profile/edit");
+
+      router.push('/profile/edit');
     } catch {
-      toast.error("Проблема з мережею або сервером. Спробуйте пізніше.");
+      toast.error('Проблема з мережею або сервером. Спробуйте пізніше.');
     }
   };
 
@@ -83,7 +98,7 @@ export default function RegistrationForm() {
               name="name"
               placeholder="Ваше ім’я"
               className={`${styles.input} ${
-                errors.name && touched.name ? styles.inputError : ""
+                errors.name && touched.name ? styles.inputError : ''
               }`}
             />
             <ErrorMessage
@@ -100,7 +115,7 @@ export default function RegistrationForm() {
               type="email"
               placeholder="hello@leleka.com"
               className={`${styles.input} ${
-                errors.email && touched.email ? styles.inputError : ""
+                errors.email && touched.email ? styles.inputError : ''
               }`}
             />
             <ErrorMessage
@@ -118,7 +133,7 @@ export default function RegistrationForm() {
               autoComplete="new-password"
               placeholder="********"
               className={`${styles.input} ${
-                errors.password && touched.password ? styles.inputError : ""
+                errors.password && touched.password ? styles.inputError : ''
               }`}
             />
             <ErrorMessage
@@ -131,19 +146,19 @@ export default function RegistrationForm() {
           <button
             type="submit"
             className={`${styles.button} ${
-              isSubmitting ? styles.buttonLoading : ""
+              isSubmitting ? styles.buttonLoading : ''
             }`}
             disabled={isSubmitting}
           >
             {isSubmitting ? (
               <span className={styles.signal} aria-label="Завантаження" />
             ) : (
-              "Зареєструватись"
+              'Зареєструватись'
             )}
           </button>
 
           <p className={styles.authText}>
-            Вже маєте акаунт?{" "}
+            Вже маєте акаунт?{' '}
             <Link href="/auth/login" className={styles.link}>
               Увійти
             </Link>

@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import { useEffect, type ReactNode } from "react";
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/authStore";
+import { useEffect, type ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/authStore';
+import { Loader } from '@/components/shared/Loader/Loader';
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -15,12 +16,12 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   useEffect(() => {
     if (!isAuthLoading && !user) {
-      router.replace("/auth/login");
+      router.replace('/auth/login');
     }
   }, [isAuthLoading, user, router]);
 
   if (isAuthLoading) {
-    return <p>Завантаження...</p>;
+    return <Loader fullScreen />;
   }
 
   if (!user) {
@@ -29,4 +30,3 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   return <>{children}</>;
 }
-

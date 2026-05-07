@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Container from "@/components/shared/Container/Container";
-import GreetingBlock from "@/components/dashboard/GreetingBlock/GreetingBlock";
+import PageHeader from '@/components/shared/PageHeader/PageHeader';
 import DiaryList from "@/components/diary/DiaryList/DiaryList";
 import DiaryEntryDetails from "@/components/diary/DiaryEntryDetails/DiaryEntryDetails";
 import { Loader } from "@/components/shared/Loader/Loader";
@@ -113,7 +113,7 @@ export default function DiaryPage() {
   return (
     <Container>
       <main className={styles.diaryPage}>
-        <GreetingBlock />
+        <PageHeader />
 
         {isLoading ? (
           <Loader size="md" />

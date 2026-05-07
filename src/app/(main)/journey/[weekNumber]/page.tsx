@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, use } from "react";
-import GreetingBlock from "@/components/GreetingBlock/GreetingBlock"; 
+import GreetingBlock from "@/components/dashboard/GreetingBlock/GreetingBlock"; 
 import WeekSelector from "@/components/shared/WeekSelector/WeekSelector";
 import { JourneyDetails } from "@/components/journey/JourneyDetails/JourneyDetails";
 import { JourneyData } from "@/types/journey";
@@ -16,7 +16,6 @@ export default function JourneyPage({ params }: Props) {
   const currentWeek = Number(weekNumber) || 1;
 
   const user = useAuthStore((state) => state.user);
-  
   const dueDate = (user as { dueDate?: string })?.dueDate || "2026-10-30";
 
   const [journeyData, setJourneyData] = useState<JourneyData | null>(null);
@@ -26,13 +25,31 @@ export default function JourneyPage({ params }: Props) {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`/api/weeks/${currentWeek}`);
-        if (response.ok) {
-          const data = await response.json();
-          setJourneyData(data);
+        const [babyResponse, momResponse] = await Promise.all([
+          fetch(`/api/weeks/${currentWeek}/baby`),
+          fetch(`/api/weeks/${currentWeek}/mom-body`),
+        ]);
+
+        if (babyResponse.ok && momResponse.ok) {
+          const babyData = await babyResponse.json();
+          const momData = await momResponse.json();
+
+          setJourneyData({
+            baby: babyData.data || babyData, 
+            mom: momData.data || momData,
+          });
+        } else {
+          const babyError = await babyResponse.json().catch(() => ({ message: "Помилка парсингу JSON" }));
+          const momError = await momResponse.json().catch(() => ({ message: "Помилка парсингу JSON" }));
+          
+          console.error(`Baby API (Статус ${babyResponse.status}):`, babyError);
+          console.error(`Mom API (Статус ${momResponse.status}):`, momError);
+          
+          setJourneyData(null);
         }
       } catch (error) {
-        console.error("Помилка завантаження даних:", error);
+        console.error("Помилка завантаження даних (Network Error):", error);
+        setJourneyData(null);
       } finally {
         setIsLoading(false);
       }
@@ -47,7 +64,10 @@ export default function JourneyPage({ params }: Props) {
       
       <WeekSelector dueDate={dueDate} />
       
-      <JourneyDetails data={journeyData as JourneyData} isLoading={isLoading} />
+      {/* Рендеримо JourneyDetails тільки якщо йде лоадінг або успішно отримані дані */}
+      {isLoading || journeyData ? (
+        <JourneyDetails data={journeyData as JourneyData} isLoading={isLoading} />
+      ) : null}
     </>
   );
 }

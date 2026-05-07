@@ -6,13 +6,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import toast from 'react-hot-toast';
 
+import Logo from '@/components/shared/Logo/Logo';
 import { navigationItems } from '@/lib/constants/navigation';
 import { useAuthStore } from '@/store/authStore';
 import UserBar from '@/components/layout/UserBar/UserBar';
 import AuthBar from '@/components/layout/AuthBar/AuthBar';
 import ConfirmationModal from '@/components/shared/ConfirmationModal/ConfirmationModal';
 
-import css from './Sidebar.module.css';
+import css from './sidebar.module.css';
 
 const iconMap: Record<string, string> = {
   '/': 'my-day',
@@ -53,6 +54,7 @@ export default function Sidebar({
       if (!response.ok) throw new Error('Не вдалося вийти з акаунту');
 
       clearUser();
+
       setIsLogoutModalOpen(false);
       onCloseMobileMenu();
       router.push('/');
@@ -93,18 +95,15 @@ export default function Sidebar({
           </button>
         </div>
 
-        {/* ЗАГОЛОВОК МЕНЮ */}
-        <div className={css.sidebarHeader}></div>
-
         <nav aria-label="Main navigation" className={css.nav}>
           <ul className={css.navList}>
             {navigationItems.map((item) => {
               const targetHref = isAuthenticated ? item.href : '/auth/login';
+
               const isActive =
                 item.href === '/'
                   ? pathname === '/'
                   : pathname.startsWith(item.href);
-              const iconName = iconMap[item.href] || 'activity';
 
               return (
                 <li key={item.label}>
