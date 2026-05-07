@@ -5,7 +5,9 @@ const BACKEND_URL =
 
 export async function PATCH(request, { params }) {
   try {
-    const { taskId } = params;
+    // ВАЖЛИВО: додаємо await для params (Next.js 15+)
+    const { taskId } = await params;
+    
     const body = await request.json();
     const cookie = request.headers.get("cookie");
 
@@ -21,7 +23,7 @@ export async function PATCH(request, { params }) {
     const data = await response.json();
 
     return NextResponse.json(data, { status: response.status });
-  } catch {
+  } catch (error) {
     return NextResponse.json(
       { message: "Не вдалося оновити статус завдання" },
       { status: 500 }

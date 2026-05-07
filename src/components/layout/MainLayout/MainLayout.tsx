@@ -3,8 +3,8 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 
-import Header from "@/components/layout/Header/Header";
-import Sidebar from "@/components/layout/Sidebar/Sidebar";
+import Header from "@/components/layout/header/header";
+import Sidebar from "@/components/layout/sidebar/sidebar";
 import Breadcrumbs from "@/components/layout/Breadcrumbs/Breadcrumbs";
 
 import css from "./MainLayout.module.css";
