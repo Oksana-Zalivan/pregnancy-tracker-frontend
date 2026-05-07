@@ -21,7 +21,7 @@
 .weekButton {
   font-family: 'Lato', sans-serif;
   padding: 16px;
-
+  color: black;
   width: 97px;
   height: 87px;
   flex: 0 0 auto;
