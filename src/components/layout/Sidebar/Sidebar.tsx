@@ -15,13 +15,6 @@ import ConfirmationModal from '@/components/shared/ConfirmationModal/Confirmatio
 
 import css from './Sidebar.module.css';
 
-const iconMap: Record<string, string> = {
-  '/': 'my-day',
-  '/journey/1': 'journey',
-  '/diary': 'diary',
-  '/profile': 'profile',
-};
-
 type SidebarProps = {
   isMobileMenuOpen: boolean;
   onCloseMobileMenu: () => void;
@@ -46,17 +39,21 @@ export default function Sidebar({
   const handleLogout = async () => {
     try {
       setIsLogoutLoading(true);
+
       const response = await fetch('/api/auth/logout', {
         method: 'POST',
         credentials: 'include',
       });
 
-      if (!response.ok) throw new Error('Не вдалося вийти з акаунту');
+      if (!response.ok) {
+        throw new Error('Не вдалося вийти з акаунту');
+      }
 
       clearUser();
 
       setIsLogoutModalOpen(false);
       onCloseMobileMenu();
+
       router.push('/');
       router.refresh();
     } catch {
@@ -76,12 +73,12 @@ export default function Sidebar({
       <aside
         className={clsx(css.sidebar, isMobileMenuOpen && css.sidebarMobileOpen)}
       >
-        <div className={css.sidebarHeaderTop}>
-          <Link href="/" className={css.logoLink} onClick={onCloseMobileMenu}>
-            <svg width="105" height="45">
-              <use href="/images/sprite.svg#icon-logo" />
-            </svg>
-          </Link>
+        <div className={css.logoWrapper}>
+          <Logo />
+        </div>
+
+        <div className={css.sidebarHeader}>
+          <p className={css.sidebarTitle}>Меню</p>
 
           <button
             type="button"
@@ -89,9 +86,7 @@ export default function Sidebar({
             onClick={onCloseMobileMenu}
             aria-label="Закрити меню"
           >
-            <svg width="24" height="24" className={css.closeIcon}>
-              <use href="/images/sprite.svg#icon-close" />
-            </svg>
+            ✕
           </button>
         </div>
 
@@ -113,8 +108,9 @@ export default function Sidebar({
                     onClick={onCloseMobileMenu}
                   >
                     <svg className={css.navIcon} width="24" height="24">
-                      <use href={`/images/sprite.svg#icon-${iconName}`} />
+                      <use href={item.icon} />
                     </svg>
+
                     <span>{item.label}</span>
                   </Link>
                 </li>
