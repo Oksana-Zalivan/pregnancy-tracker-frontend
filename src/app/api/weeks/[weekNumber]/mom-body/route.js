@@ -5,30 +5,26 @@ const BACKEND_URL =
 
 export async function GET(req, { params }) {
   try {
-    const { weekNumber } = params;
+    // ВАЖЛИВО: У Next.js 15 params треба чекати через await
+    const resolvedParams = await params;
+    const weekNumber = resolvedParams.weekNumber;
+    
     const cookie = req.headers.get("cookie");
 
-    const response = await fetch(
-      `${BACKEND_URL}/weeks/${weekNumber}/mom-body`,
-      {
-        headers: {
-          ...(cookie && { cookie }),
-        },
-        cache: "no-store",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/weeks/${weekNumber}/mom-body`, {
+      headers: {
+        ...(cookie && { cookie }),
+      },
+      cache: "no-store",
+    });
 
     const data = await response.json();
 
     return NextResponse.json(data, { status: response.status });
   } catch {
     return NextResponse.json(
-      {
-        message: "Не вдалося завантажити дані мами",
-      },
-      {
-        status: 500,
-      }
+      { message: "Не вдалося завантажити дані мами" },
+      { status: 500 }
     );
   }
 }
