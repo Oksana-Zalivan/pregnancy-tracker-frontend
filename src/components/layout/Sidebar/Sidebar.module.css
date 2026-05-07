@@ -20,8 +20,8 @@
   width: 280px;
   height: 100vh;
   padding: 24px 16px;
-  background-color: #FFFFFF;
-  border-right: 1px solid #E5E5E5;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e5e5;
   transform: translateX(-100%);
   transition: transform 200ms ease;
   z-index: 50;
@@ -42,13 +42,6 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
-}
-
-.sidebarHeaderTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
 }
 
 .sidebarTitle {
@@ -92,14 +85,6 @@
 }
 
 .navLink:hover {
-  background-color: #FFF4F6;
-}
-
-.activeLink {
-  background-color: #FFF4F6;
-  font-weight: 700;
-}
-
   background-color: #fff4f6;
 }
 
@@ -144,7 +129,7 @@
   .logoWrapper {
     display: flex;
     align-items: center;
-    margin-bottom: 0;
+    margin-bottom: 16px;
     padding: 0 8px;
   }
 
