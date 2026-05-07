@@ -71,8 +71,20 @@
     --foreground: black;
   }
 }
+ul {
+	list-style-type: none
+}
+p {
+font-family: var(--font-family);
+font-weight: 400;
+font-size: 16px;
+line-height: 150%;
+color: var(--color-scheme-text);
+}
 
-
+li {
+	
+}
 html {
   height: 100%;
 }
