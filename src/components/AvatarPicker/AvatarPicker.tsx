@@ -60,7 +60,7 @@ export default function AvatarPicker() {
   };
 
   return (
-    <div>
+    <div className={styles.avatarBox}>
       <Image
         src={avatarUrl}
         alt={'Аватар користувача'}
