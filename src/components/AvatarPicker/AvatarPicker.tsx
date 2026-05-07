@@ -7,7 +7,7 @@ import styles from './AvatarPicker.module.css';
 export default function AvatarPicker() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState('/icons/default-avatar.svg');
+  const [avatarUrl, setAvatarUrl] = useState('/images/placeholder-avatar.jpg');
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -45,7 +45,7 @@ export default function AvatarPicker() {
 
       if (!response.ok) {
         toast.error(data.message || 'Не вдалося оновити аватар.');
-        setAvatarUrl('/icons/default-avatar.svg');
+        setAvatarUrl('/images/placeholder-avatar.jpg');
         return;
       }
 
