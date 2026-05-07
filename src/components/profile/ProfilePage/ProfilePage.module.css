@@ -6,6 +6,7 @@
   width: 100%;
   max-width: 375px;
   margin: 0 auto;
+  padding: 0 20px 24px;
 }
 
 .headerBlock {
@@ -23,6 +24,7 @@
 @media screen and (min-width: 768px) {
   .content {
     max-width: 768px;
+    padding: 0;
   }
 
   .headerBlock {
@@ -36,6 +38,7 @@
   .content {
     max-width: 644px;
     margin: 0;
+    padding: 0;
   }
 
   .headerBlock {
