@@ -29,7 +29,8 @@ export async function POST(req) {
     }
 
     return nextResponse;
-  } catch {
+  } catch (error) {
+    console.log(error);
     return NextResponse.json(
       {
         message: 'Проблема з мережею або сервером. Спробуйте пізніше.',
