@@ -14,6 +14,13 @@ import ConfirmationModal from '@/components/shared/ConfirmationModal/Confirmatio
 
 import css from './Sidebar.module.css';
 
+const iconMap: Record<string, string> = {
+  '/': 'my-day',
+  '/journey/1': 'journey',
+  '/diary': 'diary',
+  '/profile': 'profile',
+};
+
 type SidebarProps = {
   isMobileMenuOpen: boolean;
   onCloseMobileMenu: () => void;
@@ -38,20 +45,16 @@ export default function Sidebar({
   const handleLogout = async () => {
     try {
       setIsLogoutLoading(true);
-
       const response = await fetch('/api/auth/logout', {
         method: 'POST',
         credentials: 'include',
       });
 
-      if (!response.ok) {
-        throw new Error('Не вдалося вийти з акаунту');
-      }
+      if (!response.ok) throw new Error('Не вдалося вийти з акаунту');
 
       clearUser();
       setIsLogoutModalOpen(false);
       onCloseMobileMenu();
-
       router.push('/');
       router.refresh();
     } catch {
@@ -63,18 +66,20 @@ export default function Sidebar({
 
   return (
     <>
-      {/* backdrop */}
       <div
         className={clsx(css.backdrop, isMobileMenuOpen && css.backdropVisible)}
         onClick={onCloseMobileMenu}
       />
 
-      {/* sidebar */}
       <aside
         className={clsx(css.sidebar, isMobileMenuOpen && css.sidebarMobileOpen)}
       >
-        <div className={css.sidebarHeader}>
-          <p className={css.sidebarTitle}>Меню</p>
+        <div className={css.sidebarHeaderTop}>
+          <Link href="/" className={css.logoLink} onClick={onCloseMobileMenu}>
+            <svg width="105" height="45">
+              <use href="/images/sprite.svg#icon-logo" />
+            </svg>
+          </Link>
 
           <button
             type="button"
@@ -82,17 +87,24 @@ export default function Sidebar({
             onClick={onCloseMobileMenu}
             aria-label="Закрити меню"
           >
-            ✕
+            <svg width="24" height="24" className={css.closeIcon}>
+              <use href="/images/sprite.svg#icon-close" />
+            </svg>
           </button>
         </div>
 
-        {/* navigation */}
+        {/* ЗАГОЛОВОК МЕНЮ */}
+        <div className={css.sidebarHeader}></div>
+
         <nav aria-label="Main navigation" className={css.nav}>
           <ul className={css.navList}>
             {navigationItems.map((item) => {
               const targetHref = isAuthenticated ? item.href : '/auth/login';
-
-              const isActive = pathname.startsWith(item.href);
+              const isActive =
+                item.href === '/'
+                  ? pathname === '/'
+                  : pathname.startsWith(item.href);
+              const iconName = iconMap[item.href] || 'activity';
 
               return (
                 <li key={item.label}>
@@ -101,7 +113,10 @@ export default function Sidebar({
                     className={clsx(css.navLink, isActive && css.activeLink)}
                     onClick={onCloseMobileMenu}
                   >
-                    {item.label}
+                    <svg className={css.navIcon} width="24" height="24">
+                      <use href={`/images/sprite.svg#icon-${iconName}`} />
+                    </svg>
+                    <span>{item.label}</span>
                   </Link>
                 </li>
               );
@@ -109,7 +124,6 @@ export default function Sidebar({
           </ul>
         </nav>
 
-        {/* footer */}
         <div className={css.sidebarFooter}>
           {isAuthLoading ? null : isAuthenticated && user ? (
             <UserBar user={user} onLogout={() => setIsLogoutModalOpen(true)} />
@@ -119,7 +133,6 @@ export default function Sidebar({
         </div>
       </aside>
 
-      {/* logout modal */}
       <ConfirmationModal
         isOpen={isLogoutModalOpen}
         title="Ви впевнені, що хочете вийти?"

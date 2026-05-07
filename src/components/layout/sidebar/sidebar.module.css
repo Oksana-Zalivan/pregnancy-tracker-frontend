@@ -20,8 +20,8 @@
   width: 280px;
   height: 100vh;
   padding: 24px 16px;
-  background-color: #ffffff;
-  border-right: 1px solid #e5e5e5;
+  background-color: #FFFFFF;
+  border-right: 1px solid #E5E5E5;
   transform: translateX(-100%);
   transition: transform 200ms ease;
   z-index: 50;
@@ -33,11 +33,22 @@
   transform: translateX(0);
 }
 
+.logoWrapper {
+  display: none;
+}
+
 .sidebarHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
+}
+
+.sidebarHeaderTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
 .sidebarTitle {
@@ -53,55 +64,57 @@
   line-height: 1;
 }
 
+.nav {
+  flex: 1;
+}
+
 .navList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   list-style: none;
 }
 
-.profileCard {
-  margin-top: auto;
+.navLink {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding-top: 24px;
-  border-top: 1px solid #efebeb;
-}
-
-.profileAvatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.profileMeta {
-  min-width: 0;
-}
-
-.profileName {
-  font-weight: 700;
-  color: #1d1717;
-}
-
-.profileEmail {
-  margin-top: 4px;
-  color: #6b6161;
-  font-size: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.navLink {
-  display: block;
-  padding: 10px 12px;
+  width: 100%;
+  padding: 8px 12px;
   border-radius: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+  color: #000000;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.navLink:hover {
+  background-color: #FFF4F6;
 }
 
 .activeLink {
-  background-color: #f3f3f3;
+  background-color: #FFF4F6;
   font-weight: 700;
+}
+
+.navIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  fill: #000000;
+  stroke: #000000;
+}
+
+.navIcon path {
+  fill: #000000;
+  stroke: #000000;
+}
+
+.sidebarFooter {
+  margin-top: auto;
 }
 
 @media screen and (min-width: 1440px) {
@@ -113,17 +126,29 @@
     position: sticky;
     top: 0;
     transform: translateX(0);
-    width: 280px;
+    width: 312px;
     height: 100vh;
+    padding: 16px;
     flex-shrink: 0;
     z-index: auto;
   }
 
+  .logoWrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    padding: 0 8px;
+  }
+
   .sidebarHeader {
-    justify-content: flex-start;
+    display: none;
   }
 
   .closeButton {
     display: none;
+  }
+
+  .nav {
+    margin-top: 0;
   }
 }
