@@ -85,6 +85,7 @@
   height: 14px;
   filter: brightness(0) invert(1);
   display: block;
+  fill: #fff;
 }
 .taskText {
   font-size: 12px;

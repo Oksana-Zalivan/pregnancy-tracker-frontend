@@ -7,7 +7,7 @@ import { Loader } from "@/components/shared/Loader/Loader";
 import AddTaskModal from "@/components/AddTaskModal/AddTaskModal";
 import AddTaskForm from "@/components/AddTaskForm/AddTaskForm";
 import styles from "./TasksReminderCard.module.css";
-
+import Image from 'next/image';
 type Task = {
   _id: string;
   date: string;
@@ -48,10 +48,10 @@ export default function TasksReminderCard() {
     }
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     fetchTasks();
   }, []);
-
+ */
   const handleAddTask = () => {
     setIsAddTaskModalOpen(true);
   };
@@ -147,7 +147,7 @@ export default function TasksReminderCard() {
           >
             {task.isDone && (
               <svg className={styles.checkboxIcon} width="16" height="16">
-                <use href="/icons/sprite.svg#icon-check" />
+                <use href="/public/images/sprite.svg#icon-check" />
               </svg>
             )}
           </span>
@@ -176,10 +176,10 @@ export default function TasksReminderCard() {
           className={styles.addTaskButton}
           onClick={handleAddTask}
         >
-          <img src="/icons/add.svg" alt="Додати завдання" />
+          <Image src="/public/images/sprite.svg#icon-add" width={24} height={24} alt="Додати завдання" />
         </Button>
       </div>
-
+{/* sprite.svg#icon-add */}
       {isLoading ? (
         <Loader size="md" />
       ) : tasks.length === 0 ? (
