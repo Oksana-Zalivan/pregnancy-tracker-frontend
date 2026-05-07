@@ -47,7 +47,14 @@ export default function LoginForm() {
       const data = await response.json();
 
       if (!response.ok) {
-        toast.error(data.message || 'Не вдалося увійти');
+        if (data.message?.toLowerCase().includes('email')) {
+          toast.error('Неправильно введена електронна адреса');
+        } else if (data.message?.toLowerCase().includes('password')) {
+          toast.error('Неправильно введений пароль');
+        } else {
+          toast.error(data.message || 'Не вдалося ввійти');
+        }
+
         return;
       }
 
