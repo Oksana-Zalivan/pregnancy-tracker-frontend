@@ -13,13 +13,14 @@ export const MomTab = ({ data }: Props) => {
       <div className={styles.left}>
         <div className={styles.card}>
           <h3>Як ви можете почуватись</h3>
-          <p>{data.feelings.sensationDescr}</p>
 
           <ul>
             {data.feelings.states.map((state, i) => (
-              <li key={i}>{state}</li>
+              <li key={i} className={styles.list}>{state}</li>
             ))}
           </ul>
+          <p className={styles.txt}>{data.feelings.sensationDescr}</p>
+
         </div>
 
         <div className={styles.card}>

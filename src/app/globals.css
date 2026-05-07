@@ -83,7 +83,7 @@ color: var(--color-scheme-text);
 }
 
 li {
-	
+	font-family: var(--font-family);
 }
 html {
   height: 100%;
