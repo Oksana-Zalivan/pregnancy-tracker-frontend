@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, use } from "react";
-import GreetingBlock from "@/components/GreetingBlock/GreetingBlock"; 
+import GreetingBlock from "@/components/dashboard/GreetingBlock/GreetingBlock"; 
 import WeekSelector from "@/components/shared/WeekSelector/WeekSelector";
 import { JourneyDetails } from "@/components/journey/JourneyDetails/JourneyDetails";
 import { JourneyData } from "@/types/journey";

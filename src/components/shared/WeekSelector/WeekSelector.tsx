@@ -60,9 +60,11 @@ export default function WeekSelector({ dueDate }: WeekSelectorProps) {
             )}
             onClick={() => handleClick(week)}
             disabled={isFuture}
-          >
-            {week}
-            Тиждень
+            >
+            <div className="box">
+            <span className="num-week-txt">{week}</span>
+            </div>
+            <span className="week-txt">Тиждень</span>
           </button>
         );
       })}
