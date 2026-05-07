@@ -1,4 +1,4 @@
- "use client"
+"use client"
 import css from "./UserBar.module.css";
 
 type User = {

@@ -6,13 +6,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import toast from 'react-hot-toast';
 
+import Logo from '@/components/shared/Logo/Logo';
 import { navigationItems } from '@/lib/constants/navigation';
 import { useAuthStore } from '@/store/authStore';
 import UserBar from '@/components/layout/UserBar/UserBar';
 import AuthBar from '@/components/layout/AuthBar/AuthBar';
 import ConfirmationModal from '@/components/shared/ConfirmationModal/ConfirmationModal';
 
-import css from './sidebar.module.css';
+import css from './Sidebar.module.css';
 
 type SidebarProps = {
   isMobileMenuOpen: boolean;
@@ -49,6 +50,7 @@ export default function Sidebar({
       }
 
       clearUser();
+
       setIsLogoutModalOpen(false);
       onCloseMobileMenu();
 
@@ -63,16 +65,18 @@ export default function Sidebar({
 
   return (
     <>
-      {/* backdrop */}
       <div
         className={clsx(css.backdrop, isMobileMenuOpen && css.backdropVisible)}
         onClick={onCloseMobileMenu}
       />
 
-      {/* sidebar */}
       <aside
         className={clsx(css.sidebar, isMobileMenuOpen && css.sidebarMobileOpen)}
       >
+        <div className={css.logoWrapper}>
+          <Logo />
+        </div>
+
         <div className={css.sidebarHeader}>
           <p className={css.sidebarTitle}>Меню</p>
 
@@ -86,13 +90,15 @@ export default function Sidebar({
           </button>
         </div>
 
-        {/* navigation */}
         <nav aria-label="Main navigation" className={css.nav}>
           <ul className={css.navList}>
             {navigationItems.map((item) => {
               const targetHref = isAuthenticated ? item.href : '/auth/login';
 
-              const isActive = pathname.startsWith(item.href);
+              const isActive =
+                item.href === '/'
+                  ? pathname === '/'
+                  : pathname.startsWith(item.href);
 
               return (
                 <li key={item.label}>
@@ -101,7 +107,11 @@ export default function Sidebar({
                     className={clsx(css.navLink, isActive && css.activeLink)}
                     onClick={onCloseMobileMenu}
                   >
-                    {item.label}
+                    <svg className={css.navIcon} width="24" height="24">
+                      <use href={item.icon} />
+                    </svg>
+
+                    <span>{item.label}</span>
                   </Link>
                 </li>
               );
@@ -109,7 +119,6 @@ export default function Sidebar({
           </ul>
         </nav>
 
-        {/* footer */}
         <div className={css.sidebarFooter}>
           {isAuthLoading ? null : isAuthenticated && user ? (
             <UserBar user={user} onLogout={() => setIsLogoutModalOpen(true)} />
@@ -119,7 +128,6 @@ export default function Sidebar({
         </div>
       </aside>
 
-      {/* logout modal */}
       <ConfirmationModal
         isOpen={isLogoutModalOpen}
         title="Ви впевнені, що хочете вийти?"
