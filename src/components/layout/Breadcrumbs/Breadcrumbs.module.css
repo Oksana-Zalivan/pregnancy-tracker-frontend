@@ -1,11 +1,15 @@
 .breadcrumbs {
   width: 100%;
+  padding-top: 24px;
 }
 
 .list {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 8px;
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
@@ -15,14 +19,26 @@
   gap: 8px;
 }
 
+.link,
+.current {
+  font-family: var(--font-lato);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
 .link {
-  color: #555555;
+  color: #000000;
+  text-decoration: none;
 }
 
 .current {
-  font-weight: 700;
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .separator {
-  color: #999999;
+  width: 7px;
+  height: 12px;
+  fill: none;
+  stroke: #000000;
 }

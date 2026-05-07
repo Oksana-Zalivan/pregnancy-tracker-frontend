@@ -1,11 +1,22 @@
-export type NavigationItem = {
-  label: string;
-  href: string;
-};
-
-export const navigationItems: NavigationItem[] = [
-  { label: "Мій день", href: "/" },
-  { label: "Подорож", href: "/journey/1" },
-  { label: "Щоденник", href: "/diary" },
-  { label: "Профіль", href: "/profile" },
+export const navigationItems = [
+  {
+    label: 'Мій день',
+    href: '/',
+    icon: '/images/sprite.svg#icon-my-day',
+  },
+  {
+    label: 'Подорож',
+    href: '/journey',
+    icon: '/images/sprite.svg#icon-journey',
+  },
+  {
+    label: 'Щоденник',
+    href: '/diary',
+    icon: '/images/sprite.svg#icon-diary',
+  },
+  {
+    label: 'Профіль',
+    href: '/profile',
+    icon: '/images/sprite.svg#icon-profile',
+  },
 ];
