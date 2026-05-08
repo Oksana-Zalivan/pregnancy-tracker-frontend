@@ -1,28 +1,45 @@
 .diaryList {
   width: 100%;
+  background-color: var(--color-pastel-pink-lighter, #fff4f6);
+  border-radius: 32px;
+  padding: 24px;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .title {
+  font-family: var(--second-family);
   font-size: 24px;
+  font-weight: 700;
+  color: var(--color-scheme-text);
+  margin: 0;
 }
 
 .createButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  font-family: var(--font-family);
+  font-size: 14px;
+  color: var(--color-scheme-text);
   cursor: pointer;
+  padding: 0;
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  list-style: none;
+  gap: 16px; 
+  list-style: none; /* Прибирає крапку */
+  margin: 0; /* Прибирає стандартний відступ браузера */
+  padding: 0; /* Прибирає стандартний відступ браузера */
 }
 
 .item {
@@ -30,6 +47,7 @@
 }
 
 .placeholder {
-  margin-top: 16px;
+  font-family: var(--font-family);
+  font-size: 16px;
+  color: var(--color-neutral, #7f7f7f);
 }
-

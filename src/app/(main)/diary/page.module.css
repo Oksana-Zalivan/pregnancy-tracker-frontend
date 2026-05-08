@@ -5,10 +5,9 @@
   padding-top: 24px;
 }
 
-/* Обгортка, в яку ми загорнемо список і деталі */
 .contentWrapper {
   display: flex;
-  flex-direction: column; /* На мобілці вони йдуть один під одним */
+  flex-direction: column;
   gap: 24px;
   width: 100%;
   margin-top: 24px;
@@ -19,23 +18,24 @@
 }
 
 .desktopOnly {
-  display: none; /* Ховаємо праву колонку на мобілці */
+  display: none;
 }
 
-/* На екранах від 1440px і більше робимо 2 колонки */
-@media screen and (min-width: 1440px) {
+/* Медіа-запит від 1024px (щоб гарантовано працювало і на ноутах) */
+@media screen and (min-width: 1024px) {
   .contentWrapper {
-    flex-direction: row; /* Ставимо їх поруч! */
+    flex-direction: row;
     align-items: flex-start;
   }
 
   .listColumn {
-    width: 350px; /* Ширина лівого меню зі списком */
+    width: 380px;
     flex-shrink: 0;
   }
 
   .desktopOnly {
     display: block;
-    flex: 1; /* Права частина займає весь вільний простір */
+    flex: 1;
+    min-width: 0; /* Рятує від "розриву" сітки */
   }
 }

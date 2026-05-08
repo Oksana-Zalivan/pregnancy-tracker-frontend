@@ -1,78 +1,64 @@
 .details {
+  width: 100%; /* ВАЖЛИВО: Замість 335px! */
+  background-color: var(--color-pastel-pink-lighter, #fff4f6);
   border-radius: 32px;
-  width: 335px;
-  background-color: #fff4f6;
-  padding: 24px 24px 55px 24px;
+  padding: 32px;
+  min-height: 400px; /* Щоб порожній стан виглядав гарно */
 }
 
-.detailsHeader {
+/* Шапка: розкидаємо групи по краях */
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.titleGroup, .dateGroup {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 12px;
 }
 
-.detailsHeader h2 {
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 140%;
-  letter-spacing: 0.01em;
-  color: #1a1a1a;
+.titleGroup h2 {
+  font-family: var(--second-family);
+  font-weight: 700;
+  font-size: 24px;
+  margin: 0;
+  color: var(--color-scheme-text);
 }
 
-.edit {
-  border-radius: 100px;
-  padding: 8px;
-  width: 40px;
-  height: 40px;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dateDiv {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.dateDiv span {
+.dateGroup span {
+  font-family: var(--font-family);
   font-weight: 400;
-  font-size: 12px;
-  line-height: 160%;
-  color: #1a1a1a;
+  font-size: 14px;
+  color: var(--color-scheme-text);
 }
 
-.delete {
+.iconButton {
+  background: transparent;
   border: none;
-  background-color: transparent;
   cursor: pointer;
+  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.delete:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 .pDiv {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 8px;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .pDiv p {
+  font-family: var(--font-family);
   font-weight: 400;
-  font-size: 14px;
-  line-height: 150%;
-  color: #1a1a1a;
+  font-size: 16px; /* Трохи збільшив для кращої читабельності */
+  line-height: 1.5;
+  color: var(--color-scheme-text);
+  margin: 0;
 }
 
 .emotions {
@@ -82,13 +68,18 @@
 }
 
 .tag {
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 160%;
-  color: black;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--color-scheme-text);
+  background-color: rgba(0, 0, 0, 0.05); /* Легкий сірий фон як на макеті */
   border-radius: 100px;
-  padding: 4px 10px;
-  display: inline-block;
-  background-color: #ffffff;
+  padding: 6px 16px;
+}
+
+.emptyText {
+  font-family: var(--font-family);
+  color: var(--color-neutral);
+  text-align: center;
+  margin-top: 40px;
 }
