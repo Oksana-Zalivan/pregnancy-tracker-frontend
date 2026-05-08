@@ -19,23 +19,22 @@ export default function OnboardingPage({
 }: OnboardingPageProps) {
   return (
     <main className={styles.page}>
-      {/* Ліва частина */}
       <section className={styles.onboardingSection}>
-        {/* Контент */}
-        <div className={styles.formWrapper}>
-          <h1 className={styles.title}>{title}</h1>
-          {children}
+        <div className={styles.onboardingContainer}>
+          <div className={styles.formWrapper}>
+            <h1 className={styles.title}>{title}</h1>
+            {children}
+          </div>
         </div>
       </section>
-      {/* Зображення правої частини сторінки */}
+
       {imageSrc && (
         <div className={styles.imageWrapper}>
           <Image
             className={styles.image}
             src={imageSrc}
             alt={imageAlt}
-            width={720}
-            height={900}
+            fill
             priority
           />
         </div>

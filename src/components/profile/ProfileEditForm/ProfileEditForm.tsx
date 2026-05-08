@@ -9,7 +9,7 @@ import { saveUserProfile } from '@/lib/profile-storage';
 import { applyTheme } from '@/lib/theme';
 import { babySexOptions, type UserProfile } from '@/types/user-profile';
 import styles from '@/components/profile/ProfileEditForm/ProfileEditForm.module.css';
-
+import { useAuthStore } from '@/store/authStore';
 type ProfileEditFormProps = {
   profile: UserProfile;
 };
@@ -49,6 +49,7 @@ function buildInitialValues(profile: UserProfile): ProfileFormValues {
 }
 
 export default function ProfileEditForm({ profile }: ProfileEditFormProps) {
+  const setUser = useAuthStore((state) => state.setUser);
   useEffect(() => {
     applyTheme(profile.gender ?? null);
   }, [profile.gender]);
@@ -80,6 +81,7 @@ export default function ProfileEditForm({ profile }: ProfileEditFormProps) {
           }
 
           saveUserProfile(data.data);
+          setUser(data.data);
           resetForm({ values: buildInitialValues(data.data) });
           applyTheme(data.data.gender ?? null);
           toast.success('Профіль успішно оновлено');

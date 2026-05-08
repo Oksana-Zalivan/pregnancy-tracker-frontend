@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import type { ReactNode } from "react";
-import { useEffect } from "react";
-import styles from "./AddDiaryEntryModal.module.css";
+import type { ReactNode } from 'react';
+import { useEffect } from 'react';
+import styles from './AddDiaryEntryModal.module.css';
 
 type AddDiaryEntryModalProps = {
   onClose: () => void;
@@ -15,11 +15,14 @@ export default function AddDiaryEntryModal({
 }: AddDiaryEntryModalProps) {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === 'Escape') onClose();
     };
 
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
   }, [onClose]);
 
   return (
@@ -31,7 +34,9 @@ export default function AddDiaryEntryModal({
           className={styles.close}
           onClick={onClose}
         >
-          ✕
+          <svg className={styles.closeIcon} width="24" height="24">
+            <use href="/images/sprite.svg#icon-close" />
+          </svg>
         </button>
 
         {children}

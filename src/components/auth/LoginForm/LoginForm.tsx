@@ -32,6 +32,7 @@ const loginSchema = Yup.object({
 export default function LoginForm() {
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
+  const clearUser = useAuthStore((state) => state.clearUser);
 
   const handleSubmit = async (values: LoginValues) => {
     try {
@@ -70,6 +71,11 @@ export default function LoginForm() {
       }
 
       const currentUser = await currentUserResponse.json();
+
+      // 1. Спочатку очищаємо старого юзера
+      clearUser();
+      // 2. Потім записуємо нового
+      setUser(currentUser.data);
 
       setUser(currentUser.data);
 
