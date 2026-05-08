@@ -14,6 +14,9 @@ export default function AuthProvider({ children }: Props) {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
+        setAuthLoading(true);
+        setUser(null);
+
         const response = await fetch('/api/users/current', {
           method: 'GET',
           credentials: 'include',
