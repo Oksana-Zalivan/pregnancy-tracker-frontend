@@ -1,6 +1,6 @@
 .page {
     min-height: 100vh;
-    background-color: #ffffff;
+    background: var(--color-scheme-background);
 }
 
 /* Ліва колонка (форма + лого) */
@@ -40,9 +40,10 @@
 .title {
     margin-bottom: 28px;
     text-align: center;
-    font-size: 32px;
+    font-size: 36px;
     line-height: 1.2;
-    font-weight: 400;
+    font-weight: 700;
+    color: var(--color-scheme-text);
 }
 
 /* Права картинка */
