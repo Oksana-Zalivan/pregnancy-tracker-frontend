@@ -81,7 +81,7 @@ export default function ProfileEditForm({ profile }: ProfileEditFormProps) {
           }
 
           saveUserProfile(data.data);
-          setUser(data.data); // ← додай це
+          setUser(data.data);
           resetForm({ values: buildInitialValues(data.data) });
           applyTheme(data.data.gender ?? null);
           toast.success('Профіль успішно оновлено');
