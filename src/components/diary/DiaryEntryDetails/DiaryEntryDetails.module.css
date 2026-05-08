@@ -1,66 +1,88 @@
 .details {
-  width: 100%; /* ВАЖЛИВО: Замість 335px! */
-  background-color: var(--color-pastel-pink-lighter, #fff4f6);
-  border-radius: 32px;
-  padding: 32px;
-  min-height: 400px; /* Щоб порожній стан виглядав гарно */
-}
-
-/* Шапка: розкидаємо групи по краях */
-.topRow {
+  border-radius: 16px;
+  width: 100%;
+  height: 100%;
+  background-color: #fff4f6;
+  padding: 24px 16px;
+  box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 24px;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
 }
 
-.titleGroup, .dateGroup {
+.empty {
+  font-size: 14px;
+  color: #888;
+  margin: 0;
+}
+
+/* Header row: title + edit button */
+.detailsHeader {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.titleGroup h2 {
-  font-family: var(--second-family);
-  font-weight: 700;
-  font-size: 24px;
+.title {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  color: #1a1a1a;
   margin: 0;
-  color: var(--color-scheme-text);
 }
 
-.dateGroup span {
-  font-family: var(--font-family);
+/* Date row: date + delete button */
+.dateRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.date {
   font-weight: 400;
   font-size: 14px;
   color: var(--color-scheme-text);
 }
 
+/* Shared icon button style */
 .iconButton {
-  background: transparent;
   border: none;
   cursor: pointer;
   padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
 }
 
-.pDiv {
+.iconButton:hover {
+  opacity: 0.7;
+}
+
+/* Description paragraphs */
+.description {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 10px;
+  flex: 1;
 }
 
-.pDiv p {
-  font-family: var(--font-family);
+.description p {
   font-weight: 400;
-  font-size: 16px; /* Трохи збільшив для кращої читабельності */
-  line-height: 1.5;
-  color: var(--color-scheme-text);
+  font-size: 14px;
+  line-height: 150%;
+  color: #1a1a1a;
   margin: 0;
 }
 
+/* Emotion tags */
 .emotions {
   display: flex;
   gap: 8px;
@@ -68,18 +90,13 @@
 }
 
 .tag {
-  font-family: var(--font-family);
-  font-weight: 500;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
   font-size: 14px;
-  color: var(--color-scheme-text);
-  background-color: rgba(0, 0, 0, 0.05); /* Легкий сірий фон як на макеті */
+  line-height: 150%;
+  color: #1a1a1a;
+  background-color: #ffdae0;
   border-radius: 100px;
-  padding: 6px 16px;
-}
-
-.emptyText {
-  font-family: var(--font-family);
-  color: var(--color-neutral);
-  text-align: center;
-  margin-top: 40px;
+  padding: 2px 12px;
+  display: inline-block;
 }

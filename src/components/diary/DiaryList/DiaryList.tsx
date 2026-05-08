@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import DiaryEntryCard from "@/components/diary/DiaryEntryCard/DiaryEntryCard";
-import styles from "./DiaryList.module.css";
+import DiaryEntryCard from '@/components/diary/DiaryEntryCard/DiaryEntryCard';
+import styles from './DiaryList.module.css';
 
 // 1. ПОВЕРТАЄМО ТИПИ:
 type DiaryEntry = {
@@ -29,7 +29,7 @@ export default function DiaryList({
   return (
     <section className={styles.diaryList}>
       <div className={styles.header}>
-        <h2 className={styles.title}>Ваші записи</h2>
+        <h1 className={styles.title}>Ваші записи</h1>
 
         <button
           type="button"
@@ -37,10 +37,9 @@ export default function DiaryList({
           onClick={onCreateEntry}
         >
           Новий запис
-          {/* Іконка плюсика як на макеті */}
-          <svg  width="24" height="24">
-              <use href="/images/sprite.svg#icon-add" />
-            </svg>
+          <span className={styles.createIcon} aria-hidden="true">
+            +
+          </span>
         </button>
       </div>
 
