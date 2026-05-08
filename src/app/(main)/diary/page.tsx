@@ -9,7 +9,8 @@ import DiaryList from "@/components/diary/DiaryList/DiaryList";
 import DiaryEntryDetails from "@/components/diary/DiaryEntryDetails/DiaryEntryDetails";
 import { Loader } from "@/components/shared/Loader/Loader";
 import styles from "./page.module.css";
-
+import AddDiaryEntryForm from "@/components/diary/AddDiaryEntryForm/AddDiaryEntryForm";
+import Modal from "@/components/shared/Modal/Modal";
 type DiaryEntry = {
   _id: string;
   title: string;
@@ -25,7 +26,7 @@ type DiaryEntriesResponse = {
 
 export default function DiaryPage() {
   const router = useRouter();
-
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [entries, setEntries] = useState<DiaryEntry[]>([]);
   const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -68,9 +69,12 @@ export default function DiaryPage() {
     setSelectedEntry(entry);
   };
 
-  const handleCreateEntry = () => {
+ /*  const handleCreateEntry = () => {
     router.push("/diary/create");
-  };
+  }; */
+  const handleCreateEntry = (isOpen: boolean) => {
+    setIsModalOpen(isOpen)
+  }
 
   const handleEditEntry = (entry: DiaryEntry) => {
     router.push(`/diary/${entry._id}/edit`);
@@ -136,6 +140,11 @@ export default function DiaryPage() {
           </>
         )}
       </main>
+      {isModalOpen && 
+      <Modal isOpen = {isModalOpen} onClose={() => setIsModalOpen(false)} >
+      <AddDiaryEntryForm onClose={() => setIsModalOpen(false)}/> 
+      </Modal>
+}
     </Container>
   );
 }

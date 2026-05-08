@@ -9,6 +9,11 @@ import {
 export const PROFILE_STORAGE_KEY = 'user';
 export const PROFILE_UPDATED_EVENT = 'profile-updated';
 
+export function clearStoredUserProfile() {
+  if (typeof window === 'undefined') return;
+  window.localStorage.removeItem(PROFILE_STORAGE_KEY);
+}
+
 const allowedGenderValues = new Set<Exclude<BabySex, null>>(['girl', 'boy']);
 
 export function normalizeUserProfile(value: unknown): UserProfile {
