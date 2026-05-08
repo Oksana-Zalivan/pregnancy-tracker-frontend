@@ -8,12 +8,20 @@
 .main {
   flex: 1;
   min-width: 0;
+  
+  /* ДОДАЄМО ЦЕ: */
+  display: flex;
+  flex-direction: column; /* Змушує всі блоки йти один під одним */
+  padding: 32px; /* Універсальний відступ з усіх боків для десктопу */
+  
+  width: 100%;
 }
 
 @media screen and (min-width: 1440px) {
   .layout {
     display: grid;
     grid-template-columns: 312px 1fr;
+    
   }
 
   .main {
