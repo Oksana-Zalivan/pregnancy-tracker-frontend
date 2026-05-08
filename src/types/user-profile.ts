@@ -1,4 +1,4 @@
-export type BabySex = 'girl' | 'boy' | 'unknown';
+export type BabySex = 'girl' | 'boy' | null;
 
 export type UserProfile = {
   name: string;
@@ -11,7 +11,7 @@ export type UserProfile = {
 export const defaultUserProfile: UserProfile = {
   name: 'Ганна',
   email: 'hanna@gmail.com',
-  gender: 'unknown',
+  gender: null,
   dueDate: '2025-07-16',
   avatar: '/images/placeholder-avatar.jpg',
 };
