@@ -14,7 +14,7 @@ export async function POST(request) {
       cache: 'no-cache',
     });
 
-    const nextResponse = NextResponse(null, {
+    const nextResponse = new NextResponse(null, {
       status: response.status,
     });
 
