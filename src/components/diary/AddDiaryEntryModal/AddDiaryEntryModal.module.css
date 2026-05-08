@@ -5,19 +5,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
   background: rgba(0, 0, 0, 0.5);
 }
 
 .modal {
   position: relative;
   width: 100%;
-  max-width: 768px;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 48px 64px;
-  border-radius: 40px;
+  max-width: 335px;
+  max-height: calc(100dvh - 32px);
+  overflow: hidden;
+  border-radius: 24px;
   background: #fff;
+  padding: 56px 20px 32px;
 }
 
 .close {
@@ -42,15 +41,19 @@
   fill: none;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 768px) {
   .modal {
-    max-width: 335px;
-    padding: 32px 20px;
-    border-radius: 24px;
+    max-width: 704px;
+    padding: 64px 32px 48px;
+    border-radius: 32px;
+    overflow: hidden;
   }
+}
 
-  .close {
-    top: 16px;
-    right: 16px;
+@media screen and (min-width: 1158px) {
+  .modal {
+    max-width: 768px;
+    padding: 64px 64px 56px;
+    overflow: hidden;
   }
 }
