@@ -1,5 +1,6 @@
 .breadcrumbs {
   width: 100%;
+  margin-bottom: 24px; /* ВАЖЛИВО: Додаємо відступ, щоб відштовхнути "Доброго ранку!" */
 }
 
 .list {
@@ -16,30 +17,35 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  
 }
 
 .link,
 .current {
-  font-family: var(--font-lato);
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.6;
+  /* Використовуємо глобальну змінну, яку ми налаштували раніше для надійності */
+  font-family: var(--font-family); 
+  font-size: 14px; /* 12px може бути замалим, 14px виглядає ближче до макету */
+  font-weight: 500; /* Трохи додаємо ваги для кращої читабельності */
+  line-height: 1.5;
 }
 
 .link {
-  color: #000000;
+  color: var(--color-scheme-text); /* Використовуємо вашу тему замість жорсткого #000 */
   text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.link:hover {
+  opacity: 0.6; /* Приємний візуальний відгук при наведенні мишкою */
 }
 
 .current {
-  color: rgba(0, 0, 0, 0.4);
+  color: var(--color-neutral); /* Ваш фірмовий сірий колір для тексту */
 }
 
 .separator {
-  width: 7px;
-  height: 12px;
+  width: 16px; /* Трохи збільшуємо контейнер іконки, щоб вона не здавалася сплюснутою */
+  height: 16px;
   fill: none;
-  stroke: #000000;
+  stroke: var(--color-neutral-dark); /* Колір стрілочки */
+  opacity: 0.5;
 }
-

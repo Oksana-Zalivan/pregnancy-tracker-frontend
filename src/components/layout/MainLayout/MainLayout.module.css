@@ -17,6 +17,7 @@
   .layout {
     display: grid;
     grid-template-columns: 312px 1fr;
+    
   }
 
   .main {
