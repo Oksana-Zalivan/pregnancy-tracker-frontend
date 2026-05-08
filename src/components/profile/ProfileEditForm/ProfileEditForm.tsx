@@ -1,9 +1,12 @@
 'use client';
 
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import type { ChangeEvent } from 'react';
+import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import { saveUserProfile } from '@/lib/profile-storage';
+import { applyTheme } from '@/lib/theme';
 import { babySexOptions, type UserProfile } from '@/types/user-profile';
 import styles from '@/components/profile/ProfileEditForm/ProfileEditForm.module.css';
 
@@ -46,6 +49,10 @@ function buildInitialValues(profile: UserProfile): ProfileFormValues {
 }
 
 export default function ProfileEditForm({ profile }: ProfileEditFormProps) {
+  useEffect(() => {
+    applyTheme(profile.gender ?? null);
+  }, [profile.gender]);
+
   return (
     <Formik
       initialValues={buildInitialValues(profile)}
@@ -74,13 +81,14 @@ export default function ProfileEditForm({ profile }: ProfileEditFormProps) {
 
           saveUserProfile(data.data);
           resetForm({ values: buildInitialValues(data.data) });
+          applyTheme(data.data.gender ?? null);
           toast.success('Профіль успішно оновлено');
         } catch {
           toast.error('Проблема з мережею або сервером. Спробуйте пізніше.');
         }
       }}
     >
-      {({ dirty, errors, isSubmitting, resetForm, touched }) => (
+      {({ dirty, errors, isSubmitting, resetForm, setFieldValue, touched }) => (
         <Form className={styles.form}>
           <label className={styles.label}>
             Ім&apos;я
@@ -121,6 +129,12 @@ export default function ProfileEditForm({ profile }: ProfileEditFormProps) {
               className={`${styles.field} ${styles.select} ${
                 errors.gender && touched.gender ? styles.fieldError : ''
               }`}
+              onChange={(event: ChangeEvent<HTMLSelectElement>) => {
+                const nextGender = event.target.value as '' | 'girl' | 'boy';
+
+                setFieldValue('gender', nextGender);
+                applyTheme(nextGender || null);
+              }}
             >
               {babySexOptions.map((option) => (
                 <option key={option.value || 'empty'} value={option.value}>
