@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Image from "next/image";
-import styles from "./DiaryEntryDetails.module.css";
-import ConfirmationModal from "@/components/shared/ConfirmationModal/ConfirmationModal";
+import { useState } from 'react';
+import Image from 'next/image';
+import styles from './DiaryEntryDetails.module.css';
+import ConfirmationModal from '@/components/shared/ConfirmationModal/ConfirmationModal';
 
 type Entry = {
   _id: string;
@@ -25,7 +25,7 @@ export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
   if (!entry) {
     return (
       <div className={styles.details}>
-        <p>Наразі записи у щоденнику відсутні</p>
+        <p className={styles.empty}>Оберіть запис, щоб переглянути деталі</p>
       </div>
     );
   }
@@ -34,32 +34,45 @@ export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
     <>
       <div className={styles.details}>
         <div className={styles.detailsHeader}>
-          <h2>{entry.title}</h2>
+          <h2 className={styles.title}>{entry.title}</h2>
           <button
             type="button"
-            className={styles.edit}
+            className={styles.iconButton}
             onClick={() => onEdit(entry)}
             aria-label="Редагувати запис"
           >
-            <Image src="/icons/edit.svg" alt="Редагувати" width={24} height={24} />
+            <Image
+              src="/icons/edit.svg"
+              alt="Редагувати"
+              width={24}
+              height={24}
+            />
           </button>
         </div>
-        <div className={styles.dateDiv}>
-          <span>{entry.date}</span>
+
+        <div className={styles.dateRow}>
+          <span className={styles.date}>{entry.date}</span>
           <button
             type="button"
-            className={styles.delete}
+            className={styles.iconButton}
             onClick={() => setShowConfirm(true)}
             aria-label="Видалити запис"
           >
-            <Image src="/icons/trash.svg" alt="Видалити" width={24} height={24} />
+            <Image
+              src="/icons/trash.svg"
+              alt="Видалити"
+              width={24}
+              height={24}
+            />
           </button>
         </div>
-        <div className={styles.pDiv}>
-          {entry.description.split("\n").map((paragraph, index) => (
+
+        <div className={styles.description}>
+          {entry.description.split('\n').map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
         </div>
+
         <div className={styles.emotions}>
           {entry.emotions?.map((emotion, index) => (
             <span key={index} className={styles.tag}>
