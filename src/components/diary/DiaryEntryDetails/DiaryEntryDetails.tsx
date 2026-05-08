@@ -46,7 +46,9 @@ export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
               onClick={() => onEdit(entry)}
               aria-label="Редагувати запис"
             >
-              <Image src="/icons/edit.svg" alt="Редагувати" width={24} height={24} />
+              <svg  width="24" height="24">
+              <use href="/images/sprite.svg#icon-edit" />
+            </svg>
             </button>
           </div>
 
@@ -58,7 +60,12 @@ export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
               onClick={() => setShowConfirm(true)}
               aria-label="Видалити запис"
             >
-              <Image src="/icons/sicon-trash" alt="Видалити" width={24} height={24} />
+{/*               <Image src="/images/sprite.svg#icon-trash" alt="Видалити" width={24} height={24} />
+ */}            <svg width={24} height={24}>
+                      <use
+                        href= "/images/sprite.svg#icon-trash"
+                      ></use>
+                    </svg>
             </button>
           </div>
 
