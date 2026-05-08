@@ -1,23 +1,19 @@
-import GreetingBlock from "@/components/dashboard/GreetingBlock/GreetingBlock";
-import StatusBlock from "@/components/dashboard/StatusBlock/StatusBlock";
-import BabyTodayCard from "@/components/dashboard/BabyTodayCard/BabyTodayCard";
-import MomTipCard from "@/components/dashboard/MomTipCard/MomTipCard";
-import TasksReminderCard from "@/components/dashboard/TasksReminderCard/TasksReminderCard";
-import FeelingCheckCard from "@/components/dashboard/FeelingCheckCard/FeelingCheckCard";
-import styles from "./DashboardPage.module.css";
+import PageHeader from '@/components/shared/PageHeader/PageHeader';
+import StatusBlock from '@/components/dashboard/StatusBlock/StatusBlock';
+import BabyTodayCard from '@/components/dashboard/BabyTodayCard/BabyTodayCard';
+import MomTipCard from '@/components/dashboard/MomTipCard/MomTipCard';
+import TasksReminderCard from '@/components/dashboard/TasksReminderCard/TasksReminderCard';
+import FeelingCheckCard from '@/components/dashboard/FeelingCheckCard/FeelingCheckCard';
+import styles from './DashboardPage.module.css';
 
 export default function DashboardPage() {
   return (
     <main className={styles.page}>
-      <div className={styles.topRow}>
-        <div className={styles.greetingBlock}>
-          <GreetingBlock />
-        </div>
-      </div>
+      <PageHeader />
 
       <div className={styles.content}>
-        <div className={styles.leftColumn}>
-          <div className={styles.statusBlock}>
+        <div className={styles.mainColumn}>
+          <div className={styles.statusRow}>
             <StatusBlock />
           </div>
 
@@ -30,7 +26,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className={styles.rightColumn}>
+        <div className={styles.sideColumn}>
           <div className={styles.tasksReminderCard}>
             <TasksReminderCard />
           </div>

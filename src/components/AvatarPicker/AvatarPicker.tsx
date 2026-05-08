@@ -49,7 +49,7 @@ export default function AvatarPicker() {
         return;
       }
 
-      setAvatarUrl(data.data.avatarUrl);
+      setAvatarUrl(data.data.avatar || '/icons/default-avatar.svg');
       toast.success('Фото профілю оновлено.');
     } catch {
       toast.error('Проблема з мережею або сервером. Спробуйте пізніше.');

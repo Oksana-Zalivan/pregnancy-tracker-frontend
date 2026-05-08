@@ -5,7 +5,6 @@
   padding: 20px;
 }
 
-/* ---------------- TABS ---------------- */
 
 .tabs {
   display: flex;
@@ -24,10 +23,17 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  font-weight: 500;
+  font-family: var(--font-family);
+font-weight: 500;
+font-size: 16px;
+line-height: 160%;
+color: var(--color-scheme-text);
 }
 
-.active {
+
+
+
+.tabs button.active {
   background: #ffb6c1;
 }
 

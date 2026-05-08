@@ -2,47 +2,36 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px;
+  margin: 24px 32px auto 32px;
 }
 
-/* Верх */
-.topRow {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* Контент */
 .content {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.leftColumn,
-.rightColumn {
+.mainColumn,
+.sideColumn {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
+.statusRow {
+  width: 100%;
+}
+
 /* Tablet */
 @media (min-width: 768px) {
   .page {
-    padding: 32px;
-    gap: 24px;
-  }
-
-  .topRow {
+    margin: 24px 32px auto 32px;
     gap: 16px;
   }
 
-  .content {
-    gap: 24px;
-  }
-
-  .leftColumn,
-  .rightColumn {
+  .content,
+  .mainColumn,
+  .sideColumn {
     gap: 24px;
   }
 }
@@ -51,41 +40,27 @@
 @media (min-width: 1440px) {
   .page {
     height: 100%;
-    padding: 0;
+    margin: 24px 32px auto 32px;
     gap: 16px;
     overflow: hidden;
-  }
-
-  .topRow {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-  }
-
-  .greetingBlock {
-    padding: 0;
-  }
-
-  .statusBlock {
-    width: 642px;
-    height: 127px;
-    padding: 0;
   }
 
   .content {
     display: grid;
     grid-template-columns: 642px 390px;
-    gap: 24px;
+    gap: 32px;
     align-items: start;
   }
 
-  .leftColumn,
-  .rightColumn {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+  .mainColumn,
+  .sideColumn {
+    gap: 32px;
     min-height: 0;
-    align-self: start;
+  }
+
+  .statusRow {
+    width: 674px;
+    height: 127px;
   }
 
   .babyTodayCard {

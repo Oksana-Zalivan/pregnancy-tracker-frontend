@@ -8,7 +8,6 @@
   --z-backdrop: 900;
   --z-modal: 1000;
   --z-loader: 1100;
-
   --color-scheme-background: var(--color-white);
   --color-neutral-darkest: #000;
   --color-scheme-border: var(--opacity-neutral-darkest-15);
@@ -62,13 +61,30 @@
   --color-french-pass-lighter: #e5fafe;
   --color-french-pass-lightest: #fbfefe;
   --color-red: #c60000;
+  --font-family: "Lato", sans-serif;
+  --second-family: "Comfortaa", sans-serif;
+
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground: #ededed;
+    --foreground: black;
   }
 }
+
+ul {
+  list-style-type: none
+}
+
+p {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--color-scheme-text);
+}
+
+li {}
 
 html {
   height: 100%;
@@ -115,4 +131,32 @@ h4,
 h5,
 h6 {
   font-family: var(--font-comfortaa);
+  <<<<<<< HEAD=======
+}
+
+/* Theme by baby gender */
+
+/* Theme by baby gender */
+
+:root,
+[data-theme='neutral'] {
+  --theme-card-bg: var(--color-oasis-lighter);
+  --theme-accent-bg: var(--color-oasis-light);
+  --theme-accent: var(--color-oasis);
+  --theme-accent-border: var(--color-oasis-dark);
+}
+
+[data-theme='girl'] {
+  --theme-card-bg: var(--color-pastel-pink-lighter);
+  --theme-accent-bg: var(--color-pastel-pink-light);
+  --theme-accent: var(--color-pastel-pink);
+  --theme-accent-border: var(--color-pastel-pink-dark);
+}
+
+[data-theme='boy'] {
+  --theme-card-bg: var(--color-french-pass-lighter);
+  --theme-accent-bg: var(--color-french-pass-light);
+  --theme-accent: var(--color-french-pass);
+  --theme-accent-border: var(--color-french-pass-dark);
+  >>>>>>>main
 }
