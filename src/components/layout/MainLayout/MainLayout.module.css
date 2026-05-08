@@ -8,6 +8,9 @@
 .main {
   flex: 1;
   min-width: 0;
+  overflow-y: auto;
+  /* ← ось це головне для скролу */
+
 }
 
 @media screen and (min-width: 1440px) {
