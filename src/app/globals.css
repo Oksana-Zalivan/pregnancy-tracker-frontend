@@ -108,7 +108,6 @@ html {
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden; 
 }
 
 body {
@@ -146,3 +145,8 @@ p {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--second-family);
 }
+
+button {
+  color: #000;
+}
+

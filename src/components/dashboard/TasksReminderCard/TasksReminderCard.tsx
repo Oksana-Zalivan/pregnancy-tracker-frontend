@@ -1,6 +1,4 @@
-"use client";
-
-
+'use client';
 
 import { useEffect, useState } from "react";
 
@@ -393,6 +391,16 @@ useEffect(() => {
             <p className={styles.placeholderText}>Створіть мерщій завдання!</p>
 
           </div>
+        ) : (
+          <>
+            {todayTasks.length > 0 && (
+              <div className={styles.tasksGroup}>
+                <p className={styles.tasksGroupTitle}>Сьогодні:</p>
+                <ul className={styles.tasksList}>
+                  {todayTasks.map(renderTask)}
+                </ul>
+              </div>
+            )}
 
 
 

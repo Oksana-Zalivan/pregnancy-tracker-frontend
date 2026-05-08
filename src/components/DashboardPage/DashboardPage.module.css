@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin: 24px 32px auto 32px;
+  margin: 24px 32px auto;
 }
 
 .content {
@@ -22,13 +22,7 @@
   width: 100%;
 }
 
-/* Tablet */
 @media (min-width: 768px) {
-  .page {
-    margin: 24px 32px auto 32px;
-    gap: 16px;
-  }
-
   .content,
   .mainColumn,
   .sideColumn {
@@ -36,12 +30,9 @@
   }
 }
 
-/* Desktop */
 @media (min-width: 1440px) {
   .page {
     height: 100%;
-    margin: 24px 32px auto 32px;
-    gap: 16px;
     overflow: hidden;
   }
 
@@ -59,12 +50,12 @@
   }
 
   .statusRow {
-    width: 674px;
+    width: 642px;
     height: 127px;
   }
 
   .babyTodayCard {
-    height: 422px;
+    height: 373px;
     overflow-y: auto;
   }
 
