@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
 import css from './Breadcrumbs.module.css';
 
 const breadcrumbLabels: Record<string, string> = {
@@ -17,18 +16,17 @@ const breadcrumbLabels: Record<string, string> = {
 
 export default function Breadcrumbs() {
   const pathname = usePathname();
-
   const pathSegments = pathname.split('/').filter(Boolean);
 
   const breadcrumbs = [
     { label: 'Лелека', href: '/' },
     ...pathSegments.map((segment, index) => {
       const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
+      
+      // Якщо це число (наприклад, 15 тиждень), просто виводимо його
+      const label = breadcrumbLabels[segment] ?? segment;
 
-      return {
-        label: breadcrumbLabels[segment] ?? segment,
-        href,
-      };
+      return { label, href };
     }),
   ];
 
@@ -47,7 +45,6 @@ export default function Breadcrumbs() {
                   <Link href={breadcrumb.href} className={css.link}>
                     {breadcrumb.label}
                   </Link>
-
                   <svg className={css.separator} aria-hidden="true">
                     <use href="/images/sprite.svg#icon-right-arrow" />
                   </svg>
@@ -59,4 +56,4 @@ export default function Breadcrumbs() {
       </ol>
     </nav>
   );
-}  
+}

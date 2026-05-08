@@ -17,13 +17,14 @@
 }
 
 .tasksTitle {
-  margin: 0;
   font-family: var(--second-family);
   font-size: 20px;
   font-weight: 700;
   line-height: 1.4;
   color: #000;
 }
+
+
 
 .addTaskButton {
   width: 24px;

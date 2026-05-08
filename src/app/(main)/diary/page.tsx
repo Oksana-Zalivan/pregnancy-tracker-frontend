@@ -117,19 +117,26 @@ export default function DiaryPage() {
   return (
     <Container>
       <main className={styles.diaryPage}>
+        {/* Заголовок і крихти завжди зверху */}
         <PageHeader />
 
         {isLoading ? (
           <Loader size="md" />
         ) : (
-          <>
-            <DiaryList
-              entries={entries}
-              selectedEntryId={selectedEntry?._id}
-              onSelectEntry={handleSelectEntry}
-              onCreateEntry={handleCreateEntry}
-            />
+          /* ДОДАНО: Обгортка для колонок списку та деталей */
+          <div className={styles.contentWrapper}>
+            
+            {/* Ліва колонка (Список) */}
+            <div className={styles.listColumn}>
+              <DiaryList
+                entries={entries}
+                selectedEntryId={selectedEntry?._id}
+                onSelectEntry={handleSelectEntry}
+                onCreateEntry={handleCreateEntry}
+              />
+            </div>
 
+            {/* Права колонка (Деталі - тільки для десктопу) */}
             <div className={styles.desktopOnly}>
               <DiaryEntryDetails
                 entry={selectedEntry}
@@ -137,14 +144,16 @@ export default function DiaryPage() {
                 onDelete={handleDeleteEntry}
               />
             </div>
-          </>
+            
+          </div>
         )}
       </main>
-      {isModalOpen && 
-      <Modal isOpen = {isModalOpen} onClose={() => setIsModalOpen(false)} >
-      <AddDiaryEntryForm onClose={() => setIsModalOpen(false)}/> 
-      </Modal>
-}
+      
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <AddDiaryEntryForm onClose={() => setIsModalOpen(false)} />
+        </Modal>
+      )}
     </Container>
   );
 }

@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState, use } from "react";
-import GreetingBlock from "@/components/dashboard/GreetingBlock/GreetingBlock"; 
 import WeekSelector from "@/components/shared/WeekSelector/WeekSelector";
 import { JourneyDetails } from "@/components/journey/JourneyDetails/JourneyDetails";
 import { JourneyData } from "@/types/journey";
 import { useAuthStore } from "@/store/authStore";
-import Breadcrumbs from "@/components/layout/Breadcrumbs/Breadcrumbs"; 
+import PageHeader from "@/components/shared/PageHeader/PageHeader";
 
 type Props = {
   params: Promise<{ weekNumber: string }>;
@@ -61,9 +60,7 @@ export default function JourneyPage({ params }: Props) {
 
   return (
     <>
-      <Breadcrumbs />
-      
-      <GreetingBlock />
+      <PageHeader/>
       
       <WeekSelector dueDate={dueDate} />
       

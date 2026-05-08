@@ -1,19 +1,41 @@
 .diaryPage {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 24px;
+}
+
+/* Обгортка, в яку ми загорнемо список і деталі */
+.contentWrapper {
+  display: flex;
+  flex-direction: column; /* На мобілці вони йдуть один під одним */
+  gap: 24px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.listColumn {
+  width: 100%;
 }
 
 .desktopOnly {
-  display: none;
+  display: none; /* Ховаємо праву колонку на мобілці */
 }
 
-@media (min-width: 1440px) {
-  .diaryPage {
-    display: grid;
-    grid-template-columns: 390px 1fr;
+/* На екранах від 1440px і більше робимо 2 колонки */
+@media screen and (min-width: 1440px) {
+  .contentWrapper {
+    flex-direction: row; /* Ставимо їх поруч! */
+    align-items: flex-start;
+  }
+
+  .listColumn {
+    width: 350px; /* Ширина лівого меню зі списком */
+    flex-shrink: 0;
   }
 
   .desktopOnly {
     display: block;
+    flex: 1; /* Права частина займає весь вільний простір */
   }
 }

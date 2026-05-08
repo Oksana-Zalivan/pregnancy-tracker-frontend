@@ -1,13 +1,13 @@
 .breadcrumbs {
   width: 100%;
-  margin-bottom: 24px; /* ВАЖЛИВО: Додаємо відступ, щоб відштовхнути "Доброго ранку!" */
+  margin-bottom: 24px;
 }
 
 .list {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 8px; /* Відступ між елементами */
   margin: 0;
   padding: 0;
   list-style: none;
@@ -21,31 +21,31 @@
 
 .link,
 .current {
-  /* Використовуємо глобальну змінну, яку ми налаштували раніше для надійності */
-  font-family: var(--font-family); 
-  font-size: 14px; /* 12px може бути замалим, 14px виглядає ближче до макету */
-  font-weight: 500; /* Трохи додаємо ваги для кращої читабельності */
+  font-family: var(--font-family); /* Твій Lato */
+  font-size: 14px;
   line-height: 1.5;
+  font-weight: 400;
 }
 
 .link {
-  color: var(--color-scheme-text); /* Використовуємо вашу тему замість жорсткого #000 */
+  color: var(--color-neutral, #7f7f7f); /* Сірий колір неактивних крихт */
   text-decoration: none;
   transition: opacity 0.2s ease;
 }
 
 .link:hover {
-  opacity: 0.6; /* Приємний візуальний відгук при наведенні мишкою */
+  color: var(--color-scheme-text);
 }
 
 .current {
-  color: var(--color-neutral); /* Ваш фірмовий сірий колір для тексту */
+  color: var(--color-scheme-text); /* Темний колір поточної сторінки */
+  font-weight: 500;
 }
 
 .separator {
-  width: 16px; /* Трохи збільшуємо контейнер іконки, щоб вона не здавалася сплюснутою */
+  width: 16px;
   height: 16px;
-  fill: none;
-  stroke: var(--color-neutral-dark); /* Колір стрілочки */
+  fill: var(--color-neutral-dark, #4c4c4c); /* fill замість stroke */
+  flex-shrink: 0; /* Щоб іконку не плющило */
   opacity: 0.5;
 }
