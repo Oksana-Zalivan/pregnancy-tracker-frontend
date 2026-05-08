@@ -3,11 +3,11 @@
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import styles from './OnboardingForm.module.css';
-import { babySexOptions } from '@/types/user-profile';
-import { saveUserProfile } from '@/lib/profile-storage';
-import { defaultUserProfile } from '@/types/user-profile';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+
+import styles from './OnboardingForm.module.css';
+import { babySexOptions, defaultUserProfile } from '@/types/user-profile';
+import { saveUserProfile } from '@/lib/profile-storage';
 
 const formatDate = (date: Date) => {
   const y = date.getFullYear();
