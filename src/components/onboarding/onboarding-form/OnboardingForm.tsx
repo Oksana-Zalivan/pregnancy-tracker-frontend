@@ -21,7 +21,7 @@ const maxDueDate = getDateAfterDays(280);
 // Валідація через Yup
 const onboardingSchema = Yup.object({
   babySex: Yup.mixed<BabySex>()
-    .oneOf([null, 'girl', 'boy'], 'Оберіть коректне значення')
+    .oneOf(['unknown', 'girl', 'boy'], 'Оберіть коректне значення')
     .required('Стать дитини є обовʼязковою'),
   dueDate: Yup.date()
     .required('Планова дата пологів є обовʼязковою')
