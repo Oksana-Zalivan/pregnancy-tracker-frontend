@@ -105,6 +105,9 @@
   width: 18px;
   height: 18px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid transparent;
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.05);
@@ -112,6 +115,14 @@
 
 .checked {
   background-color: #000;
+}
+
+.checkboxIcon {
+  width: 14px;
+  height: 14px;
+  filter: brightness(0) invert(1);
+  display: block;
+  fill: #fff;
 }
 
 .taskText {

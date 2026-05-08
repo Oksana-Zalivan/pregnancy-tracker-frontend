@@ -6,6 +6,7 @@ import WeekSelector from "@/components/shared/WeekSelector/WeekSelector";
 import { JourneyDetails } from "@/components/journey/JourneyDetails/JourneyDetails";
 import { JourneyData } from "@/types/journey";
 import { useAuthStore } from "@/store/authStore";
+import Breadcrumbs from "@/components/layout/Breadcrumbs/Breadcrumbs"; 
 
 type Props = {
   params: Promise<{ weekNumber: string }>;
@@ -60,11 +61,12 @@ export default function JourneyPage({ params }: Props) {
 
   return (
     <>
+      <Breadcrumbs />
+      
       <GreetingBlock />
       
       <WeekSelector dueDate={dueDate} />
       
-      {/* Рендеримо JourneyDetails тільки якщо йде лоадінг або успішно отримані дані */}
       {isLoading || journeyData ? (
         <JourneyDetails data={journeyData as JourneyData} isLoading={isLoading} />
       ) : null}
