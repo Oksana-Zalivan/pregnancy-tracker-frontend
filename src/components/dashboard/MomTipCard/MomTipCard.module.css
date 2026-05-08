@@ -1,4 +1,4 @@
-/* -----------  MOBILE (до 767px) ----------- */
+/* ----------- MOBILE (до 767px) ----------- */
 
 .card {
   padding: 24px;
@@ -6,32 +6,44 @@
   border-radius: 32px;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* ❗ важливо для центрування по вертикалі */
+  justify-content: center;
   gap: 4px;
 }
 
 .title {
+  margin: 0;
   font-size: 20px;
   font-weight: 700;
-  color: #000000;
-  margin: 0;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: #000;
 }
 
 .text {
+  margin: 0;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.6;
-  color: #000000;
-  margin: 0;
+  color: #000;
 }
 
-/* -----------  DESKTOP (від 1280px) ----------- */
+/* ----------- TABLET ----------- */
+
+@media (min-width: 768px) {
+  .card {
+    padding: 24px 32px;
+  }
+}
+
+/* ----------- DESKTOP ----------- */
+
 @media (min-width: 1280px) {
   .title {
     font-size: 24px;
   }
 
   .text {
-    font-size: 16px;
+    font-size: 14px;
+    line-height: 1.6;
   }
 }

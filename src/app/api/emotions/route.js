@@ -7,7 +7,7 @@ export async function GET(request) {
   try {
     const cookie = request.headers.get("cookie");
 
-    const response = await fetch(BACKEND_URL + "/emotions", {
+    const response = await fetch(BACKEND_URL + "/emotion", {
       method: "GET",
       headers: {
         ...(cookie && { cookie }),

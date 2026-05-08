@@ -1,35 +1,102 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-}
-
-.input,
-.textarea {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-.textarea {
-    min-height: 100px;
-}
-
-.categories {
+    gap: 16px;
+  }
+  
+  .title {
+    margin: 0;
+    font-family: var(--second-family);
+    font-size: 32px;
+    line-height: 1.2;
+    text-align: center;
+    color: #000;
+  }
+  
+  .label,
+  .fieldBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+    color: #000;
+  }
+  
+  .labelText {
+    margin: 0;
+    font-size: 14px;
+    color: #000;
+  }
+  
+  .input,
+  .textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.05);
+    font-size: 14px;
+    color: #000;
+    outline: none;
+  }
+  
+  .input:focus,
+  .textarea:focus {
+    border-color: var(--theme-accent, #ffcbd3);
+    background: #fff;
+  }
+  
+  .textarea {
+    min-height: 120px;
+    resize: none;
+  }
+  
+  .categories {
+    max-height: 96px;
+    overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-}
-
-.error {
-    color: red;
+    gap: 8px;
+    padding-right: 4px;
+  }
+  
+  .category {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    border-radius: 100px;
+    background: rgba(0, 0, 0, 0.05);
     font-size: 12px;
-}
-
-.button {
-    background: #ffc4d0;
-    border: none;
-    padding: 10px;
-    border-radius: 999px;
+    line-height: 1.4;
+    color: #000;
     cursor: pointer;
-}
+  }
+  
+  .category input {
+    width: 14px;
+    height: 14px;
+    accent-color: #000;
+  }
+  
+  .error {
+    color: #c60000;
+    font-size: 12px;
+  }
+  
+  .button {
+    width: 100%;
+    min-height: 46px;
+    border: none;
+    border-bottom: 4px solid var(--theme-accent, #ffcbd3);
+    border-radius: 100px;
+    background: var(--theme-accent-bg, #ffdae0);
+    color: #000;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
