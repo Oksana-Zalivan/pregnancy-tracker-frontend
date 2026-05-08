@@ -12,6 +12,7 @@ import { useAuthStore } from '@/store/authStore';
 import UserBar from '@/components/layout/UserBar/UserBar';
 import AuthBar from '@/components/layout/AuthBar/AuthBar';
 import ConfirmationModal from '@/components/shared/ConfirmationModal/ConfirmationModal';
+import { clearStoredUserProfile } from '@/lib/profile-storage';
 
 import css from './Sidebar.module.css';
 
@@ -50,6 +51,7 @@ export default function Sidebar({
       }
 
       clearUser();
+      clearStoredUserProfile();
 
       setIsLogoutModalOpen(false);
       onCloseMobileMenu();

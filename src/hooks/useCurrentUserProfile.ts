@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   getStoredUserProfile,
   normalizeUserProfile,
   PROFILE_STORAGE_KEY,
   PROFILE_UPDATED_EVENT,
   saveUserProfile,
-} from "@/lib/profile-storage";
-import { defaultUserProfile, type UserProfile } from "@/types/user-profile";
+} from '@/lib/profile-storage';
+import { defaultUserProfile, type UserProfile } from '@/types/user-profile';
 
 export function useCurrentUserProfile() {
   const [state, setState] = useState(() => {
@@ -16,16 +16,16 @@ export function useCurrentUserProfile() {
 
     return {
       profile: storedProfile ?? defaultUserProfile,
-      isLoading: !storedProfile,
+      isLoading: true,
     };
   });
 
   useEffect(() => {
     if (state.isLoading) {
-      void fetch("/api/users/current")
+      void fetch('/api/users/current')
         .then(async (response) => {
           if (!response.ok) {
-            throw new Error("Failed to load profile");
+            throw new Error('Failed to load profile');
           }
 
           const data = await response.json();
@@ -80,13 +80,14 @@ export function useCurrentUserProfile() {
     };
 
     window.addEventListener(PROFILE_UPDATED_EVENT, handleProfileUpdate);
-    window.addEventListener("storage", handleStorage);
+    window.addEventListener('storage', handleStorage);
 
     return () => {
       window.removeEventListener(PROFILE_UPDATED_EVENT, handleProfileUpdate);
-      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener('storage', handleStorage);
     };
-  }, [state.isLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return state;
 }
