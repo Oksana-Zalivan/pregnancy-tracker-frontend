@@ -118,6 +118,7 @@
 .checked {
   background-color: #000;
 }
+
 .checkboxIcon {
   width: 14px;
   height: 14px;
@@ -125,6 +126,7 @@
   display: block;
   fill: #fff;
 }
+
 .taskText {
   margin: 0;
   font-family: var(--font-family);
