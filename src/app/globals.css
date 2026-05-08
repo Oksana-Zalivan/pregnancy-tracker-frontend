@@ -132,3 +132,28 @@ h6 {
   font-family: var(--font-comfortaa);
 }
 
+/* Theme by baby gender */
+
+/* Theme by baby gender */
+
+:root,
+[data-theme='neutral'] {
+  --theme-card-bg: var(--color-oasis-lighter);
+  --theme-accent-bg: var(--color-oasis-light);
+  --theme-accent: var(--color-oasis);
+  --theme-accent-border: var(--color-oasis-dark);
+}
+
+[data-theme='girl'] {
+  --theme-card-bg: var(--color-pastel-pink-lighter);
+  --theme-accent-bg: var(--color-pastel-pink-light);
+  --theme-accent: var(--color-pastel-pink);
+  --theme-accent-border: var(--color-pastel-pink-dark);
+}
+
+[data-theme='boy'] {
+  --theme-card-bg: var(--color-french-pass-lighter);
+  --theme-accent-bg: var(--color-french-pass-light);
+  --theme-accent: var(--color-french-pass);
+  --theme-accent-border: var(--color-french-pass-dark);
+}
