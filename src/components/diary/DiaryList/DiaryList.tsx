@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import DiaryEntryCard from "@/components/diary/DiaryEntryCard/DiaryEntryCard";
-import styles from "./DiaryList.module.css";
+import DiaryEntryCard from '@/components/diary/DiaryEntryCard/DiaryEntryCard';
+import styles from './DiaryList.module.css';
 
 type DiaryEntry = {
   _id: string;
@@ -27,7 +27,7 @@ export default function DiaryList({
   return (
     <section className={styles.diaryList}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Щоденник</h1>
+        <h1 className={styles.title}>Ваші записи</h1>
 
         <button
           type="button"
@@ -35,6 +35,9 @@ export default function DiaryList({
           onClick={onCreateEntry}
         >
           Новий запис
+          <span className={styles.createIcon} aria-hidden="true">
+            +
+          </span>
         </button>
       </div>
 
