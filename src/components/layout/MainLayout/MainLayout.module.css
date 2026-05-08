@@ -8,12 +8,16 @@
 .main {
   flex: 1;
   min-width: 0;
+  overflow-y: auto;
+  /* ← ось це головне для скролу */
+
 }
 
 @media screen and (min-width: 1440px) {
   .layout {
     display: grid;
     grid-template-columns: 312px 1fr;
+    
   }
 
   .main {
