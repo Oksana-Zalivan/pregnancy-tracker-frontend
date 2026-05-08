@@ -9,32 +9,52 @@ import { saveUserProfile } from '@/lib/profile-storage';
 import { defaultUserProfile } from '@/types/user-profile';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
+const formatDate = (date: Date) => {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+
+  return `${y}-${m}-${d}`;
+};
+
 const getDateAfterDays = (days: number) => {
   const date = new Date();
+
+  date.setHours(0, 0, 0, 0);
   date.setDate(date.getDate() + days);
-  return date.toISOString().split('T')[0];
+
+  return formatDate(date);
 };
 
 const minDueDate = getDateAfterDays(7);
 const maxDueDate = getDateAfterDays(280);
 
-// Валідація через Yup
 const onboardingSchema = Yup.object({
-  babySex: Yup.mixed<'' | 'girl' | 'boy'>()
+  gender: Yup.mixed<'' | 'girl' | 'boy'>()
     .oneOf(['girl', 'boy', ''], 'Оберіть коректне значення')
     .required('Стать дитини є обовʼязковою'),
-  dueDate: Yup.date()
+
+  dueDate: Yup.string()
     .required('Планова дата пологів є обовʼязковою')
-    .min(new Date(minDueDate), 'Дата має бути не раніше ніж через 1 тиждень')
-    .max(new Date(maxDueDate), 'Дата має бути не пізніше ніж через 40 тижнів'),
+    .matches(/^\d{4}-\d{2}-\d{2}$/, 'Некоректний формат дати')
+    .test(
+      'range',
+      'Дата має бути від +1 тижня до +40 тижнів від сьогодні',
+      (value) => {
+        if (!value) return false;
+
+        return value >= minDueDate && value <= maxDueDate;
+      },
+    ),
 });
 
 export default function OnboardingForm() {
   const router = useRouter();
+
   return (
     <Formik
       initialValues={{
-        gender: defaultUserProfile.gender,
+        gender: defaultUserProfile.gender ?? '',
         dueDate: '',
       }}
       validationSchema={onboardingSchema}
@@ -57,7 +77,9 @@ export default function OnboardingForm() {
           }
 
           saveUserProfile(data.data);
+
           toast.success('Вітаю! Профіль успішно оновлено');
+
           router.push('/');
         } catch {
           toast.error('Проблема з мережею або сервером. Спробуйте пізніше.');
@@ -68,12 +90,17 @@ export default function OnboardingForm() {
         <Form className={styles.form}>
           <label className={styles.label}>
             Стать дитини
+
             <Field
               as="select"
-              name="babySex"
+              name="gender"
               className={`${styles.field} ${styles.select} ${
                 errors.gender && touched.gender ? styles.fieldError : ''
-              } ${values.gender !== defaultUserProfile.gender ? styles.fieldFilled : ''}`}
+              } ${
+                values.gender !== (defaultUserProfile.gender ?? '')
+                  ? styles.fieldFilled
+                  : ''
+              }`}
             >
               {babySexOptions.map((option) => (
                 <option value={option.value} key={option.value}>
@@ -81,19 +108,29 @@ export default function OnboardingForm() {
                 </option>
               ))}
             </Field>
+
             <ErrorMessage
               name="gender"
               component="span"
               className={styles.error}
             />
           </label>
+
           <label className={styles.label}>
             Планова дата пологів
+
             <Field
               name="dueDate"
               type="date"
-              className={`${styles.field} ${styles.dateField} ${errors.dueDate && touched.dueDate ? styles.fieldError : ''} ${values.dueDate ? styles.fieldFilled : ''}`}
+              min={minDueDate}
+              max={maxDueDate}
+              className={`${styles.field} ${styles.dateField} ${
+                errors.dueDate && touched.dueDate
+                  ? styles.fieldError
+                  : ''
+              } ${values.dueDate ? styles.fieldFilled : ''}`}
             />
+
             <ErrorMessage
               name="dueDate"
               component="span"
