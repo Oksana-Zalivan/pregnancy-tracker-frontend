@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import styles from './OnboardingForm.module.css';
 import { babySexOptions } from '@/types/user-profile';
 import { saveUserProfile } from '@/lib/profile-storage';
-import { defaultUserProfile } from '@/types/user-profile';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 const getDateAfterDays = (days: number) => {
@@ -18,10 +17,9 @@ const getDateAfterDays = (days: number) => {
 const minDueDate = getDateAfterDays(7);
 const maxDueDate = getDateAfterDays(280);
 
-// Валідація через Yup
 const onboardingSchema = Yup.object({
-  babySex: Yup.mixed<'' | 'girl' | 'boy'>()
-    .oneOf(['girl', 'boy', ''], 'Оберіть коректне значення')
+  gender: Yup.mixed<'' | 'girl' | 'boy'>()
+    .oneOf(['girl', 'boy'], 'Оберіть коректне значення')
     .required('Стать дитини є обовʼязковою'),
   dueDate: Yup.date()
     .required('Планова дата пологів є обовʼязковою')
@@ -34,7 +32,7 @@ export default function OnboardingForm() {
   return (
     <Formik
       initialValues={{
-        gender: defaultUserProfile.gender,
+        gender: '' as '' | 'girl' | 'boy',
         dueDate: '',
       }}
       validationSchema={onboardingSchema}
@@ -42,9 +40,7 @@ export default function OnboardingForm() {
         try {
           const response = await fetch('/api/users/profile', {
             method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
             body: JSON.stringify(values),
           });
@@ -70,10 +66,10 @@ export default function OnboardingForm() {
             Стать дитини
             <Field
               as="select"
-              name="babySex"
+              name="gender"
               className={`${styles.field} ${styles.select} ${
                 errors.gender && touched.gender ? styles.fieldError : ''
-              } ${values.gender !== defaultUserProfile.gender ? styles.fieldFilled : ''}`}
+              } ${values.gender ? styles.fieldFilled : ''}`}
             >
               {babySexOptions.map((option) => (
                 <option value={option.value} key={option.value}>
@@ -92,7 +88,9 @@ export default function OnboardingForm() {
             <Field
               name="dueDate"
               type="date"
-              className={`${styles.field} ${styles.dateField} ${errors.dueDate && touched.dueDate ? styles.fieldError : ''} ${values.dueDate ? styles.fieldFilled : ''}`}
+              className={`${styles.field} ${styles.dateField} ${
+                errors.dueDate && touched.dueDate ? styles.fieldError : ''
+              } ${values.dueDate ? styles.fieldFilled : ''}`}
             />
             <ErrorMessage
               name="dueDate"
