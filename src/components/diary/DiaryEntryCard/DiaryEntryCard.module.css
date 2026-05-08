@@ -1,12 +1,18 @@
 .card {
   background-color: #ffdae0;
-  width: 303px;
-  height: 91px;
+  width: 100%;
   border-radius: 16px;
   padding: 16px;
   display: flex;
   flex-direction: column;
+  gap: 8px;
   cursor: pointer;
+  box-sizing: border-box;
+  transition: opacity 0.2s ease;
+}
+
+.card:hover {
+  opacity: 0.85;
 }
 
 .active {
@@ -16,18 +22,20 @@
 .cardHeader {
   display: flex;
   align-items: center;
-  padding: 3.5px 0;
-  width: 271px;
-  height: 26px;
-  margin-bottom: 8px;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
 }
 
-.cardHeader h3 {
+.title {
   font-weight: 400;
   font-size: 16px;
   line-height: 160%;
-  color: black;
-  margin-right: auto;
+  color: #1a1a1a;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .date {
@@ -35,11 +43,16 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 160%;
-  color: black;
+  color: #1a1a1a;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .emotions {
-  width: 271px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
 }
 
 .tag {
@@ -47,10 +60,9 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 150%;
-  color: black;
+  color: #1a1a1a;
   background-color: #fff4f6;
   border-radius: 100px;
   display: inline-block;
   padding: 2px 12px;
-  margin-right: 8px;
 }
