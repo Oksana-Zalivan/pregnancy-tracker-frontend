@@ -31,20 +31,22 @@
 /* 🔹 Текст */
 .textBlock {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+@media screen and (min-width: 1440px) {
+  .textBlock {
+    font-size: 16px;
+  }
+  
 }
 
-.size {
-  margin: 0 0 8px;
-  font-size: 14px;
-  font-weight: 600;
+.textBlockMain {
+  font-weight: 700;
 }
 
-.text {
-  margin: 0;
-  font-size: 14px;
-  color: #555;
-  line-height: 1.5;
-}
 
 /* 📱 Mobile — картинка зверху */
 @media (max-width: 767px) {
