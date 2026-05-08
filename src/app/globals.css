@@ -131,7 +131,6 @@ h4,
 h5,
 h6 {
   font-family: var(--font-comfortaa);
-  <<<<<<< HEAD=======
 }
 
 /* Theme by baby gender */
@@ -158,5 +157,4 @@ h6 {
   --theme-accent-bg: var(--color-french-pass-light);
   --theme-accent: var(--color-french-pass);
   --theme-accent-border: var(--color-french-pass-dark);
-  >>>>>>>main
 }
