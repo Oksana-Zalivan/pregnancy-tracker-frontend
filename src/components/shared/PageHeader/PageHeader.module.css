@@ -1,7 +1,7 @@
 .pageHeader {
   width: 100%;
-  padding-top: 24px;
-  padding-left: 32px;
+  /* padding-top: 24px; */
+  /* padding-left: 32px; */
   display: flex;
   flex-direction: column;
   gap: 16px;
