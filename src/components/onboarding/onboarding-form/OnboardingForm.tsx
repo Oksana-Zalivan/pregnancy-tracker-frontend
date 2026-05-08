@@ -21,7 +21,7 @@ const maxDueDate = getDateAfterDays(280);
 // Валідація через Yup
 const onboardingSchema = Yup.object({
   babySex: Yup.mixed<BabySex>()
-    .oneOf(['unknown', 'girl', 'boy'], 'Оберіть коректне значення')
+    .oneOf([null, 'girl', 'boy'], 'Оберіть коректне значення')
     .required('Стать дитини є обовʼязковою'),
   dueDate: Yup.date()
     .required('Планова дата пологів є обовʼязковою')
@@ -34,7 +34,7 @@ export default function OnboardingForm() {
   return (
     <Formik
       initialValues={{
-        babySex: defaultUserProfile.babySex,
+        gender: defaultUserProfile.gender,
         dueDate: '',
       }}
       validationSchema={onboardingSchema}
@@ -72,8 +72,8 @@ export default function OnboardingForm() {
               as="select"
               name="babySex"
               className={`${styles.field} ${styles.select} ${
-                errors.babySex && touched.babySex ? styles.fieldError : ''
-              } ${values.babySex !== defaultUserProfile.babySex ? styles.fieldFilled : ''}`}
+                errors.gender && touched.gender ? styles.fieldError : ''
+              } ${values.gender !== defaultUserProfile.gender ? styles.fieldFilled : ''}`}
             >
               {babySexOptions.map((option) => (
                 <option value={option.value} key={option.value}>
