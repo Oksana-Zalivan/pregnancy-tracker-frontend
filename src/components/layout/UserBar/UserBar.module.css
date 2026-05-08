@@ -7,6 +7,7 @@
     display: flex;
     align-items: center;
     margin-top: 16px;
+    width: 100%;
     
 }
 .Profile {
@@ -29,16 +30,25 @@
 }
 .userName {
     font-weight: 500;
+    font-size: 12px;
+
 
 }
 
+.userEmail {
+    font-weight: 400;
+    font-size: 12px;
+}
 .logoutLink{ 
     padding: 8px;
+    margin-left: auto;
 }
 @media screen and (min-width: 768px) {
-    .avatarContent {
-        font-size: 14px;
-    }
+    .userName, .userEmail {
+            font-size: 14px;
+    
+    
+        }
     
 }
 .logoutLink {
