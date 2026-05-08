@@ -5,6 +5,14 @@ import TasksReminderCard from "@/components/dashboard/TasksReminderCard/TasksRem
 type Props = {
   data: MomData;
 };
+const getIconId = (category: string) => {
+  const iconMap: Record<string, string> = {
+    "Харчування": "icon-food",   // Замініть на реальні ID з вашого sprite.svg
+    "Активність": "icon-activity",
+    "Відпочинок": "icon-rest"
+  };
+  return iconMap[category] || "icon-default";
+};
 
 export const MomTab = ({ data }: Props) => {
   return (
@@ -25,11 +33,22 @@ export const MomTab = ({ data }: Props) => {
 
         <div className={styles.card}>
           <h3>Поради для вашого комфорту</h3>
-
-          <ul>
+<ul className={styles.tipsList}>
             {data.comfortTips.map((tip, i) => (
-              <li key={i}>
-                <strong>{tip.category}:</strong> {tip.tip}
+              <li key={i} className={styles.tipItem}>
+                
+                {/* Обгортка для іконки та назви категорії */}
+                <div className={styles.tipHeader}>
+                  <svg className={styles.icon} width={18} height={20}>
+                    {/* Використовуємо динамічний ID і правильний шлях */}
+                    <use href={`/images/sprite.svg#${getIconId(tip.category)}`}></use>
+                  </svg>
+                  <span className={styles.categoryName}>{tip.category}</span>
+                </div>
+
+                {/* Сам текст поради йде окремо знизу */}
+                <p className={styles.tipText}>{tip.tip}</p>
+
               </li>
             ))}
           </ul>

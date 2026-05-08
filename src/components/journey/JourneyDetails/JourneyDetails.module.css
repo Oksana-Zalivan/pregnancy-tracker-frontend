@@ -50,13 +50,7 @@ height: 30px;
 }
 
 
-.txt {
-  font-family: var(--font-family);
-font-weight: 400;
-font-size: 16px;
-line-height: 150%;
-color: var(--color-scheme-text);
-}
+
 .tabs button.active {
   background: #FCE1E6; 
   font-weight: 500;
@@ -145,7 +139,28 @@ color: var(--color-scheme-text);
   top: 20px;
 }
 
+.tipHeader {
+  font-family: var(--font-family);
+font-weight: 700;
+font-size: 16px;
+line-height: 160%;
+color: var(--color-scheme-text);
+}
 
+.txt {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--color-scheme-text);
+}
+
+.tipText {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--color-scheme-text);
+  margin: 0;
+}
 /* ---------------- MOBILE ---------------- */
 @media (max-width: 768px) {
   .babyGrid,
