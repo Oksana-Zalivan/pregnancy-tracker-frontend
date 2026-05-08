@@ -82,7 +82,7 @@ export default function OnboardingForm() {
               ))}
             </Field>
             <ErrorMessage
-              name="babySex"
+              name="gender"
               component="span"
               className={styles.error}
             />
