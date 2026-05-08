@@ -52,9 +52,9 @@ export default function TasksReminderCard() {
     }
   }, []);
 
-  useEffect(() => {
+ /*  useEffect(() => {
     fetchTasks();
-  }, [fetchTasks]);
+  }, [fetchTasks]); */
 
   const handleAddTask = () => {
     setIsAddTaskModalOpen(true);

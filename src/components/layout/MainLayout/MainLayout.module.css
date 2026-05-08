@@ -8,15 +8,7 @@
 .main {
   flex: 1;
   min-width: 0;
-  
-  /* ДОДАЄМО ЦЕ: */
-  display: flex;
-  flex-direction: column; /* Змушує всі блоки йти один під одним */
-  padding: 32px; /* Універсальний відступ з усіх боків для десктопу */
-  
-  width: 100%;
   overflow-y: auto;
-  /* ← ось це головне для скролу */
 
 }
 
