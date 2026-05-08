@@ -1,19 +1,41 @@
 .diaryPage {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 24px;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.listColumn {
+  width: 100%;
 }
 
 .desktopOnly {
   display: none;
 }
 
-@media (min-width: 1440px) {
-  .diaryPage {
-    display: grid;
-    grid-template-columns: 390px 1fr;
+/* Медіа-запит від 1024px (щоб гарантовано працювало і на ноутах) */
+@media screen and (min-width: 1024px) {
+  .contentWrapper {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .listColumn {
+    width: 380px;
+    flex-shrink: 0;
   }
 
   .desktopOnly {
     display: block;
+    flex: 1;
+    min-width: 0; /* Рятує від "розриву" сітки */
   }
 }

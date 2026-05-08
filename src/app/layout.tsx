@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Comfortaa, Lato } from 'next/font/google';
+import { Comfortaa } from 'next/font/google'; // Залишили тільки Comfortaa
 import { Toaster } from 'react-hot-toast';
 import AuthProvider from '@/components/auth/AuthProvider/AuthProvider';
 import QueryProvider from '@/components/QueryProvider/QueryProvider';
@@ -8,14 +8,9 @@ import './globals.css';
 
 const comfortaa = Comfortaa({
   subsets: ['latin', 'cyrillic'],
-  weight: ['400', '700'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-comfortaa',
-});
-
-const lato = Lato({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-lato',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -29,14 +24,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk" suppressHydrationWarning={true}>
-      <body className={`${comfortaa.variable} ${lato.variable}`}>
+    // Передаємо ТІЛЬКИ змінну Comfortaa
+    <html lang="uk" suppressHydrationWarning={true} className={comfortaa.variable}>
+      <body>
         <ThemeInitializer />
-
+        
         <QueryProvider>
           <AuthProvider>{children}</AuthProvider>
         </QueryProvider>
-
+        
         <Toaster position="top-right" />
       </body>
     </html>

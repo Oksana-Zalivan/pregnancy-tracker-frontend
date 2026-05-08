@@ -3,6 +3,7 @@
 import DiaryEntryCard from '@/components/diary/DiaryEntryCard/DiaryEntryCard';
 import styles from './DiaryList.module.css';
 
+// 1. ПОВЕРТАЄМО ТИПИ:
 type DiaryEntry = {
   _id: string;
   title: string;
@@ -18,6 +19,7 @@ type DiaryListProps = {
   onCreateEntry: () => void;
 };
 
+// 2. САМ КОМПОНЕНТ:
 export default function DiaryList({
   entries,
   selectedEntryId,

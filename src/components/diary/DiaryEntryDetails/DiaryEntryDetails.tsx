@@ -22,6 +22,7 @@ type Props = {
 export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
   const [showConfirm, setShowConfirm] = useState(false);
 
+  // Стан, коли жодного запису не обрано (або список порожній)
   if (!entry) {
     return (
       <div className={styles.details}>
@@ -82,12 +83,13 @@ export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
         </div>
       </div>
 
+      {/* МОДАЛКА ПІДТВЕРДЖЕННЯ ВИДАЛЕННЯ */}
       {showConfirm && (
         <ConfirmationModal
           isOpen={showConfirm}
-          title="Ви точно хочете видалити?"
-          confirmButtonText="Так"
-          cancelButtonText="Ні"
+          title="Ви точно хочете видалити цей запис?"
+          confirmButtonText="Так, видалити"
+          cancelButtonText="Ні, залишити"
           onConfirm={() => {
             onDelete(entry._id);
             setShowConfirm(false);

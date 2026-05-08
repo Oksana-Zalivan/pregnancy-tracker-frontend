@@ -1,13 +1,12 @@
 'use client';
 
-import { useEffect, useState, use } from 'react';
-import WeekSelector from '@/components/shared/WeekSelector/WeekSelector';
-import { JourneyDetails } from '@/components/journey/JourneyDetails/JourneyDetails';
-import { JourneyData } from '@/types/journey';
-import { useAuthStore } from '@/store/authStore';
-import Container from '@/components/shared/Container/Container';
-import PageHeader from '@/components/shared/PageHeader/PageHeader';
-
+import { useEffect, useState, use } from "react";
+import WeekSelector from "@/components/shared/WeekSelector/WeekSelector";
+import { JourneyDetails } from "@/components/journey/JourneyDetails/JourneyDetails";
+import { JourneyData } from "@/types/journey";
+import { useAuthStore } from "@/store/authStore";
+import PageHeader from "@/components/shared/PageHeader/PageHeader";
+import Container from "@/components/shared/Container/Container";
 type Props = {
   params: Promise<{ weekNumber: string }>;
 };

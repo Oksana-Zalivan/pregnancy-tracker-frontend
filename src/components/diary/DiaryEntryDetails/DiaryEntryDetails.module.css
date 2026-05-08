@@ -44,16 +44,15 @@
 
 .date {
   font-weight: 400;
-  font-size: 12px;
-  line-height: 160%;
-  color: #1a1a1a;
+  font-size: 14px;
+  color: var(--color-scheme-text);
 }
 
 /* Shared icon button style */
 .iconButton {
   border: none;
-  background-color: transparent;
   cursor: pointer;
+  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;

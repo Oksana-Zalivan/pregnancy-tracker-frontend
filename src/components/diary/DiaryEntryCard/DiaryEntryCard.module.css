@@ -1,3 +1,5 @@
+/* DiaryEntryCard.module.css */
+
 .card {
   background-color: #ffdae0;
   width: 100%;
@@ -15,12 +17,20 @@
   opacity: 0.85;
 }
 
+.card:hover {
+  background-color: #ffd6e4;
+  transform: translateY(-2px); /* Легкий ефект підняття при наведенні */
+}
+
+/* Стиль для обраної (активної) картки */
 .active {
-  outline: 2px solid #f4a7b9;
+  background-color: #ffd6e4;
+  border-color: #ffb6c1; /* Виділяємо активну картку рамкою */
 }
 
 .cardHeader {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   justify-content: space-between;
   width: 100%;
@@ -39,8 +49,7 @@
 }
 
 .date {
-  font-family: 'Lato', sans-serif;
-  font-weight: 400;
+  font-family: var(--font-family);
   font-size: 12px;
   line-height: 160%;
   color: #1a1a1a;
@@ -55,6 +64,7 @@
   width: 100%;
 }
 
+/* Білі бульбашки для тегів емоцій */
 .tag {
   font-family: 'Lato', sans-serif;
   font-weight: 400;

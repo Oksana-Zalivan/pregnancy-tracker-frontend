@@ -143,8 +143,21 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--second-family);
+  font-family: var(--second-family); /* Comfortaa для всіх заголовків за замовчуванням */
+  font-weight: 700;
+  color: var(--color-scheme-text);
 }
+
+.title {
+  /* ВИПРАВЛЕНО: Змінюємо Lato на Comfortaa */
+  font-family: var(--second-family); 
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 140%;
+  letter-spacing: -0.01em; /* Для Comfortaa краще невеликий мінус */
+  color: var(--color-scheme-text);
+}
+
 
 button {
   color: #000;
