@@ -1,70 +1,102 @@
 .card {
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 24px;
+  gap: 24px;
+  padding: 16px;
   border-radius: 32px;
-  background: #fff4f6;
+  background: var(--theme-card-bg, #fff4f6);
   overflow-y: auto;
 }
 
 .title {
   margin: 0;
+  font-family: var(--second-family);
   font-size: 20px;
   font-weight: 700;
+  line-height: 1.4;
+  color: #000;
 }
 
-/* 🔹 Блок з картинкою */
 .top {
   display: flex;
+  flex-direction: column;
   gap: 16px;
-  align-items: flex-start; /* ❗ було center */
 }
 
-/* 🔹 Картинка */
 .image {
-  border-radius: 16px;
-  flex-shrink: 0;
+  width: 100%;
+  max-width: 287px;
+  height: 140px;
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  border-radius: 24px;
+  object-fit: cover;
 }
 
-/* 🔹 Текст */
 .textBlock {
-  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 14px;
-}
-@media screen and (min-width: 1440px) {
-  .textBlock {
-    font-size: 16px;
-  }
-  
 }
 
 .textBlockMain {
   font-weight: 700;
 }
 
+.size,
+.text,
+.activity {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+}
 
-/* 📱 Mobile — картинка зверху */
-@media (max-width: 767px) {
+.description {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+}
+
+@media screen and (min-width: 768px) {
+  .card {
+    padding: 24px;
+  }
+
   .top {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
+    gap: 16px;
   }
 
   .image {
-    width: 120px;
-    height: 120px;
+    width: 257px;
+    height: 194px;
+  }
+
+  .textBlock {
+    flex: 1;
+    padding-top: 24px;
   }
 }
 
-/* 💻 Desktop — як у макеті */
-@media (min-width: 1440px) {
+@media screen and (min-width: 1440px) {
+  .card {
+    padding: 24px;
+  }
+
   .image {
-    width: 140px;
-    height: 140px;
+    width: 257px;
+    height: 194px;
+  }
+
+  .textBlock {
+    padding-top: 24px;
   }
 }
