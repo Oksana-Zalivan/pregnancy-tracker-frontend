@@ -10,42 +10,74 @@
 /* Сітка для BabyTab */
 .babyGrid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 32px;
+  grid-template-columns: 350px 1fr;
+  gap: 40px;
   align-items: start;
+  background-color: #FFF4F6; 
+  border-radius: 32px;
+  padding: 32px;
+  width: 100%;
 }
 
-/* Ліва колонка */
-.imageCard {
+.leftColumn {
   display: flex;
   flex-direction: column;
-  width: 100%;
-}
-
-.imgContainer {
-  width: 100%;
-  margin-bottom: 16px;
 }
 
 .imgFrame {
-  position: relative; /* Необхідно для роботи Image з fill */
+  position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1; /* Робить контейнер квадратним, як на фото */
-  
-  /* ФОН ТА РАМКА */
-  background-color: #F7F7F2; /* Той самий бежево-сірий фон */
-  border: 1px solid #E2E2E2; /* Сіра рамка 1px */
+  aspect-ratio: 4 / 3; /* Або фіксована висота, наприклад 260px */
+  background-color: #F8F8F6; 
+  border: 1px solid #E2E2E2; 
   border-radius: 24px;
-  
-  overflow: hidden; /* Щоб картинка не виходила за закруглені кути рамки */
+  overflow: hidden;
+  margin-bottom: 16px;
 }
 
 .babyImage {
-  /* Замість width/height використовуємо object-fit */
-  object-fit: cover; /* Картинка заповнить весь простір без дірок */
   display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Розтягує фото на всю площину рамки */
 }
 
+.sizeText {
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-scheme-text);
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.developmentText p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.highlight {
+  background-color: #FCE1E6; 
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.factHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.factText {
+  font-size: 16px;
+  line-height: 1.5;
+}
 .sizeText {
   font-family: var(--font-family);
   font-size: 16px;
