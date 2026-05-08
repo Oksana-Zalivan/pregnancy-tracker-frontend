@@ -71,6 +71,17 @@ export default function AddDiaryEntryForm({
     void fetchEmotions();
   }, []);
 
+  const getEmotionText = (emotion: Emotion) => {
+    return (
+      emotion.name ||
+      emotion.title ||
+      emotion.label ||
+      emotion.value ||
+      emotion.emotion ||
+      'Емоція'
+    );
+  };
+
   const handleSubmit = async (
     values: FormValues,
     { setSubmitting }: { setSubmitting: (v: boolean) => void },
@@ -78,9 +89,7 @@ export default function AddDiaryEntryForm({
     try {
       const response = await fetch('/api/diaries', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify(values),
       });
@@ -101,17 +110,6 @@ export default function AddDiaryEntryForm({
     }
   };
 
-  const getEmotionText = (emotion: Emotion) => {
-    return (
-      emotion.name ||
-      emotion.title ||
-      emotion.label ||
-      emotion.value ||
-      emotion.emotion ||
-      'Емоція'
-    );
-  };
-
   return (
     <Formik<FormValues>
       initialValues={{
@@ -127,11 +125,11 @@ export default function AddDiaryEntryForm({
           <h2 className={styles.title}>Новий запис</h2>
 
           <label className={styles.label}>
-            Назва
+            Заголовок
             <Field
               type="text"
               name="title"
-              placeholder="Назва запису"
+              placeholder="Введіть заголовок запису"
               className={styles.input}
             />
             <ErrorMessage
@@ -142,7 +140,7 @@ export default function AddDiaryEntryForm({
           </label>
 
           <div className={styles.fieldBlock}>
-            <p className={styles.labelText}>Емоції</p>
+            <p className={styles.labelText}>Категорії</p>
 
             <div className={styles.categories}>
               {emotionsList.map((emotion) => (
@@ -187,7 +185,7 @@ export default function AddDiaryEntryForm({
             <Field
               as="textarea"
               name="description"
-              placeholder="Текст запису"
+              placeholder="Запишіть, як ви себе відчуваєте"
               className={styles.textarea}
             />
             <ErrorMessage
