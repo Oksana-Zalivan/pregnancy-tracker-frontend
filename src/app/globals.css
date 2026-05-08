@@ -64,6 +64,25 @@
   --color-french-pass-lighter: #e5fafe;
   --color-french-pass-lightest: #fbfefe;
   --color-red: #c60000;
+/*   [data-theme='neutral'] {
+  --theme-card-bg: var(--color-oasis-lighter);
+  --theme-accent-bg: var(--color-oasis-light);
+  --theme-accent: var(--color-oasis);
+  --theme-accent-border: var(--color-oasis-dark);
+}
+
+[data-theme='girl'] {
+  --theme-card-bg: var(--color-pastel-pink-lighter);
+  --theme-accent-bg: var(--color-pastel-pink-light);
+  --theme-accent: var(--color-pastel-pink);
+  --theme-accent-border: var(--color-pastel-pink-dark);
+}
+
+[data-theme='boy'] {
+  --theme-card-bg: var(--color-french-pass-lighter);
+  --theme-accent-bg: var(--color-french-pass-light);
+  --theme-accent: var(--color-french-pass);
+  --theme-accent-border: var(--color-french-pass-dark); */
   
   /* ОСЬ ТУТ ГОЛОВНА ЗМІНА: Використовуємо змінні з next/font */
   --font-family: var(--font-lato), sans-serif;

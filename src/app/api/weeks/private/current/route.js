@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001/api";
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const cookieStore = request.headers.get("cookie");
+    const cookie = request.headers.get("cookie");
 
     const response = await fetch(`${BACKEND_URL}/weeks/private/current`, {
       headers: {

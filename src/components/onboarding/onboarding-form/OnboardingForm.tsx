@@ -64,7 +64,7 @@ export default function OnboardingForm() {
         }
       }}
     >
-      {({ dirty, errors, isSubmitting, touched }) => (
+      {({ dirty, errors, isSubmitting, touched, values }) => (
         <Form className={styles.form}>
           <label className={styles.label}>
             Стать дитини
@@ -73,7 +73,7 @@ export default function OnboardingForm() {
               name="babySex"
               className={`${styles.field} ${styles.select} ${
                 errors.babySex && touched.babySex ? styles.fieldError : ''
-              }`}
+              } ${values.babySex !== defaultUserProfile.babySex ? styles.fieldFilled : ''}`}
             >
               {babySexOptions.map((option) => (
                 <option value={option.value} key={option.value}>
@@ -92,7 +92,7 @@ export default function OnboardingForm() {
             <Field
               name="dueDate"
               type="date"
-              className={`${styles.field} ${styles.dateField} ${errors.dueDate && touched.dueDate ? styles.fieldError : ''}`}
+              className={`${styles.field} ${styles.dateField} ${errors.dueDate && touched.dueDate ? styles.fieldError : ''} ${values.dueDate ? styles.fieldFilled : ''}`}
             />
             <ErrorMessage
               name="dueDate"

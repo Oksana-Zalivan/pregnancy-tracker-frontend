@@ -48,10 +48,14 @@ export default function TasksReminderCard() {
     }
   };
 
-  /* useEffect(() => {
+useEffect(() => {
+  const timer = setTimeout(() => {
     fetchTasks();
-  }, []);
- */
+  }, 0);
+
+  return () => clearTimeout(timer);
+}, []);
+
   const handleAddTask = () => {
     setIsAddTaskModalOpen(true);
   };
@@ -176,7 +180,9 @@ export default function TasksReminderCard() {
           className={styles.addTaskButton}
           onClick={handleAddTask}
         >
-          <Image src="/public/images/sprite.svg#icon-add" width={24} height={24} alt="Додати завдання" />
+         <svg width="24" height="24" aria-label="add">
+    <use href="/public/images/sprite.svg#icon-add" />
+  </svg>
         </Button>
       </div>
 {/* sprite.svg#icon-add */}

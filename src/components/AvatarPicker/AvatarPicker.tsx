@@ -7,7 +7,7 @@ import styles from './AvatarPicker.module.css';
 export default function AvatarPicker() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState('/icons/default-avatar.svg');
+  const [avatarUrl, setAvatarUrl] = useState('/images/placeholder-avatar.jpg');
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -45,11 +45,11 @@ export default function AvatarPicker() {
 
       if (!response.ok) {
         toast.error(data.message || 'Не вдалося оновити аватар.');
-        setAvatarUrl('/icons/default-avatar.svg');
+        setAvatarUrl('/images/placeholder-avatar.jpg');
         return;
       }
 
-      setAvatarUrl(data.data.avatarUrl);
+      setAvatarUrl(data.data.avatar || '/icons/default-avatar.svg');
       toast.success('Фото профілю оновлено.');
     } catch {
       toast.error('Проблема з мережею або сервером. Спробуйте пізніше.');
@@ -60,7 +60,7 @@ export default function AvatarPicker() {
   };
 
   return (
-    <div>
+    <div className={styles.avatarBox}>
       <Image
         src={avatarUrl}
         alt={'Аватар користувача'}
