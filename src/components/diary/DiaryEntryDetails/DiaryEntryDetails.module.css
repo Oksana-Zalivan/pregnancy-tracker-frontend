@@ -17,13 +17,23 @@
   margin: 0;
 }
 
-/* Header row: title + edit button */
-.detailsHeader {
+/* === НОВІ КЛАСИ ДЛЯ ВЕРХНЬОГО РЯДКА === */
+.topRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  width: 100%;
 }
+
+.titleGroup,
+.dateGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* Відстань між текстом та іконкою */
+}
+
+/* ====================================== */
 
 .title {
   font-weight: 500;
@@ -34,25 +44,17 @@
   margin: 0;
 }
 
-/* Date row: date + delete button */
-.dateRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
 .date {
   font-weight: 400;
   font-size: 14px;
   color: var(--color-scheme-text);
+  /* Переконайтеся, що ця змінна існує, або замініть на #666 */
 }
 
 /* Shared icon button style */
 .iconButton {
   border: none;
   cursor: pointer;
-  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,6 +62,7 @@
   border-radius: 50%;
   flex-shrink: 0;
   transition: opacity 0.2s ease;
+  background-color: transparent;
 }
 
 .iconButton:hover {

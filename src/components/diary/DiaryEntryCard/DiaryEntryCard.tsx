@@ -17,6 +17,21 @@ type Props = {
   isActive?: boolean;
 };
 
+// Filters out MongoDB ObjectId strings that leak into emotions
+const OBJECT_ID_REGEX = /^[a-f\d]{24}$/i;
+
+function formatDate(raw: string): string {
+  const d = new Date(raw);
+  if (isNaN(d.getTime())) return raw;
+  return d.toLocaleString('uk-UA', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
 export default function DiaryEntryCard({ entry, onClick, isActive }: Props) {
   const router = useRouter();
 
@@ -29,6 +44,8 @@ export default function DiaryEntryCard({ entry, onClick, isActive }: Props) {
       router.push(`/diary/${entry._id}`);
     }
   };
+  console.log(entry.emotions);
+  const safeEmotions = entry.emotions?.filter((e) => !OBJECT_ID_REGEX.test(e));
 
   return (
     <div
@@ -40,10 +57,10 @@ export default function DiaryEntryCard({ entry, onClick, isActive }: Props) {
     >
       <div className={styles.cardHeader}>
         <h3 className={styles.title}>{entry.title}</h3>
-        <span className={styles.date}>{entry.date}</span>
+        <span className={styles.date}>{formatDate(entry.date)}</span>
       </div>
       <div className={styles.emotions}>
-        {entry.emotions?.map((emotion, index) => (
+        {safeEmotions?.map((emotion, index) => (
           <span key={index} className={styles.tag}>
             {emotion}
           </span>
