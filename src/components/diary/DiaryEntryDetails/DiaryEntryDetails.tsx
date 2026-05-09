@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import styles from './DiaryEntryDetails.module.css';
 import ConfirmationModal from '@/components/shared/ConfirmationModal/ConfirmationModal';
 
@@ -19,10 +18,21 @@ type Props = {
   onDelete: (id: string) => void;
 };
 
+const OBJECT_ID_REGEX = /^[a-f\d]{24}$/i;
+
+function formatDate(raw: string): string {
+  const d = new Date(raw);
+  if (isNaN(d.getTime())) return raw;
+  return d.toLocaleString('uk-UA', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+
 export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
   const [showConfirm, setShowConfirm] = useState(false);
 
-  // Стан, коли жодного запису не обрано (або список порожній)
   if (!entry) {
     return (
       <div className={styles.details}>
@@ -34,38 +44,35 @@ export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
   return (
     <>
       <div className={styles.details}>
-        <div className={styles.detailsHeader}>
-          <h2 className={styles.title}>{entry.title}</h2>
-          <button
-            type="button"
-            className={styles.iconButton}
-            onClick={() => onEdit(entry)}
-            aria-label="Редагувати запис"
-          >
-            <Image
-              src="/icons/edit.svg"
-              alt="Редагувати"
-              width={24}
-              height={24}
-            />
-          </button>
-        </div>
+        {/* Обгорнули заголовок і дату в один спільний рядок */}
+        <div className={styles.topRow}>
+          <div className={styles.titleGroup}>
+            <h2 className={styles.title}>{entry.title}</h2>
+            <button
+              type="button"
+              className={styles.iconButton}
+              onClick={() => onEdit(entry)}
+              aria-label="Редагувати запис"
+            >
+              <svg className={styles.icon} width="24" height="24">
+                <use href="/images/sprite.svg#icon-edit" />
+              </svg>
+            </button>
+          </div>
 
-        <div className={styles.dateRow}>
-          <span className={styles.date}>{entry.date}</span>
-          <button
-            type="button"
-            className={styles.iconButton}
-            onClick={() => setShowConfirm(true)}
-            aria-label="Видалити запис"
-          >
-            <Image
-              src="/icons/trash.svg"
-              alt="Видалити"
-              width={24}
-              height={24}
-            />
-          </button>
+          <div className={styles.dateGroup}>
+            <span className={styles.date}>{formatDate(entry.date)}</span>
+            <button
+              type="button"
+              className={styles.iconButton}
+              onClick={() => setShowConfirm(true)}
+              aria-label="Видалити запис"
+            >
+              <svg className={styles.icon} width="24" height="24">
+                <use href="/images/sprite.svg#icon-trash" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div className={styles.description}>
@@ -75,15 +82,16 @@ export default function DiaryEntryDetails({ entry, onEdit, onDelete }: Props) {
         </div>
 
         <div className={styles.emotions}>
-          {entry.emotions?.map((emotion, index) => (
-            <span key={index} className={styles.tag}>
-              {emotion}
-            </span>
-          ))}
+          {entry.emotions
+            ?.filter((e) => !OBJECT_ID_REGEX.test(e))
+            .map((emotion, index) => (
+              <span key={index} className={styles.tag}>
+                {emotion}
+              </span>
+            ))}
         </div>
       </div>
 
-      {/* МОДАЛКА ПІДТВЕРДЖЕННЯ ВИДАЛЕННЯ */}
       {showConfirm && (
         <ConfirmationModal
           isOpen={showConfirm}

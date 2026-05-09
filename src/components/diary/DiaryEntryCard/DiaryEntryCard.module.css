@@ -19,13 +19,15 @@
 
 .card:hover {
   background-color: #ffd6e4;
-  transform: translateY(-2px); /* Легкий ефект підняття при наведенні */
+  transform: translateY(-2px);
+  /* Легкий ефект підняття при наведенні */
 }
 
 /* Стиль для обраної (активної) картки */
 .active {
   background-color: #ffd6e4;
-  border-color: #ffb6c1; /* Виділяємо активну картку рамкою */
+  border-color: #ffb6c1;
+  /* Виділяємо активну картку рамкою */
 }
 
 .cardHeader {
@@ -38,23 +40,24 @@
 }
 
 .title {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 160%;
-  color: #1a1a1a;
+
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 160%;
+  color: var(--color-scheme-text);
 }
 
 .date {
   font-family: var(--font-family);
+  font-weight: 500;
   font-size: 12px;
   line-height: 160%;
-  color: #1a1a1a;
-  white-space: nowrap;
-  flex-shrink: 0;
+  color: var(--color-scheme-text);
 }
 
 .emotions {
@@ -66,13 +69,19 @@
 
 /* Білі бульбашки для тегів емоцій */
 .tag {
-  font-family: 'Lato', sans-serif;
+  font-family: var(--font-family);
   font-weight: 400;
   font-size: 14px;
   line-height: 150%;
   color: #1a1a1a;
+  /* конкретний колір замість CSS-змінної */
   background-color: #fff4f6;
+  /* конкретний фон */
+  /* border: 1px solid #ffb6c1; */
   border-radius: 100px;
-  display: inline-block;
   padding: 2px 12px;
+  display: inline-block;
+
+
+
 }

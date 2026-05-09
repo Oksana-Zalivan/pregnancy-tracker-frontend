@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import Container from "@/components/shared/Container/Container";
+import { useEffect, useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import Container from '@/components/shared/Container/Container';
 import PageHeader from '@/components/shared/PageHeader/PageHeader';
-import DiaryList from "@/components/diary/DiaryList/DiaryList";
-import DiaryEntryDetails from "@/components/diary/DiaryEntryDetails/DiaryEntryDetails";
-import { Loader } from "@/components/shared/Loader/Loader";
-import AddDiaryEntryForm from "@/components/diary/AddDiaryEntryForm/AddDiaryEntryForm";
-import Modal from "@/components/shared/Modal/Modal";
-import styles from "./page.module.css";
+import DiaryList from '@/components/diary/DiaryList/DiaryList';
+import DiaryEntryDetails from '@/components/diary/DiaryEntryDetails/DiaryEntryDetails';
+import { Loader } from '@/components/shared/Loader/Loader';
+import AddDiaryEntryForm from '@/components/diary/AddDiaryEntryForm/AddDiaryEntryForm';
+import Modal from '@/components/shared/Modal/Modal';
+import styles from './page.module.css';
 
 type DiaryEntry = {
   _id: string;
@@ -32,30 +32,30 @@ export default function DiaryPage() {
   const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchEntries = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch("/api/diaries", {
-          credentials: "include",
-          cache: "no-store",
-        });
+  const fetchEntries = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/diaries', {
+        credentials: 'include',
+        cache: 'no-store',
+      });
 
-        if (!response.ok) throw new Error("Не вдалося завантажити записи");
+      if (!response.ok) throw new Error('Не вдалося завантажити записи');
 
-        const result: DiaryEntriesResponse = await response.json();
-        setEntries(result.data);
-        setSelectedEntry(result.data[0] ?? null);
-      } catch (error) {
-        console.error(error);
-        toast.error("Не вдалося завантажити записи щоденника");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchEntries();
+      const result: DiaryEntriesResponse = await response.json();
+      setEntries(result.data);
+      setSelectedEntry(result.data[0] ?? null);
+    } catch (error) {
+      console.error(error);
+      toast.error('Не вдалося завантажити записи щоденника');
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchEntries();
+  }, [fetchEntries]);
 
   const handleSelectEntry = (entry: DiaryEntry) => {
     if (window.innerWidth < 1024) {
@@ -66,7 +66,28 @@ export default function DiaryPage() {
   };
 
   const handleDeleteEntry = async (id: string) => {
-    // ... твоя логіка видалення ...
+    try {
+      const response = await fetch(`/api/diaries/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+
+      if (!response.ok) throw new Error('Не вдалося видалити запис щоденника');
+
+      toast.success('Запис щоденника успішно видалено');
+      setEntries((prev) => prev.filter((e) => e._id !== id));
+      setSelectedEntry((prev) =>
+        prev?._id === id ? (entries.find((e) => e._id !== id) ?? null) : prev,
+      );
+    } catch (error) {
+      console.error(error);
+      toast.error('Не вдалося видалити запис щоденника');
+    }
+  };
+
+  const handleEntryCreated = () => {
+    setIsModalOpen(false);
+    fetchEntries();
   };
 
   return (
@@ -77,10 +98,7 @@ export default function DiaryPage() {
         {isLoading ? (
           <Loader size="md" />
         ) : (
-          /* ОСЬ ГОЛОВНА ОБГОРТКА ДЛЯ ДВОХ КОЛОНОК */
           <div className={styles.contentWrapper}>
-            
-            {/* ЛІВА КОЛОНКА */}
             <div className={styles.listColumn}>
               <DiaryList
                 entries={entries}
@@ -90,7 +108,6 @@ export default function DiaryPage() {
               />
             </div>
 
-            {/* ПРАВА КОЛОНКА */}
             <div className={styles.desktopOnly}>
               <DiaryEntryDetails
                 entry={selectedEntry}
@@ -98,14 +115,13 @@ export default function DiaryPage() {
                 onDelete={handleDeleteEntry}
               />
             </div>
-
           </div>
         )}
       </main>
 
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <AddDiaryEntryForm onClose={() => setIsModalOpen(false)} />
+          <AddDiaryEntryForm onClose={handleEntryCreated} />
         </Modal>
       )}
     </Container>

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import Modal from "@/components/shared/Modal/Modal";
-import Button from "@/components/shared/Button/Button";
-import styles from "./ConfirmationModal.module.css";
+import Modal from '@/components/shared/Modal/Modal';
+import Button from '@/components/shared/Button/Button';
+import styles from './ConfirmationModal.module.css';
 
 type Props = {
   isOpen: boolean;

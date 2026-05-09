@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
@@ -8,13 +8,7 @@ import styles from './AddDiaryEntryForm.module.css';
 
 type Emotion = {
   _id: string;
-  name?: string;
-  title?: string;
-  label?: string;
-  value?: string;
-  emotion?: string;
-  emoji?: string;
-  icon?: string;
+  title: string;
 };
 
 type FormValues = {
@@ -46,6 +40,8 @@ export default function AddDiaryEntryForm({
   onClose: () => void;
 }) {
   const [emotionsList, setEmotionsList] = useState<Emotion[]>([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchEmotions = async () => {
@@ -71,16 +67,19 @@ export default function AddDiaryEntryForm({
     void fetchEmotions();
   }, []);
 
-  const getEmotionText = (emotion: Emotion) => {
-    return (
-      emotion.name ||
-      emotion.title ||
-      emotion.label ||
-      emotion.value ||
-      emotion.emotion ||
-      'Емоція'
-    );
-  };
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleSubmit = async (
     values: FormValues,
@@ -95,7 +94,6 @@ export default function AddDiaryEntryForm({
       });
 
       const data = await response.json();
-
       if (!response.ok) {
         toast.error(data.message || 'Не вдалося створити запис');
         return;
@@ -142,35 +140,77 @@ export default function AddDiaryEntryForm({
           <div className={styles.fieldBlock}>
             <p className={styles.labelText}>Категорії</p>
 
-            <div className={styles.categories}>
-              {emotionsList.map((emotion) => (
-                <label key={emotion._id} className={styles.category}>
-                  <input
-                    type="checkbox"
-                    checked={values.emotions.includes(emotion._id)}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setFieldValue('emotions', [
-                          ...values.emotions,
-                          emotion._id,
-                        ]);
-                      } else {
-                        setFieldValue(
-                          'emotions',
-                          values.emotions.filter((id) => id !== emotion._id),
-                        );
-                      }
-                    }}
-                  />
+            <div className={styles.dropdownWrapper} ref={dropdownRef}>
+              {/* Trigger — shows selected tags + chevron */}
+              <div
+                className={styles.dropdownTrigger}
+                onClick={() => setIsDropdownOpen((prev) => !prev)}
+              >
+                <div className={styles.selectedTags}>
+                  {values.emotions.length === 0 ? (
+                    <span className={styles.placeholder}>
+                      Оберіть категорії
+                    </span>
+                  ) : (
+                    values.emotions.map((tag) => (
+                      <span key={tag} className={styles.tag}>
+                        {tag}
+                        <button
+                          type="button"
+                          className={styles.tagRemove}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setFieldValue(
+                              'emotions',
+                              values.emotions.filter((t) => t !== tag),
+                            );
+                          }}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))
+                  )}
+                </div>
+                <span
+                  className={`${styles.chevron} ${isDropdownOpen ? styles.chevronOpen : ''}`}
+                >
+                  ▾
+                </span>
+              </div>
 
-                  <span>
-                    {emotion.emoji || emotion.icon
-                      ? `${emotion.emoji || emotion.icon} `
-                      : ''}
-                    {getEmotionText(emotion)}
-                  </span>
-                </label>
-              ))}
+              {/* Dropdown list */}
+              {isDropdownOpen && (
+                <div className={styles.dropdownList}>
+                  {emotionsList.map((emotion) => {
+                    const isSelected = values.emotions.includes(emotion.title);
+                    return (
+                      <label key={emotion._id} className={styles.dropdownItem}>
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setFieldValue('emotions', [
+                                ...values.emotions,
+                                emotion.title,
+                              ]);
+                            } else {
+                              setFieldValue(
+                                'emotions',
+                                values.emotions.filter(
+                                  (t) => t !== emotion.title,
+                                ),
+                              );
+                            }
+                          }}
+                        />
+                        <span>{emotion.title}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             <ErrorMessage

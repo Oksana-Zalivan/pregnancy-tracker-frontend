@@ -38,9 +38,7 @@ export default function TasksReminderCard() {
         return;
       }
 
-      if (!response.ok) {
-        throw new Error('Не вдалося завантажити завдання');
-      }
+      if (!response.ok) throw new Error('Не вдалося завантажити завдання');
 
       const data: TasksResponse | Task[] = await response.json();
       setTasks(Array.isArray(data) ? data : (data.data ?? []));
@@ -52,13 +50,11 @@ export default function TasksReminderCard() {
     }
   }, []);
 
- /*  useEffect(() => {
+  useEffect(() => {
     fetchTasks();
-  }, [fetchTasks]); */
+  }, [fetchTasks]);
 
-  const handleAddTask = () => {
-    setIsAddTaskModalOpen(true);
-  };
+  const handleAddTask = () => setIsAddTaskModalOpen(true);
 
   const handleCloseTaskModal = () => {
     setIsAddTaskModalOpen(false);
@@ -87,8 +83,26 @@ export default function TasksReminderCard() {
       });
 
       if (!response.ok) throw new Error();
-    } catch (error) {
+    } catch {
       toast.error('Не вдалося оновити статус');
+      setTasks(prevTasks);
+    }
+  };
+
+  const handleDeleteTask = async (id: string) => {
+    const prevTasks = tasks;
+    setTasks((current) => current.filter((t) => t._id !== id));
+
+    try {
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+
+      if (!response.ok) throw new Error();
+      toast.success('Завдання видалено');
+    } catch {
+      toast.error('Не вдалося видалити завдання');
       setTasks(prevTasks);
     }
   };
@@ -99,12 +113,11 @@ export default function TasksReminderCard() {
     return d.getTime();
   };
 
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('uk-UA', {
+  const formatDate = (date: string) =>
+    new Date(date).toLocaleDateString('uk-UA', {
       day: '2-digit',
       month: '2-digit',
     });
-  };
 
   const sortedTasks = [...tasks].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
@@ -159,6 +172,16 @@ export default function TasksReminderCard() {
           {task.name}
         </span>
       </label>
+      <button
+        type="button"
+        onClick={() => handleDeleteTask(task._id)}
+        aria-label="Видалити завдання"
+        className={styles.deleteTaskButton}
+      >
+        <svg width="16" height="16">
+          <use href="/images/sprite.svg#icon-trash" />
+        </svg>
+      </button>
     </li>
   );
 
